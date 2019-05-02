@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.jaredrummler.android.shell.CommandResult;
 import com.jaredrummler.android.shell.Shell;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
 
     private Switch sw1;
@@ -34,19 +36,32 @@ public class MainActivity extends AppCompatActivity {
 
                 if(sw1.isChecked())
                 {
-                    try {
-                        CommandResult result = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
-                        Toast.makeText(MainActivity.this, "UHQA is Active", Toast.LENGTH_SHORT).show();
-                    } catch(Exception e){
-                        Toast.makeText(MainActivity.this, "UHQA Is Disabled", Toast.LENGTH_SHORT).show();
+                    File file = new File("/sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
+                    if(file.exists()){
+                        try {
+                            Toast.makeText(MainActivity.this, "UHQA is Available", Toast.LENGTH_SHORT).show();
+                            CommandResult result = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
+                            Toast.makeText(MainActivity.this, "UHQA is Active", Toast.LENGTH_SHORT).show();
+                        } catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                    else{
+                        Toast.makeText(MainActivity.this, "UHQA Is Not Available", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else {
-                    try {
-                        CommandResult result = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
-                        Toast.makeText(MainActivity.this, "UHQA is Disabled", Toast.LENGTH_SHORT).show();
-                    } catch(Exception e){
-                        Toast.makeText(MainActivity.this, "UHQA Is Active", Toast.LENGTH_SHORT).show();
+                    File file = new File("/sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
+                    if(file.exists()) {
+                        try {
+                            Toast.makeText(MainActivity.this, "UHQA is Available", Toast.LENGTH_SHORT).show();
+                            CommandResult result = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
+                            Toast.makeText(MainActivity.this, "UHQA is Disabled", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Toast.makeText(MainActivity.this, "UHQA Is Not Available", Toast.LENGTH_SHORT).show();
                     }
                 }
 
