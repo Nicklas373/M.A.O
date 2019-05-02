@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">Mido Audio Optimizer</string>
     <string name="main_text">Welcome to Mido Audio Optimizer</string>
-    <string name="button_text">UHQA (Ultra High Quality Audio)</string>
+    <string name="switch_1_text">UHQA (Ultra High Quality Audio)</string>
     <string name="switch_1_uhqa_on">UHQA Is Activated</string>
     <string name="switch_1_uhqa_off">UHQA Is Disabled</string>
+    <string name="switch_2_text">HPH (Headset High Perfomance Mode)</string>
+    <string name="switch_2_hph_on">HPH Is Activated</string>
+    <string name="switch_2_hph_off">HPH Is Disabled</string>
 </resources>
