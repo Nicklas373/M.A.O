@@ -3,15 +3,15 @@ package com.example.midoaudioptimizer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.jaredrummler.android.shell.CommandResult;
 import com.jaredrummler.android.shell.Shell;
 
-import java.io.IOException;
-
 public class MainActivity extends AppCompatActivity {
+
+    private Switch sw1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,26 +21,38 @@ public class MainActivity extends AppCompatActivity {
         try {
             Process p = Runtime.getRuntime().exec("su");
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
 
-        final Button button2 = findViewById(R.id.button2);
+        sw1 = (Switch)findViewById(R.id.switch1);
 
-        button2.setOnClickListener(new View.OnClickListener() {
+        sw1.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View arg0) {
-                CommandResult result = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
-                if (result.isSuccessful()) {
-                    System.out.println(result.getStdout());
-                    // Example output on a rooted device:
-                    Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+
+                if(sw1.isChecked())
+                {
+                    try {
+                        CommandResult result = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
+                        Toast.makeText(MainActivity.this, "UHQA is Active", Toast.LENGTH_SHORT).show();
+                    } catch(Exception e){
+                        Toast.makeText(MainActivity.this, "UHQA Is Disabled", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                    try {
+                        CommandResult result = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
+                        Toast.makeText(MainActivity.this, "UHQA is Disabled", Toast.LENGTH_SHORT).show();
+                    } catch(Exception e){
+                        Toast.makeText(MainActivity.this, "UHQA Is Active", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
         });
+
     }
 
 }

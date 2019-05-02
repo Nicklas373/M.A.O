@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Mido Audio Optimizer</string>
     <string name="main_text">Welcome to Mido Audio Optimizer</string>
-    <string name="button_text">UHQA</string>
+    <string name="button_text">UHQA (Ultra High Quality Audio)</string>
+    <string name="switch_1_uhqa_on">UHQA Is Activated</string>
+    <string name="switch_1_uhqa_off">UHQA Is Disabled</string>
 </resources>
