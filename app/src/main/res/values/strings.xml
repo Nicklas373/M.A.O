@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Mido Audio Optimizer</string>
+    <string name="main_text">Welcome to Mido Audio Optimizer</string>
+    <string name="button_text">UHQA</string>
+</resources>
