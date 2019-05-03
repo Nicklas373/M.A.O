@@ -1,10 +1,17 @@
 <resources>
-    <string name="app_name">Mido Audio Optimizer</string>
+    <string name="app_name">M.A.O</string>
     <string name="main_text">Welcome to Mido Audio Optimizer</string>
-    <string name="switch_1_text">UHQA (Ultra High Quality Audio)</string>
-    <string name="switch_1_uhqa_on">UHQA Is Activated</string>
-    <string name="switch_1_uhqa_off">UHQA Is Disabled</string>
-    <string name="switch_2_text">HPH (Headset High Perfomance Mode)</string>
-    <string name="switch_2_hph_on">HPH Is Activated</string>
-    <string name="switch_2_hph_off">HPH Is Disabled</string>
+    <string name="secondary_text">Available kernel audio path control</string>
+    <string name="uhqa_text">UHQA (Ultra High Quality Audio)</string>
+    <string name="uhqa_text_on">UHQA is active</string>
+    <string name="uhqa_text_off">UHQA is not active</string>
+    <string name="hph_text">Headset High Performance Mode</string>
+    <string name="hph_text_on">HPH is active</string>
+    <string name="hph_text_off">HPH is not active</string>
+    <string name="amp_text">Low Distortion AMP</string>
+    <string name="amp_text_on">AMP is active</string>
+    <string name="amp_text_off">AMP is not active</string>
+    <string name="impedance_text">Headphone Impedance Detection</string>
+    <string name="impedance_text_on">Impedance is active</string>
+    <string name="impedance_text_off">Impedance is not active</string>
 </resources>

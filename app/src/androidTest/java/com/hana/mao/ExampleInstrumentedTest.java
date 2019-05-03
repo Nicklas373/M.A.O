@@ -1,4 +1,4 @@
-package com.example.midoaudioptimizer;
+package com.hana.mao;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.midoaudioptimizer", appContext.getPackageName());
+        assertEquals("com.hana.mao", appContext.getPackageName());
     }
 }
