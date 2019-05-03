@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">M.A.O</string>
-    <string name="main_text">Welcome to Mido Audio Optimizer</string>
+    <string name="main_text">Mido Audio Optimizer</string>
     <string name="secondary_text">Available kernel audio path control</string>
+    <string name="audio_path_title">Audio Path Configuration</string>
+    <string name="audio_path_button">DAC Configuration</string>
+    <string name="audio_dac_button">DAC Status</string>
+    <string name="about">About</string>
     <string name="uhqa_text">UHQA (Ultra High Quality Audio)</string>
     <string name="uhqa_text_on">UHQA is active</string>
     <string name="uhqa_text_off">UHQA is not active</string>

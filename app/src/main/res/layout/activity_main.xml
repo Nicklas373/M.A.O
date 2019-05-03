@@ -9,89 +9,65 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="343dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="652dp"
+        android:layout_width="226dp"
+        android:layout_height="39dp"
+        android:layout_marginBottom="600dp"
         android:text="@string/main_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.556"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/secondary_text"
+    <Button
+        android:id="@+id/dac_conf"
+        android:layout_width="208dp"
+        android:layout_height="60dp"
+        android:background="@drawable/ripple_effect"
+        android:text="@string/audio_path_button"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.015"
+        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.41" />
+        app:layout_constraintVertical_bias="0.664" />
 
-
-    <Switch
-        android:id="@+id/uhqa"
-        android:layout_width="361dp"
-        android:layout_height="36dp"
-        android:text="@string/uhqa_text"
-        android:textColor="#ffffff"
-        android:textOff="@string/uhqa_text_off"
-        android:textOn="@string/uhqa_text_on"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.465" />
-
-    <Switch
-        android:id="@+id/hph"
-        android:layout_width="361dp"
-        android:layout_height="40dp"
-        android:layout_below="@id/uhqa"
-        android:text="@string/hph_text"
-        android:textOff="@string/hph_text_off"
-        android:textOn="@string/hph_text_on"
+    <Button
+        android:id="@+id/dac_status"
+        android:layout_width="208dp"
+        android:layout_height="60dp"
+        android:background="@drawable/ripple_effect"
+        android:text="@string/audio_dac_button"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.515" />
+        app:layout_constraintVertical_bias="0.774" />
 
-    <Switch
-        android:id="@+id/amp"
-        android:layout_width="361dp"
-        android:layout_height="40dp"
-        android:layout_below="@id/hph"
-        android:text="@string/amp_text"
+    <Button
+        android:id="@+id/about"
+        android:layout_width="208dp"
+        android:layout_height="60dp"
+        android:background="@drawable/ripple_effect"
+        android:text="@string/about"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#ffffff"
-        android:textOff="@string/amp_text_off"
-        android:textOn="@string/amp_text_on"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.565" />
-
-    <Switch
-        android:id="@+id/impedance"
-        android:layout_width="361dp"
-        android:layout_height="40dp"
-        android:layout_below="@id/amp"
-        android:text="@string/impedance_text"
-        android:textColor="#ffffff"
-        android:textOff="@string/impedance_text_off"
-        android:textOn="@string/impedance_text_on"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.615" />
+        app:layout_constraintVertical_bias="0.888" />
 
 </android.support.constraint.ConstraintLayout>
