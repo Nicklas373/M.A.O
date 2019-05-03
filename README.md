@@ -1,7 +1,8 @@
-# M.A.O || Mido Audio Optimizer (Kernel Audio Configuration App) || WIP
-# Xiaomi Redmi Note 4x || Snapdragon Variant
+#                    M.A.O  
+# Mido Audio Optimizer (Kernel Audio Configuration App)
+# Xiaomi Redmi Note 4x (Snapdragon Variant)
 
-![alt text](https://raw.githubusercontent.com/Nicklas373/M.A.O/master/images/M.A.O_Menu.png =450x450) ![alt text](https://raw.githubusercontent.com/Nicklas373/M.A.O/master/images/M.A.O_Menu_Audio_Path.png =450x450)
+![alt text](https://raw.githubusercontent.com/Nicklas373/M.A.O/master/images/M.A.O_Menu.pngs=720) ![alt text](https://raw.githubusercontent.com/Nicklas373/M.A.O/master/images/M.A.O_Menu_Audio_Path.pngs=720)
 
 This is a android application to control several audio configuration directly on kernel, this application is designed for Xiaomi Redmi Note 4x (Snapdragon) that is using [M.A.O Magisk Module](https://github.com/Nicklas373/Internal_DAC_Fixer/tree/Magisk) or Syberia OS or other Android 7.0 - 9.0 Based ROMs.
 
