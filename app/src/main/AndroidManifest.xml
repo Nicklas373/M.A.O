@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".audio_path"></activity>
+        <activity android:name=".dac_status"></activity>
     </application>
 
 </manifest>

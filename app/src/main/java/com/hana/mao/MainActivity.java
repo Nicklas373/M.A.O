@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v){
-                Toast.makeText(MainActivity.this, "Not yet finished", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(MainActivity.this, dac_status.class);
+                startActivity(i);
             }
         });
 
