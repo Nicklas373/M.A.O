@@ -1,40 +1,39 @@
 package com.hana.mao;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jaredrummler.android.shell.CommandResult;
 import com.jaredrummler.android.shell.Shell;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 public class dac_status extends AppCompatActivity {
 
-    TextView textView4;
+    TextView UHQA,HPH,AMP,IMPEDANCE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dac_status_layout);
 
-        textView4 = (TextView) findViewById(R.id.textView4);
-        FileInputStream fstream;
+        DACClear();
+        DACStatus();
+        UHQAState();
+        HPHState();
+        AMPState();
+        IMPEDANCEState();
 
-        UHQAStatus();
-        
+    }
+
+    private void UHQAState(){
+        UHQA = (TextView) findViewById(R.id.uhqa_status);
+        FileInputStream fstream;
         try {
             fstream = openFileInput("uhqa");
             StringBuffer sbuffer = new StringBuffer();
@@ -44,7 +43,15 @@ public class dac_status extends AppCompatActivity {
             }
             fstream.close();
             String details[] = sbuffer.toString().split("\n");
-            textView4.setText("UHQA Status is: "+ details[0]);
+            if (details[0].equals("0")){
+                Toast.makeText(dac_status.this,"UHQA is inactive", Toast.LENGTH_SHORT).show();
+                UHQA.setText("Inactive");
+            } else if (details[0].equals("1")){
+                Toast.makeText(dac_status.this,"UHQA is active", Toast.LENGTH_SHORT).show();
+                UHQA.setText("Active");
+            } else {
+                Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_SHORT).show();
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -52,14 +59,135 @@ public class dac_status extends AppCompatActivity {
         }
     }
 
-    private void UHQAStatus() {
-        File uhqa_file = new File("/sys/module/snd_soc_wcd9330/parameters/high_perf_mode");
-        if(uhqa_file.exists()){
+    private void HPHState(){
+        HPH = (TextView) findViewById(R.id.hph_status);
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("hph");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read())!= -1){
+                sbuffer.append((char)i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("0")){
+                Toast.makeText(dac_status.this,"HPH is inactive", Toast.LENGTH_SHORT).show();
+                HPH.setText("Inactive");
+            } else if (details[0].equals("1")){
+                Toast.makeText(dac_status.this,"HPH is active", Toast.LENGTH_SHORT).show();
+                HPH.setText("Active");
+            } else {
+                Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_SHORT).show();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void AMPState(){
+        AMP = (TextView) findViewById(R.id.amp_status);
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("amp");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read())!= -1){
+                sbuffer.append((char)i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("0")){
+                Toast.makeText(dac_status.this,"AMP is inactive", Toast.LENGTH_SHORT).show();
+                AMP.setText("Inactive");
+            } else if (details[0].equals("1")){
+                Toast.makeText(dac_status.this,"AMP is active", Toast.LENGTH_SHORT).show();
+                AMP.setText("Active");
+            } else {
+                Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_SHORT).show();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void IMPEDANCEState(){
+        IMPEDANCE = (TextView) findViewById(R.id.impedance_status);
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("impedance");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read())!= -1){
+                sbuffer.append((char)i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("0")){
+                Toast.makeText(dac_status.this,"IMPEDANCE is inactive", Toast.LENGTH_SHORT).show();
+                IMPEDANCE.setText("Inactive");
+            } else if (details[0].equals("1")){
+                Toast.makeText(dac_status.this,"IMPEDANCE is active", Toast.LENGTH_SHORT).show();
+                IMPEDANCE.setText("Active");
+            } else {
+                Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_SHORT).show();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void DACStatus() {
+        File uhqa_file = new File("/sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
+        File hph_file = new File("/sys/module/snd_soc_wcd9330/parameters/high_perf_mode");
+        File amp_file = new File("/sys/module/snd_soc_wcd9335/parameters/low_distort_amp");
+        File impedance_file = new File("/sys/module/snd_soc_wcd9xxx/parameters/impedance_detect_en");
+        if (uhqa_file.exists()) {
             try {
-                CommandResult result = Shell.SU.run("cp /sys/module/snd_soc_wcd9330/parameters/high_perf_mode /data/data/com.hana.mao/files/uhqa");
-            } catch(Exception e){
+                CommandResult result = Shell.SU.run("cp /sys/module/snd_soc_wcd9335/parameters/huwifi_mode /data/data/com.hana.mao/files/uhqa");
+            } catch (Exception e) {
                 e.printStackTrace();
+                Toast.makeText(dac_status.this, "Could not find UHQA Path", Toast.LENGTH_SHORT).show();
+            }
+            if (hph_file.exists()) {
+                try {
+                    CommandResult result = Shell.SU.run("cp sys/module/snd_soc_wcd9330/parameters/high_perf_mode /data/data/com.hana.mao/files/hph");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(dac_status.this, "Could not find HPH Path", Toast.LENGTH_SHORT).show();
+                }
+                if (amp_file.exists()) {
+                    try {
+                        CommandResult result = Shell.SU.run("cp /sys/module/snd_soc_wcd9335/parameters/low_distort_amp /data/data/com.hana.mao/files/amp");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(dac_status.this, "Could not find AMP Path", Toast.LENGTH_SHORT).show();
+                    }
+                    if (impedance_file.exists()) {
+                        try {
+                            CommandResult result = Shell.SU.run("cp /sys/module/snd_soc_wcd9xxx/parameters/impedance_detect_en /data/data/com.hana.mao/files/impedance");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(dac_status.this, "Could not find IMPEDANCE Path", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            } else {
+                Toast.makeText(dac_status.this, "NULL", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    private void DACClear() {
+            CommandResult uhqa = Shell.SU.run("rm /data/data/com.hana.mao/files/uhqa");
+            CommandResult hph = Shell.SU.run("rm /data/data/com.hana.mao/files/hph");
+            CommandResult amp = Shell.SU.run("rm /data/data/com.hana.mao/files/amp");
+            CommandResult impedance = Shell.SU.run("rm /data/data/com.hana.mao/files/impedance");
     }
 }

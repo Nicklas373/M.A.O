@@ -5,6 +5,12 @@
     <string name="audio_path_title">Audio Path Configuration</string>
     <string name="audio_path_button">DAC Configuration</string>
     <string name="audio_dac_button">DAC Status</string>
+    <string name="audio_dac_status">Current DAC Status</string>
+    <string name="audio_dac_uhqa_status">UHQA : </string>
+    <string name="audio_dac_hph_status">HPH : </string>
+    <string name="audio_dac_amp_status">AMP : </string>
+    <string name="audio_dac_impedance_status">Impedance : </string>
+    <string name="empty">null</string>
     <string name="about">About</string>
     <string name="uhqa_text">UHQA (Ultra High Quality Audio)</string>
     <string name="uhqa_text_on">UHQA is active</string>
