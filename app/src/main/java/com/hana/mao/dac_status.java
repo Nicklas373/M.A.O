@@ -49,16 +49,17 @@ public class dac_status extends AppCompatActivity {
             } else if (details[0].equals("1")){
                 UHQA.setText("Active");
             } else {
+                UHQA.setVisibility(View.GONE);
                 Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Toast.makeText(dac_status.this,"UHQA Not Found", Toast.LENGTH_SHORT).show();
             UHQA.setVisibility(View.GONE);
+            Toast.makeText(dac_status.this,"UHQA Not Found", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
             UHQA.setVisibility(View.GONE);
+            Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -79,6 +80,7 @@ public class dac_status extends AppCompatActivity {
             } else if (details[0].equals("1")){
                 HPH.setText("Active");
             } else {
+                HPH.setVisibility(View.GONE);
                 Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
             }
         } catch (FileNotFoundException e) {
@@ -87,7 +89,6 @@ public class dac_status extends AppCompatActivity {
             HPH.setVisibility(View.GONE);
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
             HPH.setVisibility(View.GONE);
         }
     }
@@ -109,15 +110,15 @@ public class dac_status extends AppCompatActivity {
             } else if (details[0].equals("1")){
                 AMP.setText("Active");
             } else {
+                AMP.setVisibility(View.GONE);
                 Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Toast.makeText(dac_status.this,"AMP Not Found", Toast.LENGTH_LONG).show();
             AMP.setVisibility(View.GONE);
+            Toast.makeText(dac_status.this,"AMP Not Found", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
             AMP.setVisibility(View.GONE);
         }
     }
@@ -139,12 +140,13 @@ public class dac_status extends AppCompatActivity {
             } else if (details[0].equals("1")){
                 IMPEDANCE.setText("Active");
             } else {
+                IMPEDANCE.setVisibility(View.GONE);
                 Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Toast.makeText(dac_status.this,"Impedance Not Found", Toast.LENGTH_LONG).show();
             IMPEDANCE.setVisibility(View.GONE);
+            Toast.makeText(dac_status.this,"Impedance Not Found", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
             IMPEDANCE.setVisibility(View.GONE);
