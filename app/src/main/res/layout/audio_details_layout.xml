@@ -61,11 +61,21 @@
                 android:textColor="#000000" />
 
             <TextView
+                android:id="@+id/textview4"
+                android:layout_width="wrap_content"
+                android:layout_height="31dp"
+                android:layout_marginVertical="80dp"
+                android:layout_marginLeft="170dp"
+                android:text=":"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#000000" />
+
+            <TextView
                 android:id="@+id/sr_status"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
                 android:layout_marginVertical="80dp"
-                android:layout_marginLeft="160dp"
+                android:layout_marginLeft="180dp"
                 android:text="@string/empty"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -85,8 +95,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
                 android:layout_marginVertical="120dp"
-                android:layout_marginLeft="160dp"
+                android:layout_marginLeft="180dp"
                 android:text="@string/empty"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textview5"
+                android:layout_width="wrap_content"
+                android:layout_height="31dp"
+                android:layout_marginVertical="120dp"
+                android:layout_marginLeft="170dp"
+                android:text=":"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
 
@@ -105,8 +125,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
                 android:layout_marginVertical="160dp"
-                android:layout_marginLeft="160dp"
+                android:layout_marginLeft="180dp"
                 android:text="@string/empty"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textview6"
+                android:layout_width="wrap_content"
+                android:layout_height="31dp"
+                android:layout_marginVertical="160dp"
+                android:layout_marginLeft="170dp"
+                android:text=":"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
 

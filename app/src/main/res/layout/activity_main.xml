@@ -59,7 +59,7 @@
         android:layout_width="208dp"
         android:layout_height="60dp"
         android:background="@drawable/ripple_effect"
-        android:text="@string/about"
+        android:text="@string/audio_status_button"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#ffffff"

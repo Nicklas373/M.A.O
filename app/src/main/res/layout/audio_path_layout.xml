@@ -24,7 +24,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cv_main"
         android:layout_width="410dp"
-        android:layout_height="320dp"
+        android:layout_height="285dp"
         app:cardCornerRadius="12sp"
         app:cardElevation="0.4sp"
         app:cardUseCompatPadding="true"
