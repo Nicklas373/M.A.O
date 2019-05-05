@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".audio_path"></activity>
         <activity android:name=".dac_status"></activity>
+        <activity android:name=".audio_details"></activity>
     </application>
 
 </manifest>

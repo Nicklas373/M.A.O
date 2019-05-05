@@ -10,6 +10,11 @@
     <string name="audio_dac_hph_status">HPH : </string>
     <string name="audio_dac_amp_status">AMP : </string>
     <string name="audio_dac_impedance_status">Impedance : </string>
+    <string name="audio_status_title">Audio Status</string>
+    <string name="audio_status_freq">Sample Rate : </string>
+    <string name="audio_status_bit_depth">Bit Depth : </string>
+    <string name="audio_status_flags">Audio Flags : </string>
+    <string name="audio_status_current">Current Audio Status</string>
     <string name="empty">null</string>
     <string name="about">About</string>
     <string name="uhqa_text">UHQA (Ultra High Quality Audio)</string>

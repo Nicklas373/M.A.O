@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v){
-                Toast.makeText(MainActivity.this, "Not yet finished", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(MainActivity.this, audio_details.class);
+                startActivity(i);
             }
         });
     }
