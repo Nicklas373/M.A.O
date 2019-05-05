@@ -22,9 +22,11 @@ public class audio_details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.audio_details_layout);
 
-        CleanSR();
+        Clean();
         SampleRate();
         Actual_SR();
+        BitDepth();
+        Actual_BD();
     }
 
     private void Actual_SR() {
@@ -66,6 +68,39 @@ public class audio_details extends AppCompatActivity {
         }
     }
 
+    private void Actual_BD() {
+        bd = (TextView) findViewById(R.id.bd_status);
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("abd.txt");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read())!= -1){
+                sbuffer.append((char)i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("AUDIO_FORMAT_PCM_16_BIT")){
+                bd.setText("16 Bit");
+            } else if (details[0].equals("AUDIO_FORMAT_PCM_24_BIT_PACKED")){
+                bd.setText("24 Bit (Digital)");
+            } else if (details[0].equals("AUDIO_FORMAT_PCM_8_24_BIT")){
+                bd.setText("24 Bit (Analog)");
+            } else if (details[0].equals("AUDIO_FORMAT_PCM_32_BIT")){
+                bd.setText("32 Bit");
+            } else {
+                bd.setText("Invalid Bit Depth");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            bd.setVisibility(View.GONE);
+            Toast.makeText(audio_details.this,"Invalid Bit Depth", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            bd.setVisibility(View.GONE);
+        }
+    }
+
     private void SampleRate() {
             try {
                 CommandResult audio_flinger = Shell.SU.run("dumpsys media.audio_flinger > /data/data/com.hana.mao/files/audio.txt");
@@ -73,15 +108,23 @@ public class audio_details extends AppCompatActivity {
                 CommandResult Dump_Actual_SR = Shell.SU.run("cat /data/data/com.hana.mao/files/sr.txt | tail -n1 | tail -c +16 > /data/data/com.hana.mao/files/asr.txt");
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(audio_details.this, "Could not find UHQA Path", Toast.LENGTH_SHORT).show();
             }
-
     }
 
-    private void CleanSR() {
+    private void BitDepth() {
+        try {
+            CommandResult Dump_Bit_Depth = Shell.SU.run("grep -w format /data/data/com.hana.mao/files/audio.txt > /data/data/com.hana.mao/files/bd.txt");
+            CommandResult Dump_Actual_BD = Shell.SU.run("grep -w format /data/data/com.hana.mao/files/bd.txt | tail -n1 | tail -c +27 | sed 's/.$//' > /data/data/com.hana.mao/files/abd.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void Clean() {
         CommandResult audioflinger = Shell.SU.run("rm /data/data/com.hana.mao/files/audio.txt");
         CommandResult SampleRate = Shell.SU.run("rm /data/data/com.hana.mao/files/sr.txt");
         CommandResult asr = Shell.SU.run("rm /data/data/com.hana.mao/files/asr.txt");
+        CommandResult BitDepth = Shell.SU.run("rm /data/data/com.hana.mao/files/bd.txt");
+        CommandResult abd = Shell.SU.run("rm /data/data/com.hana.mao/files/abd.txt");
     }
-
 }
