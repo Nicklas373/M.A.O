@@ -25,9 +25,10 @@ Other application features on this app:
 - Bit Depth
 - Audio Flags
 
-NOTE : - Additional features only work when using hi-res audio drivers that some app can access it (PowerAMP and Neutron) Music Player
-	   - Minimum android requirement is android 7.0 (API 24)
-	   - Need root access
+NOTE : 
+- Additional features only work when using hi-res audio drivers that some app can access it (PowerAMP and Neutron) Music Player
+- Minimum android requirement is android 7.0 (API 24)
+- Need root access
        
 Current Build :
 - Build 20190503 (WIP)
