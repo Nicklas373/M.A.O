@@ -27,6 +27,8 @@ public class audio_details extends AppCompatActivity {
         Actual_SR();
         BitDepth();
         Actual_BD();
+        Flags();
+        Actual_FL();
     }
 
     private void Actual_SR() {
@@ -101,6 +103,35 @@ public class audio_details extends AppCompatActivity {
         }
     }
 
+    private void Actual_FL() {
+        fl = (TextView) findViewById(R.id.flags_status);
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("afl.txt");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read())!= -1){
+                sbuffer.append((char)i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("AUDIO_OUTPUT_FLAG_DIRECT")){
+                fl.setText("DIRECT Flags");
+            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_DEEP_BUFFER")){
+                fl.setText("DEEP BUFFER Flags");
+            } else {
+                fl.setText("Invalid Flags");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            fl.setVisibility(View.GONE);
+            Toast.makeText(audio_details.this,"Invalid Flags", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            fl.setVisibility(View.GONE);
+        }
+    }
+
     private void SampleRate() {
             try {
                 CommandResult audio_flinger = Shell.SU.run("dumpsys media.audio_flinger > /data/data/com.hana.mao/files/audio.txt");
@@ -120,11 +151,20 @@ public class audio_details extends AppCompatActivity {
         }
     }
 
+    private void Flags(){
+        try {
+            CommandResult Dump_Actual_FL = Shell.SU.run("grep -w AudioStreamOut /data/data/com.hana.mao/files/audio.txt | tail -n1 | tail -c +41 | sed 's/.$//' > /data/data/com.hana.mao/files/afl.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void Clean() {
         CommandResult audioflinger = Shell.SU.run("rm /data/data/com.hana.mao/files/audio.txt");
         CommandResult SampleRate = Shell.SU.run("rm /data/data/com.hana.mao/files/sr.txt");
         CommandResult asr = Shell.SU.run("rm /data/data/com.hana.mao/files/asr.txt");
         CommandResult BitDepth = Shell.SU.run("rm /data/data/com.hana.mao/files/bd.txt");
         CommandResult abd = Shell.SU.run("rm /data/data/com.hana.mao/files/abd.txt");
+        CommandResult afl = Shell.SU.run("rm /data/data/com.hana.mao/files/afl.txt");
     }
 }
