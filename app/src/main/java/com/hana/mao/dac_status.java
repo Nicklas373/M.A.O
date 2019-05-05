@@ -2,6 +2,7 @@ package com.hana.mao;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,18 +45,20 @@ public class dac_status extends AppCompatActivity {
             fstream.close();
             String details[] = sbuffer.toString().split("\n");
             if (details[0].equals("0")){
-                Toast.makeText(dac_status.this,"UHQA is inactive", Toast.LENGTH_SHORT).show();
                 UHQA.setText("Inactive");
             } else if (details[0].equals("1")){
-                Toast.makeText(dac_status.this,"UHQA is active", Toast.LENGTH_SHORT).show();
                 UHQA.setText("Active");
             } else {
-                Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            Toast.makeText(dac_status.this,"UHQA Not Found", Toast.LENGTH_SHORT).show();
+            UHQA.setVisibility(View.GONE);
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
+            UHQA.setVisibility(View.GONE);
         }
     }
 
@@ -72,18 +75,20 @@ public class dac_status extends AppCompatActivity {
             fstream.close();
             String details[] = sbuffer.toString().split("\n");
             if (details[0].equals("0")){
-                Toast.makeText(dac_status.this,"HPH is inactive", Toast.LENGTH_SHORT).show();
                 HPH.setText("Inactive");
             } else if (details[0].equals("1")){
-                Toast.makeText(dac_status.this,"HPH is active", Toast.LENGTH_SHORT).show();
                 HPH.setText("Active");
             } else {
-                Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            Toast.makeText(dac_status.this,"HPH Not Found", Toast.LENGTH_LONG).show();
+            HPH.setVisibility(View.GONE);
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
+            HPH.setVisibility(View.GONE);
         }
     }
 
@@ -100,18 +105,20 @@ public class dac_status extends AppCompatActivity {
             fstream.close();
             String details[] = sbuffer.toString().split("\n");
             if (details[0].equals("0")){
-                Toast.makeText(dac_status.this,"AMP is inactive", Toast.LENGTH_SHORT).show();
                 AMP.setText("Inactive");
             } else if (details[0].equals("1")){
-                Toast.makeText(dac_status.this,"AMP is active", Toast.LENGTH_SHORT).show();
                 AMP.setText("Active");
             } else {
-                Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            Toast.makeText(dac_status.this,"AMP Not Found", Toast.LENGTH_LONG).show();
+            AMP.setVisibility(View.GONE);
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
+            AMP.setVisibility(View.GONE);
         }
     }
 
@@ -128,18 +135,19 @@ public class dac_status extends AppCompatActivity {
             fstream.close();
             String details[] = sbuffer.toString().split("\n");
             if (details[0].equals("0")){
-                Toast.makeText(dac_status.this,"IMPEDANCE is inactive", Toast.LENGTH_SHORT).show();
                 IMPEDANCE.setText("Inactive");
             } else if (details[0].equals("1")){
-                Toast.makeText(dac_status.this,"IMPEDANCE is active", Toast.LENGTH_SHORT).show();
                 IMPEDANCE.setText("Active");
             } else {
-                Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(dac_status.this,"Logic Failed", Toast.LENGTH_LONG).show();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            Toast.makeText(dac_status.this,"Impedance Not Found", Toast.LENGTH_LONG).show();
+            IMPEDANCE.setVisibility(View.GONE);
         } catch (IOException e) {
             e.printStackTrace();
+            IMPEDANCE.setVisibility(View.GONE);
         }
     }
 
