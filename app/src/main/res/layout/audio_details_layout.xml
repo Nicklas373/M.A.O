@@ -24,7 +24,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cv_main"
         android:layout_width="410dp"
-        android:layout_height="220dp"
+        android:layout_height="300dp"
         app:cardCornerRadius="12sp"
         app:cardElevation="0.4sp"
         app:cardUseCompatPadding="true"
@@ -38,7 +38,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="270dp">
+            android:layout_height="300dp">
 
             <TextView
                 android:id="@+id/textView3"
@@ -51,10 +51,20 @@
                 android:textColor="#000000" />
 
             <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="31dp"
+                android:layout_marginVertical="65dp"
+                android:layout_marginLeft="250dp"
+                android:text="@string/audio_flags_current"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#000000" />
+
+            <TextView
                 android:id="@+id/sr_title"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="80dp"
+                android:layout_marginVertical="120dp"
                 android:layout_marginLeft="24dp"
                 android:text="@string/audio_status_freq"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -64,7 +74,7 @@
                 android:id="@+id/textview4"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="80dp"
+                android:layout_marginVertical="120dp"
                 android:layout_marginLeft="170dp"
                 android:text=":"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -74,7 +84,7 @@
                 android:id="@+id/sr_status"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="80dp"
+                android:layout_marginVertical="120dp"
                 android:layout_marginLeft="180dp"
                 android:text="@string/empty"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -84,7 +94,7 @@
                 android:id="@+id/bd_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="120dp"
+                android:layout_marginVertical="160dp"
                 android:layout_marginLeft="24dp"
                 android:text="@string/audio_status_bit_depth"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -94,7 +104,7 @@
                 android:id="@+id/bd_status"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="120dp"
+                android:layout_marginVertical="160dp"
                 android:layout_marginLeft="180dp"
                 android:text="@string/empty"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -104,7 +114,7 @@
                 android:id="@+id/textview5"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="120dp"
+                android:layout_marginVertical="160dp"
                 android:layout_marginLeft="170dp"
                 android:text=":"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -114,7 +124,7 @@
                 android:id="@+id/flags_title"
                 android:layout_width="173dp"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="160dp"
+                android:layout_marginVertical="200dp"
                 android:layout_marginLeft="24dp"
                 android:text="@string/audio_status_flags"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -124,7 +134,7 @@
                 android:id="@+id/flags_status"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="160dp"
+                android:layout_marginVertical="200dp"
                 android:layout_marginLeft="180dp"
                 android:text="@string/empty"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -134,7 +144,37 @@
                 android:id="@+id/textview6"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="160dp"
+                android:layout_marginVertical="200dp"
+                android:layout_marginLeft="170dp"
+                android:text=":"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/out_title"
+                android:layout_width="173dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="240dp"
+                android:layout_marginLeft="24dp"
+                android:text="@string/audio_status_out"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/out_status"
+                android:layout_width="wrap_content"
+                android:layout_height="31dp"
+                android:layout_marginVertical="240dp"
+                android:layout_marginLeft="180dp"
+                android:text="@string/empty"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textview7"
+                android:layout_width="wrap_content"
+                android:layout_height="31dp"
+                android:layout_marginVertical="240dp"
                 android:layout_marginLeft="170dp"
                 android:text=":"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"

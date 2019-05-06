@@ -14,7 +14,9 @@
     <string name="audio_status_freq">Sample Rate</string>
     <string name="audio_status_bit_depth">Bit Depth</string>
     <string name="audio_status_flags">Audio Flags</string>
+    <string name="audio_status_out">Audio Out</string>
     <string name="audio_status_current">Current Audio Status</string>
+    <string name="audio_flags_current">Not Detected</string>
     <string name="empty">null</string>
     <string name="audio_status_button">Audio Status</string>
     <string name="uhqa_text">UHQA (Ultra High Quality Audio)</string>
