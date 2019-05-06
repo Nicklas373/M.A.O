@@ -38,7 +38,7 @@ public class audio_details extends AppCompatActivity {
             }
             fstream.close();
             String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("1 (DIRECT)")){
+            if (details[0].equals(" (DIRECT)")){
                 dr = (TextView) findViewById(R.id.textView4);
                 dr.setText("Hi-Res Audio Driver");
                 HiRes_SR();
@@ -209,7 +209,7 @@ public class audio_details extends AppCompatActivity {
 
     private  void HiRes_O(){
         try {
-            CommandResult O = Shell.SU.run("grep -w device /data/data/com.hana.mao/files/audio.txt | sed -n '19p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/ho.txt");
+            CommandResult O = Shell.SU.run("grep -w device /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/ho.txt");
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -350,7 +350,7 @@ public class audio_details extends AppCompatActivity {
 
     private  void Alsa_O(){
         try {
-            CommandResult O = Shell.SU.run("grep -w device /data/data/com.hana.mao/files/audio.txt | sed -n '6p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/ao.txt");
+            CommandResult O = Shell.SU.run("grep -w device /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/ao.txt");
         } catch (Exception e){
             e.printStackTrace();
         }
