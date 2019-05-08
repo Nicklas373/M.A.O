@@ -10,7 +10,7 @@
 M.A.O is a android application that build to control some audio features that exist on kernel directly, this application is designed for Xiaomi Redmi Note 4x (Snapdragon) that is using Custom Android ROM Based on 7.0 - 9.0. 
 
 # Project Status
-![Build](https://img.shields.io/badge/Build%20Status-On%20Progress-yellow.svg) ![Dev](https://img.shields.io/badge/Development%20Phase-W.I.P-yellow.svg) ![Version](https://img.shields.io/badge/Latest%20Version-2nd%20Phase-yellow.svg) ![Package](https://img.shields.io/badge/Package-Android%20App-blue.svg)
+![Build](https://img.shields.io/badge/Build%20Status-On%20Progress-yellow.svg) ![Dev](https://img.shields.io/badge/Development%20Phase-W.I.P-yellow.svg) ![Version](https://img.shields.io/badge/Latest%20Version-3rd%20Phase-yellow.svg) ![Package](https://img.shields.io/badge/Package-Android%20App-blue.svg)
 
 M.A.O will show only exist kernel audio feature configuration on the device, so not all audio feature will show same in all ROMs. M.A.O is app for extension from [M.A.O Magisk Module](https://github.com/Nicklas373/Internal_DAC_Fixer/tree/Magisk) to optimize that module functionallity. This app still on progress, so other documentation and feature will come after.
 
@@ -33,3 +33,4 @@ NOTE :
 Current Build :
 - Build 20190503 (WIP)
 - Build 20190505 (WIP 2nd Phase)
+- Build 20190508 (WIP 3rd Phase)
