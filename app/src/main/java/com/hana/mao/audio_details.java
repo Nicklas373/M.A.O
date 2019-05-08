@@ -84,14 +84,6 @@ public class audio_details extends AppCompatActivity {
         }
     }
 
-    private void Fail_Safe_Audio_Dump(){
-        try {
-            CommandResult Detect = Shell.SU.run("grep -w type /data/data/com.hana.mao/files/audio.txt | sed -n '3p' | tail -c +61 | sed 's/.$//' > /data/data/com.hana.mao/files/hr.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     private void MediaFlinger(){
         try {
             CommandResult Dump_Media_Flinger = Shell.SU.run("dumpsys media.audio_flinger > /data/data/com.hana.mao/files/audio.txt");
@@ -359,7 +351,7 @@ public class audio_details extends AppCompatActivity {
 
     private void General_Fail_Safe_Alsa_O(){
         try {
-            CommandResult O = Shell.SU.run("grep -w device /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/fao.txt");
+            CommandResult O = Shell.SU.run("grep -w device /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/fao.txt");
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -367,7 +359,7 @@ public class audio_details extends AppCompatActivity {
 
     private void General_Alsa_O(){
         try {
-            CommandResult O = Shell.SU.run("grep -w device /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/ao.txt");
+            CommandResult O = Shell.SU.run("grep -w device /data/data/com.hana.mao/files/audio.txt | sed -n '3p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/ao.txt");
         } catch (Exception e){
             e.printStackTrace();
         }
