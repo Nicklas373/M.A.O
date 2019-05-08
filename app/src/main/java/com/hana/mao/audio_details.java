@@ -47,7 +47,7 @@ public class audio_details extends AppCompatActivity {
                 Alsa_O();
             }  else if (details[0].equals("(RECORD)")){
                 dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("(RECORD Audio State");
+                dr.setText("RECORD Audio State");
                 Alsa_SR();
                 Alsa_BD();
                 Alsa_FL();
