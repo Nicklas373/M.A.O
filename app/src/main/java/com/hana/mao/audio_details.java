@@ -45,14 +45,31 @@ public class audio_details extends AppCompatActivity {
                 HiRes_BD();
                 HiRes_FL();
                 Alsa_O();
-            }  else if (details[0].equals("(RECORD)")){
+            }
+            if (details[0].equals("(RECORD)")){
                 dr = (TextView) findViewById(R.id.textView4);
                 dr.setText("RECORD Audio State");
                 Alsa_SR();
                 Alsa_BD();
                 Alsa_FL();
                 Alsa_O();
-            } else {
+            }
+            if (details[0].equals(" (DIRECT)")){
+                dr = (TextView) findViewById(R.id.textView4);
+                dr.setText("Hi-Res Audio");
+                HiRes_SR();
+                HiRes_BD();
+                HiRes_FL();
+                Alsa_O();
+            }
+            if (details[0].equals("1 (DIRECT)")){
+                dr = (TextView) findViewById(R.id.textView4);
+                dr.setText("Hi-Res Audio");
+                HiRes_SR();
+                HiRes_BD();
+                HiRes_FL();
+                Alsa_O();
+            }  else {
                 dr = (TextView) findViewById(R.id.textView4);
                 dr.setText("ALSA Audio Driver");
                 Alsa_SR();
@@ -78,7 +95,7 @@ public class audio_details extends AppCompatActivity {
 
     private void Audio_Dump(){
         try {
-            CommandResult Detect = Shell.SU.run("grep -w type /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +64 | sed 's/.$//' > /data/data/com.hana.mao/files/fshr.txt");
+            CommandResult Detect = Shell.SU.run("grep -w type /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +62 | sed 's/.$//' > /data/data/com.hana.mao/files/fshr.txt");
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -341,6 +358,40 @@ public class audio_details extends AppCompatActivity {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void General_Fail_Safe_Alsa_O(){
+        try {
+            CommandResult O = Shell.SU.run("grep -w device /data/data/com.hana.mao/files/audio.txt | sed -n '6p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/fao.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        o = (TextView) findViewById(R.id.out_status);
+
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("fao.txt");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read()) != -1) {
+                sbuffer.append((char) i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("AUDIO_DEVICE_OUT_SPEAKER")){
+                o.setText("Speaker");
+            }
+            if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")) {
+                o.setText("Wired Headset");
+            } else {
+                General_Standby_Alsa_O();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
             o.setVisibility(View.GONE);
             Toast.makeText(audio_details.this,"Invalid Output", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
@@ -349,17 +400,9 @@ public class audio_details extends AppCompatActivity {
         }
     }
 
-    private void General_Fail_Safe_Alsa_O(){
-        try {
-            CommandResult O = Shell.SU.run("grep -w device /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/fao.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
     private void General_Alsa_O(){
         try {
-            CommandResult O = Shell.SU.run("grep -w device /data/data/com.hana.mao/files/audio.txt | sed -n '3p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/ao.txt");
+            CommandResult O = Shell.SU.run("grep -w device /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/ao.txt");
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -378,6 +421,49 @@ public class audio_details extends AppCompatActivity {
             String details[] = sbuffer.toString().split("\n");
             if (details[0].equals("AUDIO_DEVICE_OUT_SPEAKER")){
                 o.setText("Speaker");
+            }
+            if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")){
+                o.setText("Wired Headset");
+            } else {
+                General_Fail_Safe_Alsa_O();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            o.setVisibility(View.GONE);
+            Toast.makeText(audio_details.this,"Invalid Output", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            o.setVisibility(View.GONE);
+        }
+    }
+
+    private void General_Standby_Alsa_O(){
+        try {
+            CommandResult O = Shell.SU.run("grep -w device /data/data/com.hana.mao/files/audio.txt | sed -n '1p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/gsao.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        o = (TextView) findViewById(R.id.out_status);
+
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("gsao.txt");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read()) != -1) {
+                sbuffer.append((char) i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("AUDIO_DEVICE_OUT_SPEAKER")){
+                o.setText("Speaker");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")) {
+                o.setText("Wired Headset");
+            } else if (details[0].equals("DIO_DEVICE_NONE")) {
+                o.setText("Standby");
+            } else {
+                o.setText("Not Detected");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -402,5 +488,6 @@ public class audio_details extends AppCompatActivity {
         CommandResult Alsa_FL = Shell.SU.run("rm /data/data/com.hana.mao/files/afl.txt");
         CommandResult Alsa_O = Shell.SU.run("rm /data/data/com.hana.mao/files/ao.txt");
         CommandResult General_Alsa_O = Shell.SU.run("rm /data/data/com.hana.mao/files/fao.txt");
+        CommandResult General_Standby_Alsa_O = Shell.SU.run("rm /data/data/com.hana.mao/files/gsao.txt");
     }
 }
