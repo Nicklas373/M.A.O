@@ -29,7 +29,6 @@ public class dac_status extends AppCompatActivity {
         HPHState();
         AMPState();
         IMPEDANCEState();
-
     }
 
     private void UHQAState(){
@@ -166,7 +165,7 @@ public class dac_status extends AppCompatActivity {
                 Toast.makeText(dac_status.this, "Could not find UHQA Path", Toast.LENGTH_SHORT).show();
             }
         }
-        else if (hph_file.exists()) {
+        if (hph_file.exists()) {
             try {
                 CommandResult result = Shell.SU.run("cp sys/module/snd_soc_wcd9330/parameters/high_perf_mode /data/data/com.hana.mao/files/hph");
             } catch (Exception e) {
@@ -174,7 +173,7 @@ public class dac_status extends AppCompatActivity {
                 Toast.makeText(dac_status.this, "Could not find HPH Path", Toast.LENGTH_SHORT).show();
             }
         }
-        else if (amp_file.exists()) {
+        if (amp_file.exists()) {
             try {
                 CommandResult result = Shell.SU.run("cp /sys/module/snd_soc_wcd9335/parameters/low_distort_amp /data/data/com.hana.mao/files/amp");
             } catch (Exception e) {
@@ -182,7 +181,7 @@ public class dac_status extends AppCompatActivity {
                 Toast.makeText(dac_status.this, "Could not find AMP Path", Toast.LENGTH_SHORT).show();
             }
         }
-        else if (impedance_file.exists()) {
+        if (impedance_file.exists()) {
                         try {
                             CommandResult result = Shell.SU.run("cp /sys/module/snd_soc_wcd9xxx/parameters/impedance_detect_en /data/data/com.hana.mao/files/impedance");
                         } catch (Exception e) {
