@@ -7,12 +7,12 @@
   <b>Mido Audio Optimizer</b><br>
 </p>
 
-M.A.O is a android application that build to control some audio features that exist on kernel directly, this application is designed for Xiaomi Redmi Note 4x (Snapdragon) that is using Custom Android ROM Based on 7.0 - 9.0. 
+M.A.O is application that can control current exist audio features on kernel directly and show current audio state that running on device when play a song or not from audioserver service on android. This app is work by using shell command that will dump active android audioserver from system and sort it by category then detect it each current state. This app is designed for Xiaomi Redmi Note 4X (Mido) that use custom android ROM based on android 7.0+ .
 
 # Project Status
-![Build](https://img.shields.io/badge/Build%20Status-On%20Progress-yellow.svg) ![Dev](https://img.shields.io/badge/Development%20Phase-W.I.P-yellow.svg) ![Version](https://img.shields.io/badge/Latest%20Version-3rd%20Phase-yellow.svg) ![Package](https://img.shields.io/badge/Package-Android%20App-blue.svg)
+![Build](https://img.shields.io/badge/Build%20Status-On%20Progress-yellow.svg) ![Dev](https://img.shields.io/badge/Development%20Phase-W.I.P-yellow.svg) ![Version](https://img.shields.io/badge/Latest%20Version-4th%20Phase-yellow.svg) ![Package](https://img.shields.io/badge/Package-Android%20App-blue.svg)
 
-M.A.O will show only exist kernel audio feature configuration on the device, so not all audio feature will show same in all ROMs. M.A.O is app for extension from [M.A.O Magisk Module](https://github.com/Nicklas373/Internal_DAC_Fixer/tree/Magisk) to optimize that module functionallity. This app still on progress, so other documentation and feature will come after.
+M.A.O will show only exist kernel audio feature configuration on the device, so not all audio feature will show same in all ROMs. M.A.O is app for extension from [M.A.O Magisk Module](https://github.com/Nicklas373/Internal_DAC_Fixer/tree/Magisk) to optimize that module functionallity
 
 What's features that available to configure:
 - Headset High Perfomance Mode (HPH v2)
@@ -21,16 +21,20 @@ What's features that available to configure:
 - Headphone Impedance Detection
 
 Other application features on this app:
-- Sample Rate
-- Bit Depth
-- Audio Flags
+- Sample Rate (44.1 kHz - 192 kHz)
+- Bit Depth (Float, 16 bit , 24 bit (Digital or Analog), 32 bit)
+- Audio Flags (DIRECT, DEEP BUFFER)
+- Audio Out (Headset, Speaker, Headphone, Line Out)
+- HAL Buffer Size
 
 NOTE : 
-- Additional features only work when using hi-res audio drivers that some app can access it (PowerAMP and Neutron) Music Player
-- Minimum android requirement is android 7.0 (API 24)
-- Need root access
+- this app is need root access
+- minimum requirement is android 7.0 (API 24)
+- Not all features on kernel will show on app, only exist features that will show
+- audio state and features will get refreshed when activity is restart, it work by dump value on kernel not based on sharedpreferences.
        
 Current Build :
 - Build 20190503 (WIP)
 - Build 20190505 (WIP 2nd Phase)
 - Build 20190508 (WIP 3rd Phase)
+- Build 20190509 (WIP 4th Phase)
