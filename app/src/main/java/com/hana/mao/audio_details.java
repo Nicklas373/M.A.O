@@ -46,8 +46,7 @@ public class audio_details extends AppCompatActivity {
                 HiRes_FL();
                 Alsa_O();
                 Buffer_HiRes();
-            }
-            if (details[0].equals("(RECORD)")){
+            } else if (details[0].equals("(RECORD)")){
                 dr = (TextView) findViewById(R.id.textView4);
                 dr.setText("RECORD Audio State");
                 Alsa_SR();
@@ -55,8 +54,7 @@ public class audio_details extends AppCompatActivity {
                 Alsa_FL();
                 Alsa_O();
                 Buffer_Alsa();
-            }
-            if (details[0].equals(" (DIRECT)")){
+            } else if (details[0].equals(" (DIRECT)")){
                 dr = (TextView) findViewById(R.id.textView4);
                 dr.setText("Hi-Res Audio Driver");
                 HiRes_SR();
@@ -64,8 +62,7 @@ public class audio_details extends AppCompatActivity {
                 HiRes_FL();
                 Alsa_O();
                 Buffer_HiRes();
-            }
-            if (details[0].equals("1 (DIRECT)")){
+            } else if (details[0].equals("1 (DIRECT)")){
                 dr = (TextView) findViewById(R.id.textView4);
                 dr.setText("Hi-Res Audio Driver");
                 HiRes_SR();
