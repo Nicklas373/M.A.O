@@ -221,6 +221,10 @@ public class audio_details extends AppCompatActivity {
                 fl.setText("DIRECT");
             } else if (details[0].equals("AUDIO_OUTPUT_FLAG_DEEP_BUFFER")){
                 fl.setText("DEEP BUFFER");
+            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_FAST|AUDIO_OUTPUT_FLAG_PRIMARY")){
+                fl.setText("FAST | PRIMARY");
+            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_RAW")){
+                fl.setText("RAW");
             } else {
                 fl.setText("Invalid Flags");
             }
@@ -328,8 +332,12 @@ public class audio_details extends AppCompatActivity {
             String details[] = sbuffer.toString().split("\n");
             if (details[0].equals("AUDIO_OUTPUT_FLAG_DEEP_BUFFER")){
                 fl.setText("DEEP BUFFER");
+            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_FAST|AUDIO_OUTPUT_FLAG_PRIMARY")){
+                fl.setText("FAST | PRIMARY");
+            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_RAW")){
+                fl.setText("RAW");
             } else {
-                fl.setText("Invalid");
+                fl.setText("Invalid Flags");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
