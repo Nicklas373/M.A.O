@@ -179,7 +179,9 @@ public class audio_details extends AppCompatActivity {
             }
             fstream.close();
             String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("AUDIO_FORMAT_PCM_16_BIT")){
+            if (details[0].equals("AUDIO_FORMAT_PCM_FLOAT")){
+                bd.setText("Floating Point Bit Depth");
+            } else if (details[0].equals("AUDIO_FORMAT_PCM_16_BIT")){
                 bd.setText("16 Bit");
             } else if (details[0].equals("AUDIO_FORMAT_PCM_24_BIT_PACKED")){
                 bd.setText("24 Bit (Digital)");
@@ -290,7 +292,9 @@ public class audio_details extends AppCompatActivity {
             }
             fstream.close();
             String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("AUDIO_FORMAT_PCM_16_BIT")){
+            if (details[0].equals("AUDIO_FORMAT_PCM_24_BIT_PACKED")){
+                bd.setText("24 Bit (Digital)");
+            } else if (details[0].equals("AUDIO_FORMAT_PCM_16_BIT")){
                 bd.setText("16 Bit");
             } else if (details[0].equals("AUDIO_FORMAT_PCM_FLOAT")){
                 bd.setText("Floating Point Bit Depth");
@@ -358,6 +362,12 @@ public class audio_details extends AppCompatActivity {
                 o.setText("Wired Headset");
             } else if (details[0].equals("AUDIO_DEVICE_OUT_SPEAKER")){
                 o.setText("Speaker");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_LINE")){
+                o.setText("Line Out");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADPHONE")){
+                o.setText("Wired Headphone");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_AUX_DIGITAL")){
+                o.setText("AUX");
             } else {
                 General_Alsa_O();
             }
@@ -389,9 +399,14 @@ public class audio_details extends AppCompatActivity {
             String details[] = sbuffer.toString().split("\n");
             if (details[0].equals("AUDIO_DEVICE_OUT_SPEAKER")){
                 o.setText("Speaker");
-            }
-            if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")) {
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")) {
                 o.setText("Wired Headset");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_LINE")){
+                o.setText("Line Out");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADPHONE")){
+                o.setText("Wired Headphone");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_AUX_DIGITAL")){
+                o.setText("AUX");
             } else {
                 General_Standby_Alsa_O();
             }
@@ -426,9 +441,14 @@ public class audio_details extends AppCompatActivity {
             String details[] = sbuffer.toString().split("\n");
             if (details[0].equals("AUDIO_DEVICE_OUT_SPEAKER")){
                 o.setText("Speaker");
-            }
-            if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")){
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")){
                 o.setText("Wired Headset");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_LINE")){
+                o.setText("Line Out");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADPHONE")){
+                o.setText("Wired Headphone");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_AUX_DIGITAL")){
+                o.setText("AUX");
             } else {
                 General_Fail_Safe_Alsa_O();
             }
@@ -465,6 +485,12 @@ public class audio_details extends AppCompatActivity {
                 o.setText("Speaker");
             } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")) {
                 o.setText("Wired Headset");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_LINE")){
+                o.setText("Line Out");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADPHONE")){
+                o.setText("Wired Headphone");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_AUX_DIGITAL")){
+                o.setText("AUX");
             } else if (details[0].equals("DIO_DEVICE_NONE")) {
                 Last_Fail_Safe_Alsa_O();
             } else {
@@ -503,6 +529,12 @@ public class audio_details extends AppCompatActivity {
                 o.setText("Speaker");
             } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")) {
                 o.setText("Wired Headset");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_LINE")){
+                o.setText("Line Out");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADPHONE")){
+                o.setText("Wired Headphone");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_AUX_DIGITAL")){
+                o.setText("AUX");
             } else if (details[0].equals("DIO_DEVICE_NONE")) {
                 HPH_Fail_Safe_Alsa_O();
             } else {
@@ -541,6 +573,12 @@ public class audio_details extends AppCompatActivity {
                 o.setText("Speaker");
             } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")) {
                 o.setText("Wired Headset");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_LINE")){
+                o.setText("Line Out");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADPHONE")){
+                o.setText("Wired Headphone");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_AUX_DIGITAL")){
+                o.setText("AUX");
             } else if (details[0].equals("DIO_DEVICE_NONE")) {
                 o.setText("Standby");
             } else {
@@ -579,6 +617,12 @@ public class audio_details extends AppCompatActivity {
                 o.setText("Speaker");
             } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")) {
                 o.setText("Wired Headset");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_LINE")){
+                o.setText("Line Out");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADPHONE")){
+                o.setText("Wired Headphone");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_AUX_DIGITAL")){
+                o.setText("AUX");
             } else if (details[0].equals("DIO_DEVICE_NONE")) {
                 Lazy_Fail_Safe_Alsa_O();
             } else {
@@ -617,6 +661,12 @@ public class audio_details extends AppCompatActivity {
                 o.setText("Speaker");
             } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")) {
                 o.setText("Wired Headset");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_LINE")){
+                o.setText("Line Out");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADPHONE")){
+                o.setText("Wired Headphone");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_AUX_DIGITAL")){
+                o.setText("AUX");
             } else if (details[0].equals("DIO_DEVICE_NONE")) {
                 o.setText("Standby");
             } else {
