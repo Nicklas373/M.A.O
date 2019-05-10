@@ -146,23 +146,7 @@ public class audio_details extends AppCompatActivity {
             }
             fstream.close();
             String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("44100 Hz")){
-                sr.setText("44.1 Khz");
-            } else if (details[0].equals("48000 Hz")){
-                sr.setText("48.0 Khz");
-            } else if (details[0].equals("64000 Hz")){
-                sr.setText("64.0 Khz");
-            } else if (details[0].equals("88200 Hz")){
-                sr.setText("88.2 Khz");
-            } else if (details[0].equals("96000 Hz")){
-                sr.setText("96.0 Khz");
-            } else if (details[0].equals("176400 Hz")){
-                sr.setText("176.4 Khz");
-            } else if (details[0].equals("192000 Hz")){
-                sr.setText("192.0 Khz");
-            } else {
-                sr.setText("Invalid Sample Rate");
-            }
+            sr.setText(details[0]);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             sr.setVisibility(View.GONE);
@@ -308,13 +292,7 @@ public class audio_details extends AppCompatActivity {
             }
             fstream.close();
             String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("44100 Hz")){
-                sr.setText("44.1 Khz");
-            } else if (details[0].equals("48000 Hz")){
-                sr.setText("48.0 Khz");
-            } else {
-                sr.setText("Invalid Sample Rate");
-            }
+            sr.setText(details[0]);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             sr.setVisibility(View.GONE);
