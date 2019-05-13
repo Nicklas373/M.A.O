@@ -26,7 +26,7 @@
             app:layout_constraintHorizontal_bias="0.556"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.604" />
+            app:layout_constraintVertical_bias="0.804" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -37,14 +37,14 @@
             app:layout_constraintHorizontal_bias="0.556"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.475"
+            app:layout_constraintVertical_bias="0.275"
             app:srcCompat="@drawable/test" />
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="330dp"
-            android:layout_height="59dp"
-            android:text="Let's Slide to Start"
+            android:layout_width="246dp"
+            android:layout_height="61dp"
+            android:text="@string/home_secondary_text"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -54,7 +54,7 @@
             app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.846" />
+            app:layout_constraintVertical_bias="0.871" />
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

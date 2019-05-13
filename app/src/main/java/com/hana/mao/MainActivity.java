@@ -88,11 +88,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    /**
-     * Loads the specified fragment to the frame
-     *
-     * @param fragment
-     */
     private void displaySelectedFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame, fragment);

@@ -1,35 +1,29 @@
 <resources>
+    <!-- Drawer String-->
     <string name="app_name">M.A.O</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Mido Audio Optimizer</string>
     <string name="nav_header_subtitle">Kernel Audio Configuration App</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="menu_home">Home</string>
-    <string name="menu_back">Back</string>
-    <string name="menu_refresh">Refresh</string>
     <string name="menu_features">Kernel Audio Features</string>
     <string name="menu_status">Kernel Audio Status</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="welcome">Welcome To</string>
-    <string name="audio_path_text_fragment">Audio Configuration Menu</string>
-    <string name="audio_status_text_fragment">Audio Status Menu</string>
+    <!-- Button String -->
+    <string name="menu_home">Home</string>
+    <string name="menu_back">Back</string>
+    <string name="menu_refresh">Refresh</string>
     <string name="next">Next</string>
 
+    <!-- Main String -->
+    <string name="welcome">Welcome</string>
+    <string name="audio_path_text_fragment">Audio Configuration Menu</string>
+    <string name="audio_status_text_fragment">Audio Status Menu</string>
+    <string name="home_secondary_text">Lets Slide to Start</string>
     <string name="main_text">Mido Audio Optimizer</string>
-    <string name="secondary_text">Available kernel audio path control</string>
-    <string name="audio_path_title">Audio Path Configuration</string>
+    <string name="secondary_text">Available Kernel Audio Control</string>
+    <string name="audio_path_title">Kernel Audio Configuration</string>
     <string name="audio_path_button">Kernel Audio Features</string>
-    <string name="audio_dac_button">DAC Status</string>
-    <string name="audio_dac_status">Current DAC Status</string>
-    <string name="audio_dac_uhqa_status">UHQA</string>
-    <string name="audio_dac_hph_status">HPH</string>
-    <string name="audio_dac_amp_status">AMP</string>
-    <string name="audio_dac_impedance_status">Impedance</string>
     <string name="audio_status_title">Audio Status</string>
     <string name="audio_status_freq">Sample Rate</string>
     <string name="audio_status_bit_depth">Bit Depth</string>
