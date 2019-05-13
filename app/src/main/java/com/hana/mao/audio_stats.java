@@ -1,8 +1,10 @@
 package com.hana.mao;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,17 +15,42 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class audio_details extends AppCompatActivity {
+public class audio_stats extends AppCompatActivity {
 
     TextView sr,bd,fl,dr,o,bc;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.audio_details_layout);
+        setContentView(R.layout.activity_audio_stats);
+
+        setTitle("Kernel Audio Status");
 
         Clean();
         MediaFlinger();
         HiRes_Detect();
+
+        Button back = (Button) findViewById(R.id.btn_back);
+
+        back.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v){
+                Intent i = new Intent(audio_stats.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
+
+        Button refresh = (Button) findViewById(R.id.btn_refresh);
+
+        refresh.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v){
+                Clean();
+                MediaFlinger();
+                HiRes_Detect();
+            }
+        });
     }
 
     private void HiRes_Detect(){
@@ -89,7 +116,7 @@ public class audio_details extends AppCompatActivity {
             sr.setText("Invalid");
             bd.setText("Invalid");
             fl.setText("Invalid");
-            Toast.makeText(audio_details.this, "File not found", Toast.LENGTH_LONG).show();
+            Toast.makeText(audio_stats.this, "File not found", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -150,7 +177,7 @@ public class audio_details extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             sr.setVisibility(View.GONE);
-            Toast.makeText(audio_details.this,"Invalid Sample Rate", Toast.LENGTH_LONG).show();
+            Toast.makeText(audio_stats.this,"Invalid Sample Rate", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
             sr.setVisibility(View.GONE);
@@ -192,7 +219,7 @@ public class audio_details extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             bd.setVisibility(View.GONE);
-            Toast.makeText(audio_details.this,"Invalid Bit Depth", Toast.LENGTH_LONG).show();
+            Toast.makeText(audio_stats.this,"Invalid Bit Depth", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
             bd.setVisibility(View.GONE);
@@ -231,7 +258,7 @@ public class audio_details extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             fl.setVisibility(View.GONE);
-            Toast.makeText(audio_details.this,"Invalid Flags", Toast.LENGTH_LONG).show();
+            Toast.makeText(audio_stats.this,"Invalid Flags", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
             fl.setVisibility(View.GONE);
@@ -296,7 +323,7 @@ public class audio_details extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             sr.setVisibility(View.GONE);
-            Toast.makeText(audio_details.this,"Invalid Sample Rate", Toast.LENGTH_LONG).show();
+            Toast.makeText(audio_stats.this,"Invalid Sample Rate", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
             sr.setVisibility(View.GONE);
@@ -334,7 +361,7 @@ public class audio_details extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             bd.setVisibility(View.GONE);
-            Toast.makeText(audio_details.this,"Invalid Bit Depth", Toast.LENGTH_LONG).show();
+            Toast.makeText(audio_stats.this,"Invalid Bit Depth", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
             bd.setVisibility(View.GONE);
@@ -371,7 +398,7 @@ public class audio_details extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             fl.setVisibility(View.GONE);
-            Toast.makeText(audio_details.this,"Invalid Flags", Toast.LENGTH_LONG).show();
+            Toast.makeText(audio_stats.this,"Invalid Flags", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
             fl.setVisibility(View.GONE);
@@ -436,7 +463,7 @@ public class audio_details extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             bc.setVisibility(View.GONE);
-            Toast.makeText(audio_details.this,"Invalid Buffer Size", Toast.LENGTH_LONG).show();
+            Toast.makeText(audio_stats.this,"Invalid Buffer Size", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
             bc.setVisibility(View.GONE);
@@ -466,7 +493,7 @@ public class audio_details extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             bc.setVisibility(View.GONE);
-            Toast.makeText(audio_details.this,"Invalid Buffer Size", Toast.LENGTH_LONG).show();
+            Toast.makeText(audio_stats.this,"Invalid Buffer Size", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
             bc.setVisibility(View.GONE);

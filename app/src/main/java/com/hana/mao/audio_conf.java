@@ -1,8 +1,10 @@
 package com.hana.mao;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -12,14 +14,16 @@ import com.jaredrummler.android.shell.Shell;
 import java.io.File;
 import java.io.FileInputStream;
 
-public class audio_path extends AppCompatActivity {
+public class audio_conf extends AppCompatActivity {
 
     private Switch uhqa, hph, impedance, amp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.audio_path_layout);
+        setContentView(R.layout.activity_audio_conf);
+
+        setTitle("Kernel Audio Configuration");
 
         uhqa = findViewById(R.id.uhqa);
         hph = findViewById(R.id.hph);
@@ -61,7 +65,7 @@ public class audio_path extends AppCompatActivity {
                             {
                                 try {
                                     CommandResult uhqa = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
-                                    Toast.makeText(audio_path.this, "UHQA is Active", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "UHQA is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
                                     e.printStackTrace();
@@ -69,7 +73,7 @@ public class audio_path extends AppCompatActivity {
                             }  else {
                                 try {
                                     CommandResult uhqa = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
-                                    Toast.makeText(audio_path.this, "UHQA is Disabled", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "UHQA is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
                                     e.printStackTrace();
@@ -89,7 +93,7 @@ public class audio_path extends AppCompatActivity {
                             {
                                 try {
                                     CommandResult uhqa = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
-                                    Toast.makeText(audio_path.this, "UHQA is Active", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "UHQA is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
                                     e.printStackTrace();
@@ -97,7 +101,7 @@ public class audio_path extends AppCompatActivity {
                             }  else {
                                 try {
                                     CommandResult uhqa = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
-                                    Toast.makeText(audio_path.this, "UHQA is Disabled", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "UHQA is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
                                     e.printStackTrace();
@@ -111,7 +115,7 @@ public class audio_path extends AppCompatActivity {
             }
         } else {
             uhqa.setVisibility(View.GONE);
-            Toast.makeText(audio_path.this, "UHQA Not Found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(audio_conf.this, "UHQA Not Found", Toast.LENGTH_SHORT).show();
         }
 
         if(hph_file.exists()){
@@ -137,7 +141,7 @@ public class audio_path extends AppCompatActivity {
                             {
                                 try {
                                     CommandResult hph = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9330/parameters/high_perf_mode");
-                                    Toast.makeText(audio_path.this, "Headset High Performance Mode is Active", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "Headset High Performance Mode is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
                                     e.printStackTrace();
@@ -145,7 +149,7 @@ public class audio_path extends AppCompatActivity {
                             }  else {
                                 try {
                                     CommandResult hph = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9330/parameters/high_perf_mode");
-                                    Toast.makeText(audio_path.this, "Headset High Performance Mode is Disabled", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "Headset High Performance Mode is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
                                     e.printStackTrace();
@@ -165,7 +169,7 @@ public class audio_path extends AppCompatActivity {
                             {
                                 try {
                                     CommandResult hph = Shell.SU.run("echo \"1\" > //sys/module/snd_soc_wcd9330/parameters/high_perf_mode");
-                                    Toast.makeText(audio_path.this, "Headset High Performance Mode is Active", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "Headset High Performance Mode is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
                                     e.printStackTrace();
@@ -173,7 +177,7 @@ public class audio_path extends AppCompatActivity {
                             }  else {
                                 try {
                                     CommandResult hph = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9330/parameters/high_perf_mode");
-                                    Toast.makeText(audio_path.this, "Headset High Performance Mode is Disabled", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "Headset High Performance Mode is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
                                     e.printStackTrace();
@@ -187,7 +191,7 @@ public class audio_path extends AppCompatActivity {
             }
         } else {
             hph.setVisibility(View.GONE);
-            Toast.makeText(audio_path.this, "Headset High Performance Mode Not Found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(audio_conf.this, "Headset High Performance Mode Not Found", Toast.LENGTH_SHORT).show();
         }
 
         if(amp_file.exists()){
@@ -213,7 +217,7 @@ public class audio_path extends AppCompatActivity {
                             {
                                 try {
                                     CommandResult amp = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/low_distort_amp");
-                                    Toast.makeText(audio_path.this, "Low Distortion AMP is Active", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "Low Distortion AMP is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
                                     e.printStackTrace();
@@ -221,7 +225,7 @@ public class audio_path extends AppCompatActivity {
                             }  else {
                                 try {
                                     CommandResult amp = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/low_distort_amp");
-                                    Toast.makeText(audio_path.this, "Low Distortion AMP is Disabled", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "Low Distortion AMP is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
                                     e.printStackTrace();
@@ -241,7 +245,7 @@ public class audio_path extends AppCompatActivity {
                             {
                                 try {
                                     CommandResult amp = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/low_distort_amp");
-                                    Toast.makeText(audio_path.this, "Low Distortion AMP is Active", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "Low Distortion AMP is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
                                     e.printStackTrace();
@@ -249,7 +253,7 @@ public class audio_path extends AppCompatActivity {
                             }  else {
                                 try {
                                     CommandResult amp = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/low_distort_amp");
-                                    Toast.makeText(audio_path.this, "Low Distortion AMP is Disabled", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "Low Distortion AMP is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
                                     e.printStackTrace();
@@ -263,7 +267,7 @@ public class audio_path extends AppCompatActivity {
             }
         } else {
             amp.setVisibility(View.GONE);
-            Toast.makeText(audio_path.this, "Low Distortion AMP Not Found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(audio_conf.this, "Low Distortion AMP Not Found", Toast.LENGTH_SHORT).show();
         }
 
         if(impedance_file.exists()){
@@ -289,7 +293,7 @@ public class audio_path extends AppCompatActivity {
                             {
                                 try {
                                     CommandResult impedance = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9xxx/parameters/impedance_detect_en");
-                                    Toast.makeText(audio_path.this, "Headphone Impedance Detection is Active", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "Headphone Impedance Detection is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
                                     e.printStackTrace();
@@ -297,7 +301,7 @@ public class audio_path extends AppCompatActivity {
                             }  else {
                                 try {
                                     CommandResult impedance = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9xxx/parameters/impedance_detect_en");
-                                    Toast.makeText(audio_path.this, "Headphone Impedance Detection is Disabled", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "Headphone Impedance Detection is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
                                     e.printStackTrace();
@@ -317,7 +321,7 @@ public class audio_path extends AppCompatActivity {
                             {
                                 try {
                                     CommandResult impedance = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9xxx/parameters/impedance_detect_en");
-                                    Toast.makeText(audio_path.this, "Headphone Impedance Detection is Active", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "Headphone Impedance Detection is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
                                     e.printStackTrace();
@@ -325,7 +329,7 @@ public class audio_path extends AppCompatActivity {
                             }  else {
                                 try {
                                     CommandResult impedance = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9xxx/parameters/impedance_detect_en");
-                                    Toast.makeText(audio_path.this, "Headphone Impedance Detection is Disabled", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "Headphone Impedance Detection is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
                                     e.printStackTrace();
@@ -339,8 +343,19 @@ public class audio_path extends AppCompatActivity {
             }
         } else {
             amp.setVisibility(View.GONE);
-            Toast.makeText(audio_path.this, "Headphone Impedance Detection Not Found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(audio_conf.this, "Headphone Impedance Detection Not Found", Toast.LENGTH_SHORT).show();
         }
+
+        Button back = (Button) findViewById(R.id.btn_back);
+
+        back.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v){
+                Intent i = new Intent(audio_conf.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void uhqa_dump() {
