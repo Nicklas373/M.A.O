@@ -77,7 +77,7 @@
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="410dp"
+                android:layout_width="365dp"
                 android:layout_height="120dp"
                 android:layout_marginVertical="30dp"
                 android:text="@string/uhqa_desc"
@@ -123,7 +123,7 @@
 
             <TextView
                 android:id="@+id/textView7"
-                android:layout_width="410dp"
+                android:layout_width="365dp"
                 android:layout_height="120dp"
                 android:layout_marginVertical="30dp"
                 android:text="@string/hph_desc"
@@ -167,7 +167,7 @@
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="410dp"
+                android:layout_width="365dp"
                 android:layout_height="120dp"
                 android:layout_marginVertical="30dp"
                 android:text="@string/amp_desc"
@@ -211,7 +211,7 @@
 
             <TextView
                 android:id="@+id/textView9"
-                android:layout_width="410dp"
+                android:layout_width="365dp"
                 android:layout_height="120dp"
                 android:layout_marginVertical="30dp"
                 android:text="@string/impedance_desc"

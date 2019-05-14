@@ -8,6 +8,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="menu_features">Kernel Audio Features</string>
     <string name="menu_status">Kernel Audio Status</string>
+    <string name="menu_about">About</string>
 
     <!-- Button String -->
     <string name="menu_home">Home</string>
@@ -17,6 +18,7 @@
 
     <!-- Main String -->
     <string name="welcome">Welcome</string>
+    <string name="about">Work In Progress :)</string>
     <string name="audio_path_text_fragment">Audio Configuration Menu</string>
     <string name="audio_path_secondary_text_fragment">Control Current Kernel Audio Features</string>
     <string name="audio_status_text_fragment">Audio Status Menu</string>
@@ -46,7 +48,7 @@ Have better turn off/on music to switch the amplifier for HPH path.</string>
     <string name="hph_text_off">HPH is not active</string>
     <string name="hph_desc">Invoke class AB mode for headset path when sample rate
 is set to 192KHz and bit width is set to 24. Change enables
-headset path in Ultra High Quality Audio(UHQA) mode.</string>
+headset path in Ultra High Quality Audio mode.</string>
     <string name="amp_text">Low Distortion AMP</string>
     <string name="amp_text_on">AMP is active</string>
     <string name="amp_text_off">AMP is not active</string>
@@ -57,4 +59,7 @@ headset path in Ultra High Quality Audio(UHQA) mode.</string>
     <string name="impedance_desc">Provide impedance of headphones to be able to adjust gain according to
 impedance so user can have consistent volume level with different
 headphones.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

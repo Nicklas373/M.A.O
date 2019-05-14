@@ -3,11 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/slide_main">
         <item
             android:id="@+id/nav_home"
             android:icon="@mipmap/ic_home"
             android:title="@string/menu_home" />
+    </group>
+
+    <group android:checkableBehavior="single"
+     android:id="@+id/slide_features">
         <item
             android:id="@+id/nav_features"
             android:icon="@drawable/ic_menu_manage"
@@ -16,6 +21,14 @@
             android:id="@+id/nav_status"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_status" />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/slide_about">
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/menu_about" />
     </group>
 
 </menu>
