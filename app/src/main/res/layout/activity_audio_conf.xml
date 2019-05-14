@@ -7,95 +7,219 @@
     android:background="#424242"
     tools:context=".audio_conf">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/audio_path_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#ffffff"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.098" />
-
     <android.support.v7.widget.CardView
         android:id="@+id/cv_main"
         android:layout_width="410dp"
-        android:layout_height="285dp"
-        app:cardCornerRadius="12sp"
-        app:cardElevation="0.4sp"
+        android:layout_height="190dp"
         app:cardUseCompatPadding="true"
+        app:cardElevation="0dp"
+        android:gravity="top"
+        app:contentPaddingTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:cardBackgroundColor="@color/color_app_bar">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="270dp">
+            android:layout_height="300dp">
 
             <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="31dp"
-                android:layout_marginVertical="24dp"
-                android:layout_marginLeft="23dp"
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/secondary_text"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:layout_marginVertical="70dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="#000000" />
+                android:textColor="#ffffff" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_uhqa"
+        android:layout_width="410dp"
+        android:layout_height="100dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.350">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="140dp">
 
             <Switch
                 android:id="@+id/uhqa"
-                android:layout_width="355dp"
-                android:layout_height="25dp"
-                android:layout_marginVertical="100dp"
-                android:layout_marginLeft="23dp"
+                style="@style/Base.TextAppearance.AppCompat.Widget.Switch"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginVertical="0dp"
+                android:layout_marginLeft="0dp"
+                android:gravity="top"
+                android:textAllCaps="false"
                 android:text="@string/uhqa_text"
                 android:textColor="#000000"
                 android:textOff="@string/uhqa_text_off"
                 android:textOn="@string/uhqa_text_on" />
 
-            <Switch
-                android:id="@+id/hph"
-                android:layout_width="355dp"
-                android:layout_height="25dp"
-                android:layout_marginVertical="140dp"
-                android:layout_marginLeft="23dp"
-                android:text="@string/hph_text"
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="410dp"
+                android:layout_height="120dp"
+                android:layout_marginVertical="30dp"
+                android:text="@string/uhqa_desc"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="#000000"
-                android:textOff="@string/hph_text_off"
-                android:textOn="@string/hph_text_on" />
-
-            <Switch
-                android:id="@+id/amp"
-                android:layout_width="355dp"
-                android:layout_height="25dp"
-                android:layout_marginVertical="180dp"
-                android:layout_marginLeft="23dp"
-                android:text="@string/amp_text"
-                android:textColor="#000000"
-                android:textOff="@string/amp_text_off"
-                android:textOn="@string/amp_text_on" />
-
-            <Switch
-                android:id="@+id/impedance"
-                android:layout_width="355dp"
-                android:layout_height="25dp"
-                android:layout_marginVertical="220dp"
-                android:layout_marginLeft="23dp"
-                android:text="@string/impedance_text"
-                android:textColor="#000000"
-                android:textOff="@string/impedance_text_off"
-                android:textOn="@string/impedance_text_on" />
+                android:visibility="visible" />
 
         </RelativeLayout>
 
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_hph"
+        android:layout_width="410dp"
+        android:layout_height="100dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.525">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="140dp">
+
+            <Switch
+                android:id="@+id/hph"
+                style="@style/Base.TextAppearance.AppCompat.Widget.Switch"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginVertical="0dp"
+                android:layout_marginLeft="0dp"
+                android:gravity="top"
+                android:textAllCaps="false"
+                android:text="@string/hph_text"
+                android:textColor="#000000"
+                android:textOff="@string/uhqa_text_off"
+                android:textOn="@string/uhqa_text_on" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="410dp"
+                android:layout_height="120dp"
+                android:layout_marginVertical="30dp"
+                android:text="@string/hph_desc"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="#000000"
+                android:visibility="visible" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_amp"
+        android:layout_width="410dp"
+        android:layout_height="100dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.700">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="140dp">
+
+            <Switch
+                android:id="@+id/amp"
+                style="@style/Base.TextAppearance.AppCompat.Widget.Switch"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginVertical="0dp"
+                android:layout_marginLeft="0dp"
+                android:gravity="top"
+                android:textAllCaps="false"
+                android:text="@string/amp_text"
+                android:textColor="#000000"
+                android:textOff="@string/uhqa_text_off"
+                android:textOn="@string/uhqa_text_on" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="410dp"
+                android:layout_height="120dp"
+                android:layout_marginVertical="30dp"
+                android:text="@string/amp_desc"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="#000000"
+                android:visibility="visible" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_impedance"
+        android:layout_width="410dp"
+        android:layout_height="100dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.875">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="140dp">
+
+            <Switch
+                android:id="@+id/impedance"
+                style="@style/Base.TextAppearance.AppCompat.Widget.Switch"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginVertical="0dp"
+                android:layout_marginLeft="0dp"
+                android:gravity="top"
+                android:textAllCaps="false"
+                android:text="@string/impedance_text"
+                android:textColor="#000000"
+                android:textOff="@string/uhqa_text_off"
+                android:textOn="@string/uhqa_text_on" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="410dp"
+                android:layout_height="120dp"
+                android:layout_marginVertical="30dp"
+                android:text="@string/impedance_desc"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="#000000"
+                android:visibility="visible" />
+
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 
     <Button
@@ -112,6 +236,6 @@
         app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.904" />
+        app:layout_constraintVertical_bias="1.000" />
 
 </android.support.constraint.ConstraintLayout>

@@ -18,13 +18,15 @@
     <!-- Main String -->
     <string name="welcome">Welcome</string>
     <string name="audio_path_text_fragment">Audio Configuration Menu</string>
+    <string name="audio_path_secondary_text_fragment">Control Current Kernel Audio Features</string>
     <string name="audio_status_text_fragment">Audio Status Menu</string>
+    <string name="audio_status_secondary_text_fragment">Check Current Kernel Audio Status</string>
     <string name="home_secondary_text">Lets Slide to Start</string>
     <string name="main_text">Mido Audio Optimizer</string>
     <string name="secondary_text">Available Kernel Audio Control</string>
     <string name="audio_path_title">Kernel Audio Configuration</string>
     <string name="audio_path_button">Kernel Audio Features</string>
-    <string name="audio_status_title">Audio Status</string>
+    <string name="audio_status_title">Kernel Audio Status</string>
     <string name="audio_status_freq">Sample Rate</string>
     <string name="audio_status_bit_depth">Bit Depth</string>
     <string name="audio_status_flags">Audio Flags</string>
@@ -37,13 +39,22 @@
     <string name="uhqa_text">UHQA (Ultra High Quality Audio)</string>
     <string name="uhqa_text_on">UHQA is active</string>
     <string name="uhqa_text_off">UHQA is not active</string>
+    <string name="uhqa_desc">UHQA mode allows to have high performance audio, and it is not enabled by default.
+Have better turn off/on music to switch the amplifier for HPH path.</string>
     <string name="hph_text">Headset High Performance Mode</string>
     <string name="hph_text_on">HPH is active</string>
     <string name="hph_text_off">HPH is not active</string>
+    <string name="hph_desc">Invoke class AB mode for headset path when sample rate
+is set to 192KHz and bit width is set to 24. Change enables
+headset path in Ultra High Quality Audio(UHQA) mode.</string>
     <string name="amp_text">Low Distortion AMP</string>
     <string name="amp_text_on">AMP is active</string>
     <string name="amp_text_off">AMP is not active</string>
+    <string name="amp_desc">Provide low distortion audio quality by enable/disable l Class AB Mode directly on amplifier from kernel.</string>
     <string name="impedance_text">Headphone Impedance Detection</string>
     <string name="impedance_text_on">Impedance is active</string>
     <string name="impedance_text_off">Impedance is not active</string>
+    <string name="impedance_desc">Provide impedance of headphones to be able to adjust gain according to
+impedance so user can have consistent volume level with different
+headphones.</string>
 </resources>

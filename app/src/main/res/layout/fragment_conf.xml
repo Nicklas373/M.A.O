@@ -15,10 +15,10 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="226dp"
+            android:layout_width="300dp"
             android:layout_height="39dp"
             android:layout_marginBottom="600dp"
-            android:text="@string/welcome"
+            android:text="@string/audio_path_text_fragment"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="#ffffff"
             android:textAlignment="center"
@@ -46,7 +46,7 @@
             android:layout_width="300dp"
             android:layout_height="73dp"
             android:layout_marginBottom="50dp"
-            android:text="@string/audio_path_text_fragment"
+            android:text="@string/audio_path_secondary_text_fragment"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="#ffffff"
@@ -59,7 +59,7 @@
 
         <Button
             android:id="@+id/audio_conf"
-            android:layout_width="246dp"
+            android:layout_width="225dp"
             android:layout_height="61dp"
             android:background="@drawable/ripple_effect"
             android:text="@string/next"
@@ -68,10 +68,10 @@
             android:textColor="#ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.596"
+            app:layout_constraintHorizontal_bias="0.556"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.871" />
+            app:layout_constraintVertical_bias="0.900" />
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>
