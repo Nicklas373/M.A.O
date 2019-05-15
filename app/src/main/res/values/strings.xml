@@ -59,7 +59,11 @@ headset path in Ultra High Quality Audio mode.</string>
     <string name="impedance_desc">Provide impedance of headphones to be able to adjust gain according to
 impedance so user can have consistent volume level with different
 headphones.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_desc">M.A.O is application that can control current exist audio features on kernel directly and show current audio status that running on device when play a song or not from audioserver service on android.</string>
+    <string name="app_desc_2">This app is work by using shell command that will dump active android audioserver from system and sort it by category then detect it each current state.</string>
+    <string name="app_desc_3">This app is designed for Xiaomi Redmi Note 4X (Mido) that use custom android ROM based on android 7.0+.</string>
+    <string name="git_desc">Git Code</string>
+    <string name="git_release">Git Release</string>
+    <string name="app_visit">Visit App</string>
+    <string name="app_details">App Status</string>
 </resources>
