@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class about extends Fragment {
+
+    private Button About;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,16 @@ public class about extends Fragment {
             {
                 Uri uri = Uri.parse("https://github.com/Nicklas373/M.A.O/releases");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
+        About = (Button) view.findViewById(R.id.app_details);
+
+        About.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), stats_app.class);
                 startActivity(intent);
             }
         });

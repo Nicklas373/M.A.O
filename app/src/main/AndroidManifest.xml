@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".audio_conf"/>
+        <activity android:name=".stats_app"></activity>
+        <activity android:name=".audio_conf" />
         <activity android:name=".audio_stats" />
         <activity
             android:name=".MainActivity"

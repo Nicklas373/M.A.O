@@ -65,5 +65,16 @@ headphones.</string>
     <string name="git_desc">Git Code</string>
     <string name="git_release">Git Release</string>
     <string name="app_visit">Visit App</string>
-    <string name="app_details">App Status</string>
+    <string name="app_details">Contributor</string>
+    <string name="app_details_title">Application Contributor</string>
+    <string name="app_details_end">Application is only for personal use</string>
+    <string name="app_details_ext">Thank you for all support</string>
+    <string name="main_contributor">Dicky Herlambang</string>
+    <string name="second_contributor">Andrean Alvianto</string>
+    <string name="main_cont_desc">Main Developer</string>
+    <string name="second_cont_desc">Logo Creator</string>
+    <string name="name">Name</string>
+    <string name="title">Title</string>
+    <string name="contact">Contact</string>
+    <string name="id">:</string>
 </resources>

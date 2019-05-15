@@ -111,6 +111,7 @@
             android:text="@string/app_visit"
             android:textColor="#ffffff"
             android:layout_marginVertical="320dp"
+            android:layout_marginLeft="27dp"
             android:gravity="center"
             android:textSize="18dp"/>
 
