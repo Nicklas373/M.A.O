@@ -10,7 +10,7 @@
 M.A.O is application that can control current exist audio features on kernel directly and show current audio status that running on device when play a song or not from audioserver service on android. This app is work by using shell command that will dump active android audioserver from system and sort it by category then detect it each current state. This app is designed for Xiaomi Redmi Note 4X (Mido) that use custom android ROM based on android 7.0+.
 
 # Project Status
-![Build](https://img.shields.io/badge/Build%20Status-On%20Progress-yellow.svg) ![Dev](https://img.shields.io/badge/Development%20Phase-W.I.P-yellow.svg) ![Version](https://img.shields.io/badge/Latest%20Version-6th%20Phase-yellow.svg) ![Package](https://img.shields.io/badge/Package-Android%20App-blue.svg)
+![Build](https://img.shields.io/badge/Build%20Status-On%20Progress-yellow.svg) ![Dev](https://img.shields.io/badge/Development%20Phase-W.I.P-yellow.svg) ![Version](https://img.shields.io/badge/Latest%20Version-8th%20Phase-yellow.svg) ![Package](https://img.shields.io/badge/Package-Android%20App-blue.svg)
 
 M.A.O will show only exist kernel audio feature configuration on the device, so not all audio feature will show same in all ROMs. M.A.O is app for extension from [M.A.O Magisk Module](https://github.com/Nicklas373/Internal_DAC_Fixer) to optimize that module functionallity
 
@@ -19,6 +19,7 @@ What's features that available to control:
 - Ultra High Quality Audio Mode (UHQA Mode)
 - Low Distortion AMP
 - Headphone Impedance Detection
+- Qualcomm Power Gating (BiQuads Filter Workaround)
 
 What's audio status that can be show:
 - Sample Rate (Variable rate from device)
@@ -40,3 +41,5 @@ Current Build :
 - Build 20190509 (WIP 4th Phase)
 - Build 20190513 (WIP 5th Phase)
 - Build 20190515 (WIP 6th Phase)
+- Build 20190516 (WIP 7th Phase)
+- Build 20190630 (WIP 8th Phase)
