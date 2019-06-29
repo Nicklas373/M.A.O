@@ -17,7 +17,7 @@
             android:id="@+id/textView"
             android:layout_width="226dp"
             android:layout_height="39dp"
-            android:layout_marginBottom="600dp"
+            android:layout_marginBottom="575dp"
             android:text="@string/audio_status_text_fragment"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="#ffffff"

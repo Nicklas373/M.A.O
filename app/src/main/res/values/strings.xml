@@ -59,6 +59,14 @@ headset path in Ultra High Quality Audio mode.</string>
     <string name="impedance_desc">Provide impedance of headphones to be able to adjust gain according to
 impedance so user can have consistent volume level with different
 headphones.</string>
+    <string name="exp_text">Enable Experimental Features</string>
+    <string name="exp_desc">NOTE: Experimental features can make problem with audio process if you are use some service that need exclusive access like BiQuads service or other.</string>
+    <string name="exp_text_on">Experimental features is active</string>
+    <string name="exp_text_off">Experimental features is not active</string>
+    <string name="qcom_text">Qualcomm Power Gating</string>
+    <string name="qcom_desc">Qualcomm power gating features is only useful if user want to use BiQuads filter, it should save power for other users. (Active it if you want to use BiQuads)</string>
+    <string name="qcom_text_on">BiQuads features is active</string>
+    <string name="qcom_text_off">BiQuads features is not active</string>
     <string name="app_desc">M.A.O is application that can control current exist audio features on kernel directly and show current audio status that running on device when play a song or not from audioserver service on android.</string>
     <string name="app_desc_2">This app is work by using shell command that will dump active android audioserver from system and sort it by category then detect it each current state.</string>
     <string name="app_desc_3">This app is designed for Xiaomi Redmi Note 4X (Mido) that use custom android ROM based on android 7.0+.</string>
