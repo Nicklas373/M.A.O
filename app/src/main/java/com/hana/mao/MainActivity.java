@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity
             Process p = Runtime.getRuntime().exec("su");
         }
         catch (Exception e) {
+            Toast.makeText(MainActivity.this, "This application will not work on non-rooted device", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
 
@@ -46,7 +48,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setCheckedItem(R.id.nav_home);
         Fragment fragment = new home();
         displaySelectedFragment(fragment);
-
     }
 
     @Override
