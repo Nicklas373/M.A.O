@@ -2,6 +2,9 @@ package com.hana.mao;
 
 import android.os.Bundle;
 import com.google.android.material.navigation.NavigationView;
+import com.jaredrummler.android.shell.CommandResult;
+import com.jaredrummler.android.shell.Shell;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.view.GravityCompat;
@@ -23,16 +26,14 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Process p = null;
-        try {
-            p = Runtime.getRuntime().exec("su");
-        }
-        catch (Exception e) {
-            Toast.makeText(MainActivity.this, "This application will not work on non-rooted device", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        } finally {
-            if (p != null) p.destroy();
-        }
+        //Only ask SU one time when application started
+        su once = new su();
+        once.run(new Runnable() {
+            @Override
+            public void run() {
+                    CommandResult Detect = Shell.SU.run("su");
+            }
+        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
