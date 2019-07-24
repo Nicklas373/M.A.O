@@ -62,6 +62,7 @@ public class audio_conf extends AppCompatActivity {
         TextView t_v_amp = (TextView) findViewById(R.id.t_v_amp);
         TextView t_v_impedance = (TextView) findViewById(R.id.t_v_impedance);
 
+        //Define kernel audio path
         File uhqa_file = new File("/sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
         File hph_file = new File("/sys/module/snd_soc_wcd9330/parameters/high_perf_mode");
         File amp_file = new File("/sys/module/snd_soc_wcd9335/parameters/low_distort_amp");
@@ -241,7 +242,7 @@ public class audio_conf extends AppCompatActivity {
 
         if(amp_file.exists()){
             s_amp.setVisibility(View.VISIBLE);
-            t_v_amp.setVisibility(View.INVISIBLE);
+            t_v_amp.setVisibility(View.VISIBLE);
             t_amp.setVisibility(View.INVISIBLE);
             d_amp.setVisibility(View.INVISIBLE);
             try {
