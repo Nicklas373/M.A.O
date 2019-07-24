@@ -17,11 +17,16 @@ import com.jaredrummler.android.shell.Shell;
 import java.io.File;
 import java.io.FileInputStream;
 
+import android.content.SharedPreferences;
+import android.content.Context;
+
 public class audio_conf extends AppCompatActivity {
 
     private CardView uhqa, hph, impedance, amp, exp, qcom_gating;
     private Switch s_uhqa, s_hph, s_impedance, s_amp, s_exp, s_qcom_gating;
     private TextView t_amp, t_hph, t_impedance, t_uhqa, d_amp, d_hph, d_impedance, d_uhqa;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,15 +67,11 @@ public class audio_conf extends AppCompatActivity {
         File impedance_file = new File("/sys/module/snd_soc_wcd9xxx/parameters/impedance_detect_en");
         File qcom_gating_file = new File("/sys/module/snd_soc_wcd9335/parameters/dig_core_collapse_enable");
 
-        /* FIXME
-        Hardcoded Directory for this function only, avoid sharedpreferences usage.
-        It should have better declaration or other way than hardcoded like this.
-        */
-        File exp_file = new File("/data/user/0/com.hana.mao/files/exp.txt");
+        preferences = getSharedPreferences("exp_pref", Context.MODE_PRIVATE);
 
         FileInputStream fstream;
         Clean();
-        exp_init();
+        exp_check();
         uhqa_dump();
         hph_dump();
         amp_dump();
@@ -85,6 +86,7 @@ public class audio_conf extends AppCompatActivity {
         hph.setVisibility(View.VISIBLE);
         amp.setVisibility(View.VISIBLE);
         impedance.setVisibility(View.VISIBLE);
+        exp.setVisibility(View.VISIBLE);
 
         if(uhqa_file.exists()){
             s_uhqa.setVisibility(View.VISIBLE);
@@ -398,77 +400,36 @@ public class audio_conf extends AppCompatActivity {
             Toast.makeText(audio_conf.this, "Headphone Impedance Detection Not Found", Toast.LENGTH_LONG).show();
         }
 
-        if(exp_file.exists()){
-            try {
-                fstream = openFileInput("exp.txt");
-                StringBuffer sbuffer = new StringBuffer();
-                int i;
-                while ((i = fstream.read())!= -1){
-                    sbuffer.append((char)i);
-                }
-                fstream.close();
-                String details[] = sbuffer.toString().split("\n");
-                if (details[0].equals("1")){
-                    s_exp.setChecked(true);
-                    s_exp.setOnClickListener(new View.OnClickListener() {
+        s_exp.setOnClickListener(new View.OnClickListener() {
 
-                        @Override
-                        public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
 
-                            if(s_exp.isChecked())
-                            {
-                                try {
-                                    CommandResult exp = Shell.SU.run("echo \"1\" > /data/user/0/com.hana.mao/files/exp.txt");
-                                    qcom_gating.setVisibility(View.VISIBLE);
-                                }
-                                catch(Exception e){
-                                    e.printStackTrace();
-                                }
-                            }  else {
-                                try {
-                                    CommandResult exp = Shell.SU.run("echo \"0\" > /data/user/0/com.hana.mao/files/exp.txt");
-                                    qcom_gating.setVisibility(View.GONE);
-                                }
-                                catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    });
-                } if (details[0].equals("0")){
-                    s_exp.setChecked(false);
-                    s_exp.setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-
-                            if(s_exp.isChecked())
-                            {
-                                try {
-                                    CommandResult exp = Shell.SU.run("echo \"1\" > /data/user/0/com.hana.mao/files/exp.txt");
-                                    qcom_gating.setVisibility(View.VISIBLE);
-                                }
-                                catch(Exception e){
-                                    e.printStackTrace();
-                                }
-                            }  else {
-                                try {
-                                    CommandResult impedance = Shell.SU.run("echo \"0\" > /data/user/0/com.hana.mao/files/exp.txt");
-                                    qcom_gating.setVisibility(View.GONE);
-                                }
-                                catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    });
-                }
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            s_exp.setVisibility(View.GONE);
-        }
+                if(s_exp.isChecked())
+                {
+                    try {
+                        qcom_gating.setVisibility(View.VISIBLE);
+                        String exp_pref = "1";
+                        editor = preferences.edit();
+                        editor.putString("EXP", exp_pref);
+                        editor.apply();
+                        Toast.makeText(audio_conf.this, "Experimental features is active", Toast.LENGTH_SHORT).show();
+                    } catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }  else {
+                    try {
+                        qcom_gating.setVisibility(View.GONE);
+                        String exp_pref = "0";
+                        editor = preferences.edit();
+                        editor.putString("EXP", exp_pref);
+                        editor.apply();
+                        Toast.makeText(audio_conf.this, "Experimental features is not active", Toast.LENGTH_SHORT).show();
+                    } catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }}
+        });
 
         if(qcom_gating_file.exists()){
             try {
@@ -543,12 +504,6 @@ public class audio_conf extends AppCompatActivity {
             Toast.makeText(audio_conf.this, "QCOM Gating Not Found", Toast.LENGTH_LONG).show();
         }
 
-        if(exp_file.exists()){
-
-        } else {
-            qcom_gating.setVisibility(View.GONE);
-        }
-
         Button back = (Button) findViewById(R.id.btn_back);
 
         back.setOnClickListener(new View.OnClickListener(){
@@ -597,15 +552,6 @@ public class audio_conf extends AppCompatActivity {
         }
     }
 
-    private void exp_init() {
-        try {
-            CommandResult exp_init = Shell.SU.run("echo \"1\"  > /data/user/0/com.hana.mao/files/exp.txt");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void qcom_gating_dump() {
         try {
             CommandResult qcom_gating_check = Shell.SU.run("cp /sys/module/snd_soc_wcd9335/parameters/dig_core_collapse_enable /data/user/0/com.hana.mao/files/qcom_gating.txt");
@@ -615,12 +561,24 @@ public class audio_conf extends AppCompatActivity {
         }
     }
 
+    private void exp_check() {
+        String exp_data = preferences.getString("EXP", "0");
+        if (exp_data.equals("1")) {
+            s_exp.setChecked(true);
+            qcom_gating.setVisibility(View.VISIBLE);
+        } else if (exp_data.equals("0")) {
+            s_exp.setChecked(false);
+            qcom_gating.setVisibility(View.GONE);
+        } else {
+            Toast.makeText(audio_conf.this, "Preference not found", Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void Clean() {
         CommandResult IMPEDANCE = Shell.SU.run("rm /data/user/0/com.hana.mao/files/impedance.txt");
         CommandResult AMP = Shell.SU.run("rm /data/user/0/com.hana.mao/files/amp.txt");
         CommandResult HPH = Shell.SU.run("rm /data/user/0/com.hana.mao/files/hph.txt");
         CommandResult UHQA = Shell.SU.run("rm /data/user/0/com.hana.mao/files/uhqa.txt");
         CommandResult QCOM_GATING = Shell.SU.run("rm /data/user/0/com.hana.mao/files/qcom_gating.txt");
-        CommandResult EXP =  Shell.SU.run("rm /data/user/0/com.hana.mao/files/exp.txt");
     }
 }
