@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jaredrummler.android.shell.CommandResult;
@@ -22,6 +23,7 @@ public class audio_conf extends AppCompatActivity {
 
     private CardView uhqa, hph, impedance, amp, exp, qcom_gating;
     private Switch s_uhqa, s_hph, s_impedance, s_amp, s_exp, s_qcom_gating;
+    private TextView t_amp, t_hph, t_impedance, t_uhqa, d_amp, d_hph, d_impedance, d_uhqa;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
@@ -48,6 +50,16 @@ public class audio_conf extends AppCompatActivity {
         s_exp = findViewById(R.id.exp);
         s_qcom_gating = findViewById(R.id.qcom_gating);
 
+        //Define textview component
+        t_uhqa = findViewById(R.id.textView26);
+        t_hph = findViewById(R.id.textView27);
+        t_amp = findViewById(R.id.textView28);
+        t_impedance = findViewById(R.id.textView29);
+        d_uhqa = findViewById(R.id.textView16);
+        d_hph = findViewById(R.id.textView17);
+        d_amp = findViewById(R.id.textView18);
+        d_impedance = findViewById(R.id.textView19);
+
         preferences = getSharedPreferences("exp_pref", Context.MODE_PRIVATE);
 
         File uhqa_file = new File("/sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
@@ -66,8 +78,17 @@ public class audio_conf extends AppCompatActivity {
         impedance_dump();
         qcom_gating_dump();
 
+        //Declare all cardview should be visible on all time
+        //During now i'm controlling switch not cardview when kernel features is not available in the device.
+        uhqa.setVisibility(View.VISIBLE);
+        hph.setVisibility(View.VISIBLE);
+        amp.setVisibility(View.VISIBLE);
+        impedance.setVisibility(View.VISIBLE);
+
         if(uhqa_file.exists()){
-            uhqa.setVisibility(View.VISIBLE);
+            s_uhqa.setVisibility(View.VISIBLE);
+            t_uhqa.setVisibility(View.GONE);
+            d_uhqa.setVisibility(View.GONE);
             try {
                 fstream = openFileInput("uhqa.txt");
                 StringBuffer sbuffer = new StringBuffer();
@@ -78,7 +99,6 @@ public class audio_conf extends AppCompatActivity {
                 fstream.close();
                 String details[] = sbuffer.toString().split("\n");
                 if (details[0].equals("1")){
-                    s_uhqa.setVisibility(View.VISIBLE);
                     s_uhqa.setChecked(true);
                     s_uhqa.setOnClickListener(new View.OnClickListener() {
 
@@ -106,7 +126,6 @@ public class audio_conf extends AppCompatActivity {
                         }
                     });
                 } if (details[0].equals("0")){
-                    s_uhqa.setVisibility(View.VISIBLE);
                     s_uhqa.setChecked(false);
                     s_uhqa.setOnClickListener(new View.OnClickListener() {
 
@@ -138,12 +157,16 @@ public class audio_conf extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            uhqa.setVisibility(View.GONE);
+            s_uhqa.setVisibility(View.GONE);
+            t_uhqa.setVisibility(View.VISIBLE);
+            d_uhqa.setVisibility(View.VISIBLE);
             Toast.makeText(audio_conf.this, "Ultra High Quality Audio Not Found", Toast.LENGTH_LONG).show();
         }
 
         if(hph_file.exists()){
-            hph.setVisibility(View.VISIBLE);
+            s_hph.setVisibility(View.VISIBLE);
+            t_hph.setVisibility(View.GONE);
+            d_hph.setVisibility(View.GONE);
             try {
                 fstream = openFileInput("hph.txt");
                 StringBuffer sbuffer = new StringBuffer();
@@ -154,7 +177,6 @@ public class audio_conf extends AppCompatActivity {
                 fstream.close();
                 String details[] = sbuffer.toString().split("\n");
                 if (details[0].equals("1")){
-                    s_hph.setVisibility(View.VISIBLE);
                     s_hph.setChecked(true);
                     s_hph.setOnClickListener(new View.OnClickListener() {
 
@@ -182,7 +204,6 @@ public class audio_conf extends AppCompatActivity {
                         }
                     });
                 } if (details[0].equals("0")){
-                    hph.setVisibility(View.VISIBLE);
                     s_hph.setChecked(false);
                     s_hph.setOnClickListener(new View.OnClickListener() {
 
@@ -214,12 +235,16 @@ public class audio_conf extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            hph.setVisibility(View.GONE);
+            s_hph.setVisibility(View.GONE);
+            t_hph.setVisibility(View.VISIBLE);
+            d_hph.setVisibility(View.VISIBLE);
             Toast.makeText(audio_conf.this, "Headset High Performance Mode Not Found", Toast.LENGTH_LONG).show();
         }
 
         if(amp_file.exists()){
-            amp.setVisibility(View.VISIBLE);
+            s_amp.setVisibility(View.VISIBLE);
+            t_amp.setVisibility(View.GONE);
+            d_amp.setVisibility(View.GONE);
             try {
                 fstream = openFileInput("amp.txt");
                 StringBuffer sbuffer = new StringBuffer();
@@ -230,7 +255,6 @@ public class audio_conf extends AppCompatActivity {
                 fstream.close();
                 String details[] = sbuffer.toString().split("\n");
                 if (details[0].equals("1")){
-                    amp.setVisibility(View.VISIBLE);
                     s_amp.setChecked(true);
                     s_amp.setOnClickListener(new View.OnClickListener() {
 
@@ -258,7 +282,6 @@ public class audio_conf extends AppCompatActivity {
                         }
                     });
                 } if (details[0].equals("0")){
-                    amp.setVisibility(View.VISIBLE);
                     s_amp.setChecked(false);
                     s_amp.setOnClickListener(new View.OnClickListener() {
 
@@ -290,12 +313,16 @@ public class audio_conf extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            amp.setVisibility(View.GONE);
+            s_amp.setVisibility(View.GONE);
+            t_amp.setVisibility(View.VISIBLE);
+            d_amp.setVisibility(View.VISIBLE);
             Toast.makeText(audio_conf.this, "Low Distortion AMP Not Found", Toast.LENGTH_LONG).show();
         }
 
         if(impedance_file.exists()){
-            impedance.setVisibility(View.VISIBLE);
+            s_impedance.setVisibility(View.VISIBLE);
+            t_impedance.setVisibility(View.GONE);
+            d_impedance.setVisibility(View.GONE);
             try {
                 fstream = openFileInput("impedance.txt");
                 StringBuffer sbuffer = new StringBuffer();
@@ -306,7 +333,6 @@ public class audio_conf extends AppCompatActivity {
                 fstream.close();
                 String details[] = sbuffer.toString().split("\n");
                 if (details[0].equals("1")){
-                    impedance.setVisibility(View.VISIBLE);
                     s_impedance.setChecked(true);
                     s_impedance.setOnClickListener(new View.OnClickListener() {
 
@@ -334,7 +360,6 @@ public class audio_conf extends AppCompatActivity {
                         }
                     });
                 } if (details[0].equals("0")){
-                    impedance.setVisibility(View.VISIBLE);
                     s_impedance.setChecked(false);
                     s_impedance.setOnClickListener(new View.OnClickListener() {
 
@@ -366,7 +391,9 @@ public class audio_conf extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            impedance.setVisibility(View.GONE);
+            s_impedance.setVisibility(View.GONE);
+            t_impedance.setVisibility(View.VISIBLE);
+            d_impedance.setVisibility(View.VISIBLE);
             Toast.makeText(audio_conf.this, "Headphone Impedance Detection Not Found", Toast.LENGTH_LONG).show();
         }
 

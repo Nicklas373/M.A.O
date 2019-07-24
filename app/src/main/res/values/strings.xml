@@ -43,22 +43,26 @@
     <string name="uhqa_text_off">UHQA is not active</string>
     <string name="uhqa_desc">UHQA mode allows to have high performance audio, and it is not enabled by default.
 Have better turn off/on music to switch the amplifier for HPH path.</string>
+    <string name="uhqa_n_available">UHQA feature is not available on your kernel.</string>
     <string name="hph_text">Headset High Performance Mode</string>
     <string name="hph_text_on">HPH is active</string>
     <string name="hph_text_off">HPH is not active</string>
     <string name="hph_desc">Invoke class AB mode for headset path when sample rate
 is set to 192KHz and bit width is set to 24. Change enables
 headset path in Ultra High Quality Audio mode.</string>
+    <string name="hph_n_available">Headset High Performance feature is not available on your kernel.</string>
     <string name="amp_text">Low Distortion AMP</string>
     <string name="amp_text_on">AMP is active</string>
     <string name="amp_text_off">AMP is not active</string>
     <string name="amp_desc">Provide low distortion audio quality by enable/disable l Class AB Mode directly on amplifier from kernel.</string>
+    <string name="amp_n_available">Low Distortion AMP feature is not available on your kernel.</string>
     <string name="impedance_text">Headphone Impedance Detection</string>
-    <string name="impedance_text_on">Impedance is active</string>
-    <string name="impedance_text_off">Impedance is not active</string>
+    <string name="impedance_text_on">Headphone Impedance Detection is active</string>
+    <string name="impedance_text_off">Headphone Impedance Detection is not active</string>
     <string name="impedance_desc">Provide impedance of headphones to be able to adjust gain according to
 impedance so user can have consistent volume level with different
 headphones.</string>
+    <string name="impedance_n_available">Headphone Impedance Detection feature is not available on your kernel.</string>
     <string name="exp_text">Enable Experimental Features</string>
     <string name="exp_desc">NOTE: Experimental features can make problem with audio process if you are use some service that need exclusive access like BiQuads service or other.</string>
     <string name="exp_text_on">Experimental features is active</string>
