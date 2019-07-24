@@ -23,12 +23,15 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Process p = null;
         try {
-            Process p = Runtime.getRuntime().exec("su");
+            p = Runtime.getRuntime().exec("su");
         }
         catch (Exception e) {
             Toast.makeText(MainActivity.this, "This application will not work on non-rooted device", Toast.LENGTH_LONG).show();
             e.printStackTrace();
+        } finally {
+            if (p != null) p.destroy();
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
