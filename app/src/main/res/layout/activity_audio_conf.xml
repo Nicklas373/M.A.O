@@ -91,7 +91,7 @@
                 android:textOn="@string/uhqa_text_on" />
 
             <TextView
-                android:id="@+id/textView26"
+                android:id="@+id/t_uhqa"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginVertical="0dp"
@@ -99,11 +99,10 @@
                 android:gravity="top"
                 android:text="@string/uhqa_text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="#000000"
-                android:visibility="visible" />
+                android:textColor="#000000" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/t_v_uhqa"
                 android:layout_width="365dp"
                 android:layout_height="120dp"
                 android:layout_marginVertical="30dp"
@@ -114,15 +113,14 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/d_uhqa"
                 android:layout_width="365dp"
                 android:layout_height="120dp"
                 android:layout_marginVertical="30dp"
                 android:layout_marginLeft="3dp"
                 android:text="@string/uhqa_n_available"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="#000000"
-                android:visibility="visible" />
+                android:textColor="#000000" />
 
 
         </RelativeLayout>
@@ -160,7 +158,7 @@
                 android:textOn="@string/uhqa_text_on" />
 
             <TextView
-                android:id="@+id/textView27"
+                android:id="@+id/t_hph"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginVertical="0dp"
@@ -168,11 +166,10 @@
                 android:gravity="top"
                 android:text="@string/hph_text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="#000000"
-                android:visibility="visible" />
+                android:textColor="#000000" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/t_v_hph"
                 android:layout_width="365dp"
                 android:layout_height="120dp"
                 android:layout_marginVertical="30dp"
@@ -183,15 +180,14 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/d_hph"
                 android:layout_width="365dp"
                 android:layout_height="120dp"
                 android:layout_marginVertical="30dp"
                 android:layout_marginLeft="5dp"
                 android:text="@string/hph_n_available"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="#000000"
-                android:visibility="visible" />
+                android:textColor="#000000" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -222,11 +218,11 @@
                 android:textAllCaps="false"
                 android:text="@string/amp_text"
                 android:textColor="#000000"
-                android:textOff="@string/uhqa_text_off"
-                android:textOn="@string/uhqa_text_on" />
+                android:textOff="@string/amp_text_off"
+                android:textOn="@string/amp_text_on" />
 
             <TextView
-                android:id="@+id/textView28"
+                android:id="@+id/t_amp"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginVertical="0dp"
@@ -234,11 +230,10 @@
                 android:gravity="top"
                 android:text="@string/amp_text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="#000000"
-                android:visibility="visible" />
+                android:textColor="#000000" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/t_v_amp"
                 android:layout_width="365dp"
                 android:layout_height="120dp"
                 android:layout_marginVertical="30dp"
@@ -249,15 +244,14 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/textView18"
+                android:id="@+id/d_amp"
                 android:layout_width="365dp"
                 android:layout_height="120dp"
                 android:layout_marginVertical="30dp"
                 android:layout_marginLeft="5dp"
                 android:text="@string/amp_n_available"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="#000000"
-                android:visibility="visible" />
+                android:textColor="#000000" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -292,7 +286,7 @@
                 android:textOn="@string/uhqa_text_on" />
 
             <TextView
-                android:id="@+id/textView29"
+                android:id="@+id/t_impedance"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginVertical="0dp"
@@ -300,11 +294,10 @@
                 android:gravity="top"
                 android:text="@string/impedance_text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="#000000"
-                android:visibility="visible" />
+                android:textColor="#000000" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/t_v_impedance"
                 android:layout_width="365dp"
                 android:layout_height="120dp"
                 android:layout_marginVertical="30dp"
@@ -315,15 +308,14 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/textView19"
+                android:id="@+id/d_impedance"
                 android:layout_width="365dp"
                 android:layout_height="120dp"
                 android:layout_marginVertical="30dp"
                 android:layout_marginLeft="5dp"
                 android:text="@string/impedance_n_available"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="#000000"
-                android:visibility="visible" />
+                android:textColor="#000000" />
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

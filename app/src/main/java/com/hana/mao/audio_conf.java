@@ -22,9 +22,6 @@ import android.content.Context;
 
 public class audio_conf extends AppCompatActivity {
 
-    private CardView uhqa, hph, impedance, amp, exp, qcom_gating;
-    private Switch s_uhqa, s_hph, s_impedance, s_amp, s_exp, s_qcom_gating;
-    private TextView t_amp, t_hph, t_impedance, t_uhqa, d_amp, d_hph, d_impedance, d_uhqa;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
@@ -36,36 +33,40 @@ public class audio_conf extends AppCompatActivity {
         setContentView(R.layout.activity_audio_conf);
 
         //Define cardview layout
-        uhqa = findViewById(R.id.cv_uhqa);
-        hph = findViewById(R.id.cv_hph);
-        amp = findViewById(R.id.cv_amp);
-        impedance = findViewById(R.id.cv_impedance);
-        exp = findViewById(R.id.cv_experimental);
-        qcom_gating = findViewById(R.id.cv_qcom_gating);
+        final CardView uhqa = (CardView) findViewById(R.id.cv_uhqa);
+        final CardView hph = (CardView) findViewById(R.id.cv_hph);
+        final CardView amp = (CardView) findViewById(R.id.cv_amp);
+        final CardView impedance = (CardView) findViewById(R.id.cv_impedance);
+        final CardView exp = (CardView) findViewById(R.id.cv_experimental);
+        final CardView qcom_gating =  (CardView) findViewById(R.id.cv_qcom_gating);
 
         //Define switch layout
-        s_uhqa = findViewById(R.id.uhqa);
-        s_hph = findViewById(R.id.hph);
-        s_amp = findViewById(R.id.amp);
-        s_impedance = findViewById(R.id.impedance);
-        s_exp = findViewById(R.id.exp);
-        s_qcom_gating = findViewById(R.id.qcom_gating);
+        final Switch s_uhqa = (Switch) findViewById(R.id.uhqa);
+        final Switch s_hph = (Switch) findViewById(R.id.hph);
+        final Switch s_amp = (Switch) findViewById(R.id.amp);
+        final Switch s_impedance = (Switch) findViewById(R.id.impedance);
+        final Switch s_exp = (Switch) findViewById(R.id.exp);
+        final Switch s_gating = (Switch) findViewById(R.id.qcom_gating);
 
         //Define textview component
-        t_uhqa = findViewById(R.id.textView26);
-        t_hph = findViewById(R.id.textView27);
-        t_amp = findViewById(R.id.textView28);
-        t_impedance = findViewById(R.id.textView29);
-        d_uhqa = findViewById(R.id.textView16);
-        d_hph = findViewById(R.id.textView17);
-        d_amp = findViewById(R.id.textView18);
-        d_impedance = findViewById(R.id.textView19);
+        TextView t_uhqa = (TextView) findViewById(R.id.t_uhqa);
+        TextView t_hph = (TextView) findViewById(R.id.t_hph);
+        TextView t_amp = (TextView) findViewById(R.id.t_amp);
+        TextView t_impedance = (TextView) findViewById(R.id.t_impedance);
+        TextView d_uhqa = (TextView) findViewById(R.id.d_uhqa);
+        TextView d_hph = (TextView) findViewById(R.id.d_hph);
+        TextView d_amp = (TextView) findViewById(R.id.d_amp);
+        TextView d_impedance = (TextView) findViewById(R.id.d_impedance);
+        TextView t_v_uhqa = (TextView) findViewById(R.id.t_v_uhqa);
+        TextView t_v_hph = (TextView) findViewById(R.id.t_v_hph);
+        TextView t_v_amp = (TextView) findViewById(R.id.t_v_amp);
+        TextView t_v_impedance = (TextView) findViewById(R.id.t_v_impedance);
 
         File uhqa_file = new File("/sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
         File hph_file = new File("/sys/module/snd_soc_wcd9330/parameters/high_perf_mode");
         File amp_file = new File("/sys/module/snd_soc_wcd9335/parameters/low_distort_amp");
         File impedance_file = new File("/sys/module/snd_soc_wcd9xxx/parameters/impedance_detect_en");
-        File qcom_gating_file = new File("/sys/module/snd_soc_wcd9335/parameters/dig_core_collapse_enable");
+        File gating_file = new File("/sys/module/snd_soc_wcd9335/parameters/dig_core_collapse_enable");
 
         preferences = getSharedPreferences("exp_pref", Context.MODE_PRIVATE);
 
@@ -76,22 +77,13 @@ public class audio_conf extends AppCompatActivity {
         hph_dump();
         amp_dump();
         impedance_dump();
-        qcom_gating_dump();
-
-        /*
-        Declare all cardview should be visible on all time
-        During now i'm controlling switch not cardview when kernel features is not available in the device.
-        */
-        uhqa.setVisibility(View.VISIBLE);
-        hph.setVisibility(View.VISIBLE);
-        amp.setVisibility(View.VISIBLE);
-        impedance.setVisibility(View.VISIBLE);
-        exp.setVisibility(View.VISIBLE);
+        gating_dump();
 
         if(uhqa_file.exists()){
             s_uhqa.setVisibility(View.VISIBLE);
-            t_uhqa.setVisibility(View.GONE);
-            d_uhqa.setVisibility(View.GONE);
+            t_v_uhqa.setVisibility(View.VISIBLE);
+            t_uhqa.setVisibility(View.INVISIBLE);
+            d_uhqa.setVisibility(View.INVISIBLE);
             try {
                 fstream = openFileInput("uhqa.txt");
                 StringBuffer sbuffer = new StringBuffer();
@@ -161,6 +153,7 @@ public class audio_conf extends AppCompatActivity {
             }
         } else {
             s_uhqa.setVisibility(View.GONE);
+            t_v_uhqa.setVisibility(View.INVISIBLE);
             t_uhqa.setVisibility(View.VISIBLE);
             d_uhqa.setVisibility(View.VISIBLE);
             Toast.makeText(audio_conf.this, "Ultra High Quality Audio Not Found", Toast.LENGTH_LONG).show();
@@ -168,8 +161,9 @@ public class audio_conf extends AppCompatActivity {
 
         if(hph_file.exists()){
             s_hph.setVisibility(View.VISIBLE);
-            t_hph.setVisibility(View.GONE);
-            d_hph.setVisibility(View.GONE);
+            t_v_hph.setVisibility(View.VISIBLE);
+            t_hph.setVisibility(View.INVISIBLE);
+            d_hph.setVisibility(View.INVISIBLE);
             try {
                 fstream = openFileInput("hph.txt");
                 StringBuffer sbuffer = new StringBuffer();
@@ -239,6 +233,7 @@ public class audio_conf extends AppCompatActivity {
             }
         } else {
             s_hph.setVisibility(View.GONE);
+            t_v_hph.setVisibility(View.INVISIBLE);
             t_hph.setVisibility(View.VISIBLE);
             d_hph.setVisibility(View.VISIBLE);
             Toast.makeText(audio_conf.this, "Headset High Performance Mode Not Found", Toast.LENGTH_LONG).show();
@@ -246,8 +241,9 @@ public class audio_conf extends AppCompatActivity {
 
         if(amp_file.exists()){
             s_amp.setVisibility(View.VISIBLE);
-            t_amp.setVisibility(View.GONE);
-            d_amp.setVisibility(View.GONE);
+            t_v_amp.setVisibility(View.INVISIBLE);
+            t_amp.setVisibility(View.INVISIBLE);
+            d_amp.setVisibility(View.INVISIBLE);
             try {
                 fstream = openFileInput("amp.txt");
                 StringBuffer sbuffer = new StringBuffer();
@@ -317,6 +313,7 @@ public class audio_conf extends AppCompatActivity {
             }
         } else {
             s_amp.setVisibility(View.GONE);
+            t_v_amp.setVisibility(View.INVISIBLE);
             t_amp.setVisibility(View.VISIBLE);
             d_amp.setVisibility(View.VISIBLE);
             Toast.makeText(audio_conf.this, "Low Distortion AMP Not Found", Toast.LENGTH_LONG).show();
@@ -324,8 +321,9 @@ public class audio_conf extends AppCompatActivity {
 
         if(impedance_file.exists()){
             s_impedance.setVisibility(View.VISIBLE);
-            t_impedance.setVisibility(View.GONE);
-            d_impedance.setVisibility(View.GONE);
+            t_v_impedance.setVisibility(View.VISIBLE);
+            t_impedance.setVisibility(View.INVISIBLE);
+            d_impedance.setVisibility(View.INVISIBLE);
             try {
                 fstream = openFileInput("impedance.txt");
                 StringBuffer sbuffer = new StringBuffer();
@@ -395,6 +393,7 @@ public class audio_conf extends AppCompatActivity {
             }
         } else {
             s_impedance.setVisibility(View.GONE);
+            t_v_impedance.setVisibility(View.INVISIBLE);
             t_impedance.setVisibility(View.VISIBLE);
             d_impedance.setVisibility(View.VISIBLE);
             Toast.makeText(audio_conf.this, "Headphone Impedance Detection Not Found", Toast.LENGTH_LONG).show();
@@ -431,9 +430,9 @@ public class audio_conf extends AppCompatActivity {
                 }}
         });
 
-        if(qcom_gating_file.exists()){
+        if(gating_file.exists()){
             try {
-                fstream = openFileInput("qcom_gating.txt");
+                fstream = openFileInput("gating.txt");
                 StringBuffer sbuffer = new StringBuffer();
                 int i;
                 while ((i = fstream.read())!= -1){
@@ -442,17 +441,17 @@ public class audio_conf extends AppCompatActivity {
                 fstream.close();
                 String details[] = sbuffer.toString().split("\n");
                 if (details[0].equals("1")){
-                    s_qcom_gating.setChecked(true);
-                    s_qcom_gating.setOnClickListener(new View.OnClickListener() {
+                    s_gating.setChecked(true);
+                    s_gating.setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View v) {
 
-                            if(s_qcom_gating.isChecked())
+                            if(s_gating.isChecked())
                             {
                                 try {
                                     CommandResult qcom_gating = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/dig_core_collapse_enable");
-                                    Toast.makeText(audio_conf.this, "QCOM Gating is Active", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "Power Gating is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
                                     e.printStackTrace();
@@ -460,7 +459,7 @@ public class audio_conf extends AppCompatActivity {
                             }  else {
                                 try {
                                     CommandResult qcom_gating = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/dig_core_collapse_enable");
-                                    Toast.makeText(audio_conf.this, "QCOM Gating is Disabled", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(audio_conf.this, "Power Gating is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
                                     e.printStackTrace();
@@ -469,13 +468,13 @@ public class audio_conf extends AppCompatActivity {
                         }
                     });
                 } if (details[0].equals("0")){
-                    s_qcom_gating.setChecked(false);
-                    s_qcom_gating.setOnClickListener(new View.OnClickListener() {
+                    s_gating.setChecked(false);
+                    s_gating.setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View v) {
 
-                            if(s_qcom_gating.isChecked())
+                            if(s_gating.isChecked())
                             {
                                 try {
                                     CommandResult qcom_gating = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/dig_core_collapse_enable");
@@ -552,7 +551,7 @@ public class audio_conf extends AppCompatActivity {
         }
     }
 
-    private void qcom_gating_dump() {
+    private void gating_dump() {
         try {
             CommandResult qcom_gating_check = Shell.SU.run("cp /sys/module/snd_soc_wcd9335/parameters/dig_core_collapse_enable /data/user/0/com.hana.mao/files/qcom_gating.txt");
         }
@@ -562,13 +561,16 @@ public class audio_conf extends AppCompatActivity {
     }
 
     private void exp_check() {
+        CardView gating =  (CardView) findViewById(R.id.cv_qcom_gating);
+        Switch s_exp = (Switch) findViewById(R.id.exp);
+
         String exp_data = preferences.getString("EXP", "0");
         if (exp_data.equals("1")) {
             s_exp.setChecked(true);
-            qcom_gating.setVisibility(View.VISIBLE);
+            gating.setVisibility(View.VISIBLE);
         } else if (exp_data.equals("0")) {
             s_exp.setChecked(false);
-            qcom_gating.setVisibility(View.GONE);
+            gating.setVisibility(View.GONE);
         } else {
             Toast.makeText(audio_conf.this, "Preference not found", Toast.LENGTH_LONG).show();
         }
@@ -579,6 +581,6 @@ public class audio_conf extends AppCompatActivity {
         CommandResult AMP = Shell.SU.run("rm /data/user/0/com.hana.mao/files/amp.txt");
         CommandResult HPH = Shell.SU.run("rm /data/user/0/com.hana.mao/files/hph.txt");
         CommandResult UHQA = Shell.SU.run("rm /data/user/0/com.hana.mao/files/uhqa.txt");
-        CommandResult QCOM_GATING = Shell.SU.run("rm /data/user/0/com.hana.mao/files/qcom_gating.txt");
+        CommandResult GATING = Shell.SU.run("rm /data/user/0/com.hana.mao/files/gating.txt");
     }
 }
