@@ -10,7 +10,7 @@
 M.A.O is application that can control current exist audio features on kernel directly and show current audio status that running on device when play a song or not from audioserver service on android. This app is work by using shell command that will dump active android audioserver from system and sort it by category then detect it each current state. This app is designed for Xiaomi Redmi Note 4X (Mido) that use custom android ROM based on android 7.0+.
 
 # Project Status
-![Build](https://img.shields.io/badge/Build%20Status-On%20Progress-yellow.svg) ![Dev](https://img.shields.io/badge/Development%20Phase-W.I.P-yellow.svg) ![Version](https://img.shields.io/badge/Latest%20Version-9th%20Phase-yellow.svg) ![Package](https://img.shields.io/badge/Package-Android%20App-blue.svg)
+![Build](https://travis-ci.org/Nicklas373/M.A.O.svg?branch=master) ![Dev](https://img.shields.io/badge/Development%20Phase-W.I.P-yellow.svg) ![Version](https://img.shields.io/badge/Latest%20Version-9th%20Phase-yellow.svg) ![Package](https://img.shields.io/badge/Package-Android%20App-blue.svg)
 
 M.A.O will show only exist kernel audio feature configuration on the device, so not all audio feature will show same in all ROMs. M.A.O is app for extension from [M.A.O Magisk Module](https://github.com/Nicklas373/Internal_DAC_Fixer) to optimize that module functionallity
 
