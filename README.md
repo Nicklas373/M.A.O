@@ -12,8 +12,6 @@ M.A.O is application that can control current exist audio features on kernel dir
 # Project Status
 ![Build](https://travis-ci.org/Nicklas373/M.A.O.svg?branch=master) ![Dev](https://img.shields.io/badge/Development%20Phase-W.I.P-yellow.svg) ![Version](https://img.shields.io/badge/Latest%20Version-9th%20Phase-yellow.svg) ![Package](https://img.shields.io/badge/Package-Android%20App-blue.svg)
 
-[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/0)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/0)[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/1)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/1)[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/2)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/2)[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/3)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/3)[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/4)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/4)[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/5)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/5)[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/6)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/6)[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/7)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/7)
-
 M.A.O will show only exist kernel audio feature configuration on the device, so not all audio feature will show same in all ROMs. M.A.O is app for extension from [M.A.O Magisk Module](https://github.com/Nicklas373/Internal_DAC_Fixer) to optimize that module functionallity
 
 What's features that available to control:
@@ -46,3 +44,6 @@ Current Build :
 - Build 20190516 (WIP 7th Phase)
 - Build 20190630 (WIP 8th Phase)
 - Build 20190725 (WIP 9th Phase)
+
+# Contributor
+[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/0)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/0)[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/1)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/1)[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/2)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/2)[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/3)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/3)[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/4)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/4)[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/5)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/5)[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/6)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/6)[![](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/images/7)](https://sourcerer.io/fame/Nicklas373/Nicklas373/M.A.O/links/7)
