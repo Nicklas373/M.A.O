@@ -2,6 +2,8 @@ package com.hana.mao;
 
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import android.view.View;
@@ -31,6 +33,7 @@ public class audio_conf extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_audio_conf);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //Define cardview layout
         final CardView uhqa = (CardView) findViewById(R.id.cv_uhqa);

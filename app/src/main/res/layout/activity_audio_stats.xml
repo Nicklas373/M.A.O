@@ -10,12 +10,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_title"
-        android:layout_width="410dp"
-        android:layout_height="170dp"
-        app:cardUseCompatPadding="true"
-        app:cardElevation="0dp"
-        android:gravity="top"
-        app:contentPaddingTop="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -24,23 +20,17 @@
         app:layout_constraintVertical_bias="0.0"
         app:cardBackgroundColor="@color/color_app_bar">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="300dp">
-
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/audio_status_title"
             android:textAlignment="center"
+            android:layout_gravity="center"
+            android:textColor="#fff"
             android:textSize="24sp"
-            android:layout_marginVertical="65dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#ffffff" />
-    </RelativeLayout>
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -58,28 +48,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.570">
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="360dp">
-
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="24dp"
-                android:layout_marginLeft="100dp"
+                android:layout_gravity="center_horizontal"
                 android:text="@string/audio_status_current"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="300dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="72dp"
-                android:layout_marginLeft="140dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="50dp"
                 android:text="@string/audio_flags_current"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -88,8 +71,8 @@
                 android:id="@+id/sr_title"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="120dp"
-                android:layout_marginLeft="24dp"
+                android:layout_marginTop="120dp"
+                android:layout_marginStart="20dp"
                 android:text="@string/audio_status_freq"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -98,8 +81,8 @@
                 android:id="@+id/textview4"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="120dp"
-                android:layout_marginLeft="170dp"
+                android:layout_marginTop="120dp"
+                android:layout_marginStart="170dp"
                 android:text=":"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -108,8 +91,8 @@
                 android:id="@+id/sr_status"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="120dp"
-                android:layout_marginLeft="180dp"
+                android:layout_marginTop="120dp"
+                android:layout_marginStart="180dp"
                 android:text="@string/empty"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -118,8 +101,8 @@
                 android:id="@+id/bd_title"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="160dp"
-                android:layout_marginLeft="24dp"
+                android:layout_marginTop="160dp"
+                android:layout_marginStart="20dp"
                 android:text="@string/audio_status_bit_depth"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -128,8 +111,8 @@
                 android:id="@+id/bd_status"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="160dp"
-                android:layout_marginLeft="180dp"
+                android:layout_marginTop="160dp"
+                android:layout_marginStart="180dp"
                 android:text="@string/empty"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -138,8 +121,8 @@
                 android:id="@+id/textview5"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="160dp"
-                android:layout_marginLeft="170dp"
+                android:layout_marginTop="160dp"
+                android:layout_marginStart="170dp"
                 android:text=":"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -148,8 +131,8 @@
                 android:id="@+id/flags_title"
                 android:layout_width="173dp"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="200dp"
-                android:layout_marginLeft="24dp"
+                android:layout_marginTop="200dp"
+                android:layout_marginStart="20dp"
                 android:text="@string/audio_status_flags"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -158,8 +141,8 @@
                 android:id="@+id/flags_status"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="200dp"
-                android:layout_marginLeft="180dp"
+                android:layout_marginTop="200dp"
+                android:layout_marginStart="180dp"
                 android:text="@string/empty"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -168,8 +151,8 @@
                 android:id="@+id/textview6"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="200dp"
-                android:layout_marginLeft="170dp"
+                android:layout_marginTop="200dp"
+                android:layout_marginStart="170dp"
                 android:text=":"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -178,8 +161,8 @@
                 android:id="@+id/out_title"
                 android:layout_width="173dp"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="240dp"
-                android:layout_marginLeft="24dp"
+                android:layout_marginTop="240dp"
+                android:layout_marginStart="20dp"
                 android:text="@string/audio_status_out"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -188,8 +171,8 @@
                 android:id="@+id/out_status"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="240dp"
-                android:layout_marginLeft="180dp"
+                android:layout_marginTop="240dp"
+                android:layout_marginStart="180dp"
                 android:text="@string/empty"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -198,8 +181,8 @@
                 android:id="@+id/textview7"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="240dp"
-                android:layout_marginLeft="170dp"
+                android:layout_marginTop="240dp"
+                android:layout_marginStart="170dp"
                 android:text=":"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -208,8 +191,8 @@
                 android:id="@+id/buffer_title"
                 android:layout_width="173dp"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="280dp"
-                android:layout_marginLeft="24dp"
+                android:layout_marginTop="280dp"
+                android:layout_marginStart="20dp"
                 android:text="@string/audio_status_buffer"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -218,8 +201,8 @@
                 android:id="@+id/buffer_status"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="280dp"
-                android:layout_marginLeft="180dp"
+                android:layout_marginTop="280dp"
+                android:layout_marginStart="180dp"
                 android:text="@string/empty"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
@@ -228,12 +211,11 @@
                 android:id="@+id/textview8"
                 android:layout_width="wrap_content"
                 android:layout_height="31dp"
-                android:layout_marginVertical="280dp"
-                android:layout_marginLeft="170dp"
+                android:layout_marginTop="280dp"
+                android:layout_marginStart="170dp"
                 android:text=":"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#000000" />
-        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 

@@ -1,6 +1,7 @@
 package com.hana.mao;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ public class stats extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Next = (Button) view.findViewById(R.id.audio_stats);
 
         Next.setOnClickListener(new View.OnClickListener() {

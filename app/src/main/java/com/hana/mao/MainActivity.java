@@ -1,5 +1,6 @@
 package com.hana.mao;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import com.google.android.material.navigation.NavigationView;
 import com.jaredrummler.android.shell.CommandResult;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //Only ask SU one time when application started
         su once = new su();
