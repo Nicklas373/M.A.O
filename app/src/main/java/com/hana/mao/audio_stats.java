@@ -104,9 +104,25 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
+    private void Alsa_Out_Dump_ULL_Q(){
+        try {
+            CommandResult Alsa_Out_Dump_Q = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '7p' | tail -c +22 > /data/data/com.hana.mao/files/aoq.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void HiRes_Out_Dump_ULL(){
         try {
             CommandResult HiRes_Out_Dump = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '10p' | tail -c +22 > /data/data/com.hana.mao/files/ho.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void HiRes_Out_Dump_ULL_Q(){
+        try {
+            CommandResult HiRes_Out_Dump_Q = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '11p' | tail -c +22 > /data/data/com.hana.mao/files/hoq.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,6 +136,14 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
+    private void Alsa_Out_Dump_Q(){
+        try {
+            CommandResult Fail_Safe_Alsa_Out_Dump_Q = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +22 | sed 's/.$//' > /data/data/com.hana.mao/files/fsaoq.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void HiRes_Out_Dump(){
         try {
             CommandResult HiRes_Out_Dump = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '8p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/fsho.txt");
@@ -128,9 +152,33 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
+    private void HiRes_Out_Dump_Q(){
+        try {
+            CommandResult HiRes_Out_Dump_Q = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '11p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/fshoq.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void MediaFlinger(){
         try {
             CommandResult Dump_Media_Flinger = Shell.SU.run("dumpsys media.audio_flinger > /data/data/com.hana.mao/files/audio.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void prop(){
+        try {
+            CommandResult prop = Shell.SU.run("cp /system/build.prop /data/data/com.hana.mao/files/prop.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void prop_split(){
+        try {
+            CommandResult prop_split = Shell.SU.run("grep -w ro.build.version.release /data/data/com.hana.mao/files/prop.txt | tail -c +26 > /data/data/com.hana.mao/files/split.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -183,6 +231,8 @@ public class audio_stats extends AppCompatActivity {
 
     private void HiRes_Detect_ULL(){
         Audio_Dump_ULL();
+        prop();
+        prop_split();
         FileInputStream fstream;
         try {
             fstream = openFileInput("fshr.txt");
@@ -199,7 +249,7 @@ public class audio_stats extends AppCompatActivity {
                 HiRes_SR_ULL();
                 HiRes_BD_ULL();
                 HiRes_FL_ULL();
-                HiRes_O_ULL();
+                Hires_O_ULL_CHK();
                 Buffer_HiRes_ULL();
             } else if (details[0].equals(" (DIRECT)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -207,7 +257,7 @@ public class audio_stats extends AppCompatActivity {
                 HiRes_SR_ULL();
                 HiRes_BD_ULL();
                 HiRes_FL_ULL();
-                HiRes_O_ULL();
+                Hires_O_ULL_CHK();
                 Buffer_HiRes_ULL();
             } else if (details[0].equals("1 (DIRECT)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -215,7 +265,15 @@ public class audio_stats extends AppCompatActivity {
                 HiRes_SR_ULL();
                 HiRes_BD_ULL();
                 HiRes_FL_ULL();
-                HiRes_O_ULL();
+                Hires_O_ULL_CHK();
+                Buffer_HiRes_ULL();
+            } else if (details[0].equals(" 1 (DIRECT)")){
+                dr = (TextView) findViewById(R.id.textView4);
+                dr.setText("Hi-Res Audio Driver");
+                HiRes_SR_ULL();
+                HiRes_BD_ULL();
+                HiRes_FL_ULL();
+                Hires_O_ULL_CHK();
                 Buffer_HiRes_ULL();
             } else if (details[0].equals("(MIXER)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -223,7 +281,7 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR_ULL();
                 Alsa_BD_ULL();
                 Alsa_FL_ULL();
-                Alsa_O_ULL();
+                Alsa_O_ULL_CHK();
                 Buffer_Alsa_ULL();
             } else {
                 Alsa_Detect_ULL();
@@ -262,7 +320,7 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR_ULL();
                 Alsa_BD_ULL();
                 Alsa_FL_ULL();
-                Alsa_O_ULL();
+                Alsa_O_ULL_CHK();
                 Buffer_Alsa_ULL();
             }  else if (details[0].equals("MIXER)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -270,7 +328,15 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR_ULL();
                 Alsa_BD_ULL();
                 Alsa_FL_ULL();
-                Alsa_O_ULL();
+                Alsa_O_ULL_CHK();
+                Buffer_Alsa_ULL();
+            } else if (details[0].equals("0 (MIXER):")){
+                dr = (TextView) findViewById(R.id.textView4);
+                dr.setText("ALSA Audio Driver");
+                Alsa_SR_ULL();
+                Alsa_BD_ULL();
+                Alsa_FL_ULL();
+                Alsa_O_ULL_CHK();
                 Buffer_Alsa_ULL();
             } else {
                 HiRes_Record_Detect_ULL();
@@ -309,7 +375,7 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR_ULL();
                 Alsa_BD_ULL();
                 Alsa_FL_ULL();
-                Alsa_O_ULL();
+                Alsa_O_ULL_CHK();
                 Buffer_Alsa_ULL();
             } else if (details[0].equals("RECORD)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -317,7 +383,15 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR_ULL();
                 Alsa_BD_ULL();
                 Alsa_FL_ULL();
-                Alsa_O_ULL();
+                Alsa_O_ULL_CHK();
+                Buffer_Alsa_ULL();
+            } else if (details[0].equals(" (RECORD):")){
+                dr = (TextView) findViewById(R.id.textView4);
+                dr.setText("ALSA Audio Driver");
+                Alsa_SR_ULL();
+                Alsa_BD_ULL();
+                Alsa_FL_ULL();
+                Alsa_O_ULL_CHK();
                 Buffer_Alsa_ULL();
             } else {
                 Record_Detect_ULL();
@@ -356,7 +430,7 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR_ULL();
                 Alsa_BD_ULL();
                 Alsa_FL_ULL();
-                Alsa_O_ULL();
+                Alsa_O_ULL_CHK();
                 Buffer_Alsa_ULL();
             } else if (details[0].equals("RECORD)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -364,7 +438,15 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR_ULL();
                 Alsa_BD_ULL();
                 Alsa_FL_ULL();
-                Alsa_O_ULL();
+                Alsa_O_ULL_CHK();
+                Buffer_Alsa_ULL();
+            } else if (details[0].equals(" (RECORD):")){
+                dr = (TextView) findViewById(R.id.textView4);
+                dr.setText("Record Audio Driver");
+                Alsa_SR_ULL();
+                Alsa_BD_ULL();
+                Alsa_FL_ULL();
+                Alsa_O_ULL_CHK();
                 Buffer_Alsa_ULL();
             } else {
                 HiRes_Detect();
@@ -477,9 +559,11 @@ public class audio_stats extends AppCompatActivity {
             String details[] = sbuffer.toString().split("\n");
             if (details[0].equals("(AUDIO_OUTPUT_FLAG_DIRECT)")){
                 fl.setText("DIRECT");
+            } else if (details[0].equals("1 (AUDIO_OUTPUT_FLAG_DIRECT)")){
+                fl.setText("DIRECT");
             } else if (details[0].equals("AUDIO_OUTPUT_FLAG_DEEP_BUFFER")){
                 fl.setText("DEEP BUFFER");
-            } else if (details[0].equals("(AUDIO_OUTPUT_FLAG_FAST|AUDIO_OUTPUT_FLAG_PRIMARY)")){
+            }  else if (details[0].equals("(AUDIO_OUTPUT_FLAG_FAST|AUDIO_OUTPUT_FLAG_PRIMARY)")){
                 fl.setText("FAST | PRIMARY");
             } else if (details[0].equals("(AUDIO_OUTPUT_FLAG_FAST|AUDIO_OUTPUT_FLAG_RAW)")){
                 fl.setText("FAST | RAW");
@@ -502,6 +586,31 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
+    private  void Hires_O_ULL_CHK() {
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("split.txt");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read())!= -1){
+                sbuffer.append((char)i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("9")){
+                HiRes_O_ULL();
+            } else if (details[0].equals("10")){
+                HiRes_O_ULL_Q();
+            } else {
+                o.setText("Standby");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void HiRes_O_ULL(){
         o = (TextView) findViewById(R.id.out_status);
 
@@ -510,6 +619,41 @@ public class audio_stats extends AppCompatActivity {
         FileInputStream fstream;
         try {
             fstream = openFileInput("ho.txt");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read())!= -1){
+                sbuffer.append((char)i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("(AUDIO_DEVICE_OUT_WIRED_HEADSET)")){
+                o.setText("Wired Headset");
+            } else if (details[0].equals("(AUDIO_DEVICE_OUT_SPEAKER)")){
+                o.setText("Speaker");
+            } else if (details[0].equals("000 (AUDIO_DEVICE_OUT_LINE)")){
+                o.setText("Line Out");
+            } else if (details[0].equals("(AUDIO_DEVICE_OUT_WIRED_HEADPHONE)")){
+                o.setText("Wired Headphone");
+            } else if (details[0].equals("(AUDIO_DEVICE_OUT_AUX_DIGITAL)")){
+                o.setText("AUX");
+            } else {
+                o.setText("Standby");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void HiRes_O_ULL_Q(){
+        o = (TextView) findViewById(R.id.out_status);
+
+        HiRes_Out_Dump_ULL_Q();
+
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("hoq.txt");
             StringBuffer sbuffer = new StringBuffer();
             int i;
             while ((i = fstream.read())!= -1){
@@ -648,6 +792,31 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
+    private  void Alsa_O_ULL_CHK() {
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("split.txt");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read())!= -1){
+                sbuffer.append((char)i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("9")){
+                Alsa_O_ULL();
+            } else if (details[0].equals("10")){
+                Alsa_O_ULL_Q();
+            } else {
+                o.setText("Standby");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void Alsa_O_ULL(){
         o = (TextView) findViewById(R.id.out_status);
 
@@ -656,6 +825,41 @@ public class audio_stats extends AppCompatActivity {
         FileInputStream fstream;
         try {
             fstream = openFileInput("ao.txt");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read())!= -1){
+                sbuffer.append((char)i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("(AUDIO_DEVICE_OUT_WIRED_HEADSET)")){
+                o.setText("Wired Headset");
+            } else if (details[0].equals("(AUDIO_DEVICE_OUT_SPEAKER)")){
+                o.setText("Speaker");
+            } else if (details[0].equals("(AUDIO_DEVICE_OUT_LINE)")){
+                o.setText("Line Out");
+            } else if (details[0].equals("(AUDIO_DEVICE_OUT_WIRED_HEADPHONE)")){
+                o.setText("Wired Headphone");
+            } else if (details[0].equals("(AUDIO_DEVICE_OUT_AUX_DIGITAL)")){
+                o.setText("AUX");
+            } else {
+                o.setText("Standby");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void Alsa_O_ULL_Q(){
+        o = (TextView) findViewById(R.id.out_status);
+
+        Alsa_Out_Dump_ULL();
+
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("aoq.txt");
             StringBuffer sbuffer = new StringBuffer();
             int i;
             while ((i = fstream.read())!= -1){
@@ -766,7 +970,7 @@ public class audio_stats extends AppCompatActivity {
                 HiRes_SR();
                 HiRes_BD();
                 HiRes_FL();
-                HiRes_O();
+                HiRes_O_CHK();
                 Buffer_HiRes();
             } else if (details[0].equals("(RECORD)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -774,7 +978,7 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR();
                 Alsa_BD();
                 Alsa_FL();
-                Alsa_O();
+                Alsa_O_CHK();
                 Buffer_Alsa();
             } else if (details[0].equals(" (DIRECT)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -782,7 +986,7 @@ public class audio_stats extends AppCompatActivity {
                 HiRes_SR();
                 HiRes_BD();
                 HiRes_FL();
-                HiRes_O();
+                HiRes_O_CHK();
                 Buffer_HiRes();
             } else if (details[0].equals("1 (DIRECT)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -790,7 +994,7 @@ public class audio_stats extends AppCompatActivity {
                 HiRes_SR();
                 HiRes_BD();
                 HiRes_FL();
-                HiRes_O();
+                HiRes_O_CHK();
                 Buffer_HiRes();
             }  else if (details[0].equals("(MIXER)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -798,7 +1002,7 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR();
                 Alsa_BD();
                 Alsa_FL();
-                Alsa_O();
+                Alsa_O_CHK();
                 Buffer_Alsa();
             } else if (details[0].equals("MIXER)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -806,7 +1010,7 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR();
                 Alsa_BD();
                 Alsa_FL();
-                Alsa_O();
+                Alsa_O_CHK();
                 Buffer_Alsa();
             } else {
                 Alsa_Detect();
@@ -850,7 +1054,7 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR();
                 Alsa_BD();
                 Alsa_FL();
-                Alsa_O();
+                Alsa_O_CHK();
                 Buffer_Alsa();
             } else if (details[0].equals("MIXER)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -858,7 +1062,7 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR();
                 Alsa_BD();
                 Alsa_FL();
-                Alsa_O();
+                Alsa_O_CHK();
                 Buffer_Alsa();
             } else if (details[0].equals(" (MIXER)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -866,7 +1070,7 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR();
                 Alsa_BD();
                 Alsa_FL();
-                Alsa_O();
+                Alsa_O_CHK();
                 Buffer_Alsa();
             } else if (details[0].equals("(RECORD)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -874,7 +1078,7 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR();
                 Alsa_BD();
                 Alsa_FL();
-                Alsa_O();
+                Alsa_O_CHK();
                 Buffer_Alsa();
             } else if (details[0].equals("ECORD)")){
                 dr = (TextView) findViewById(R.id.textView4);
@@ -882,7 +1086,7 @@ public class audio_stats extends AppCompatActivity {
                 Alsa_SR();
                 Alsa_BD();
                 Alsa_FL();
-                Alsa_O();
+                Alsa_O_CHK();
                 Buffer_Alsa();
             }  else {
                 Alsa_Detect();
@@ -1020,10 +1224,70 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
+    private void HiRes_O_CHK(){
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("split.txt");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read())!= -1){
+                sbuffer.append((char)i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("9")){
+                HiRes_O();
+            } else if (details[0].equals("10")){
+                HiRes_O_Q();
+            } else {
+                o.setText("Standby");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void HiRes_O(){
         o = (TextView) findViewById(R.id.out_status);
 
         HiRes_Out_Dump();
+
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("fsho.txt");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read())!= -1){
+                sbuffer.append((char)i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")){
+                o.setText("Wired Headset");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_SPEAKER")){
+                o.setText("Speaker");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_LINE")){
+                o.setText("Line Out");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADPHONE")){
+                o.setText("Wired Headphone");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_AUX_DIGITAL")){
+                o.setText("AUX");
+            } else {
+                o.setText("Standby");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void HiRes_O_Q(){
+        o = (TextView) findViewById(R.id.out_status);
+
+        HiRes_Out_Dump_Q();
 
         FileInputStream fstream;
         try {
@@ -1166,10 +1430,70 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
+    private void Alsa_O_CHK(){
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("split.txt");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read())!= -1){
+                sbuffer.append((char)i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("9")){
+                Alsa_O();
+            } else if (details[0].equals("10")){
+                Alsa_O_Q();
+            } else {
+                o.setText("Standby");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void Alsa_O(){
         o = (TextView) findViewById(R.id.out_status);
 
         Alsa_Out_Dump();
+
+        FileInputStream fstream;
+        try {
+            fstream = openFileInput("fsao.txt");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read())!= -1){
+                sbuffer.append((char)i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")){
+                o.setText("Wired Headset");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_SPEAKER")){
+                o.setText("Speaker");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_LINE")){
+                o.setText("Line Out");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADPHONE")){
+                o.setText("Wired Headphone");
+            } else if (details[0].equals("AUDIO_DEVICE_OUT_AUX_DIGITAL")){
+                o.setText("AUX");
+            } else {
+                o.setText("Standby");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void Alsa_O_Q(){
+        o = (TextView) findViewById(R.id.out_status);
+
+        Alsa_Out_Dump_Q();
 
         FileInputStream fstream;
         try {
