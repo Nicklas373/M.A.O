@@ -9,6 +9,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.os.Handler;
+import android.os.Build;
+import android.widget.Toast;
 
 import com.jaredrummler.android.shell.CommandResult;
 import com.jaredrummler.android.shell.Shell;
@@ -36,6 +38,7 @@ public class audio_stats extends AppCompatActivity {
         final Button refresh = (Button) findViewById(R.id.btn_refresh);
 
         // Run init component
+        Codename();
         MediaFlinger();
         HiRes_Audio_Dump();
         HiRes_Detect();
@@ -93,7 +96,7 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
-    // Check audio states
+    // Check audio states (Mido)
     private void HiRes_Audio_Dump(){
         try {
             CommandResult H_Detect = Shell.SU.run("grep -w type /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +66 | sed 's/.$//' > /data/data/com.hana.mao/files/hrad.txt");
@@ -102,7 +105,16 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
-    // Check audio output states (Hi-Res)
+    // Check audio states (Lavender)
+    private void HiRes_Audio_Dump_Lavender(){
+        try {
+            CommandResult H_Detect_L = Shell.SU.run("grep -w type /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +64 | sed 's/.$//' > /data/data/com.hana.mao/files/hrad.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio output states (Hi-Res) (Mido)
     private void HiRes_Out_Dump(){
         try {
             CommandResult HiRes_Out_Dump = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '11p' | tail -c +22 > /data/data/com.hana.mao/files/hod.txt");
@@ -111,7 +123,16 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
-    // Check audio output states (ALSA)
+    // Check audio output states (Hi-Res) (Lavender)
+    private void HiRes_Out_Dump_Lavender(){
+        try {
+            CommandResult HiRes_Out_Dump_L = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '9p' | tail -c +22 > /data/data/com.hana.mao/files/hod.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio output states (ALSA) (Mido)
     private void Alsa_Out_Dump(){
         try {
             CommandResult Alsa_Out_Dump = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '6p' | tail -c +22 > /data/data/com.hana.mao/files/aod.txt");
@@ -120,7 +141,16 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
-    // Check audio sample rates (Hi-Res)
+    // Check audio output states (ALSA) (Lavender)
+    private void Alsa_Out_Dump_Lavender(){
+        try {
+            CommandResult Alsa_Out_Dump_L = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +22 > /data/data/com.hana.mao/files/aod.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio sample rates (Hi-Res) (Mido)
     private void HiRes_SR_Dump(){
         try {
             CommandResult HiRes_SR_Dump = Shell.SU.run("grep -w Sample /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +16 > /data/data/com.hana.mao/files/hsr.txt");
@@ -129,10 +159,28 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
-    // Check audio bit depth (Hi-Res)
+    // Check audio sample rates (Hi-Res) (Lavender)
+    private void HiRes_SR_Dump_Lavender(){
+        try {
+            CommandResult HiRes_SR_Dump_L = Shell.SU.run("grep -w Sample /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +16 > /data/data/com.hana.mao/files/hsr.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio bit depth (Hi-Res) (Mido)
     private void HiRes_BD_Dump(){
         try {
             CommandResult HiRes_BD_Dump = Shell.SU.run("grep -w format /data/data/com.hana.mao/files/audio.txt | sed -n '10p' | tail -c +26 > /data/data/com.hana.mao/files/hbd.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio bit depth (Hi-Res) (Lavender)
+    private void HiRes_BD_Dump_Lavender(){
+        try {
+            CommandResult HiRes_BD_Dump_L = Shell.SU.run("grep -w format /data/data/com.hana.mao/files/audio.txt | sed -n '7p' | tail -c +19 > /data/data/com.hana.mao/files/hbd.txt");
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -147,7 +195,16 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
-    // Check audio flags (Hi-Res)
+    // Check audio buffer size (Hi-Res) (Lavender)
+    private void HiRes_BF_Dump_Lavender(){
+        try {
+            CommandResult HiRes_BF_Dump_L = Shell.SU.run("grep -w size /data/data/com.hana.mao/files/audio.txt | sed -n '7p' | tail -c +20  > /data/data/com.hana.mao/files/bhr.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio flags (Hi-Res) (Mido)
     private void HiRes_FL_Dump(){
         try {
             CommandResult HiRes_FL_Dump = Shell.SU.run("grep -w AudioStreamOut /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +42 > /data/data/com.hana.mao/files/hfl.txt");
@@ -156,7 +213,16 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
-    // Check audio sample rates (ALSA)
+    // Check audio flags (Hi-Res) (Lavender)
+    private void HiRes_FL_Dump_Lavender(){
+        try {
+            CommandResult HiRes_FL_Dump_L = Shell.SU.run("grep -w AudioStreamOut /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +42 > /data/data/com.hana.mao/files/hfl.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio sample rates (ALSA) (Mido)
     private void Alsa_SR_Dump(){
         try {
             CommandResult Alsa_SR_Dump = Shell.SU.run("grep -w Sample /data/data/com.hana.mao/files/audio.txt | sed -n '3p' | tail -c +16 > /data/data/com.hana.mao/files/asr.txt");
@@ -165,7 +231,16 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
-    // Check audio bit depth (ALSA)
+    // Check audio sample rates (ALSA) (Lavender)
+    private void Alsa_SR_Dump_Lavender(){
+        try {
+            CommandResult Alsa_SR_Dump_L = Shell.SU.run("grep -w Sample /data/data/com.hana.mao/files/audio.txt | sed -n '2p' | tail -c +16 > /data/data/com.hana.mao/files/asr.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio bit depth (ALSA) (Mido)
     private void Alsa_BD_Dump(){
         try {
             CommandResult Alsa_BD = Shell.SU.run("grep -w format /data/data/com.hana.mao/files/audio.txt | sed -n '6p' | tail -c +26 > /data/data/com.hana.mao/files/abd.txt");
@@ -174,10 +249,28 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
-    // Check audio flags (ALSA)
+    // Check audio bit depth (ALSA) (Lavender)
+    private void Alsa_BD_Dump_Lavender(){
+        try {
+            CommandResult Alsa_BD_L = Shell.SU.run("grep -w format /data/data/com.hana.mao/files/audio.txt | sed -n '3p' | tail -c +19 > /data/data/com.hana.mao/files/abd.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio flags (ALSA) (Mido)
     private void Alsa_FL_Dump(){
         try {
             CommandResult Alsa_FL_Dump = Shell.SU.run("grep -w AudioStreamOut /data/data/com.hana.mao/files/audio.txt | sed -n '3p' | tail -c +42 > /data/data/com.hana.mao/files/afl.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio flags (ALSA) (Lavender)
+    private void Alsa_FL_Dump_Lavender(){
+        try {
+            CommandResult Alsa_FL_Dump_L = Shell.SU.run("grep -w AudioStreamOut /data/data/com.hana.mao/files/audio.txt | sed -n '2p' | tail -c +42 > /data/data/com.hana.mao/files/afl.txt");
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -190,6 +283,22 @@ public class audio_stats extends AppCompatActivity {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    // Check audio buffer size (ALSA)
+    private void Alsa_BF_Dump_Lavender(){
+        try {
+            CommandResult Alsa_BF_Dump_L = Shell.SU.run("grep -w size /data/data/com.hana.mao/files/audio.txt | sed -n '3p' | tail -c +20  > /data/data/com.hana.mao/files/ba.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Declare device codename
+    private void Codename() {
+        TextView codename = (TextView) findViewById(R.id.codename);
+
+        codename.setText(Build.MODEL);
     }
 
     /* Delay begin
@@ -301,7 +410,15 @@ public class audio_stats extends AppCompatActivity {
 
     // Detect Hi-Res / ALSA State
     private void HiRes_Detect(){
-        HiRes_Audio_Dump();
+        final TextView codename = (TextView) findViewById(R.id.codename);
+
+        // Check device codename (Try to fix compatibility for lavender
+        if (codename.getText().toString().equalsIgnoreCase("mido")) {
+            HiRes_Audio_Dump();
+        } else if (codename.getText().toString().equalsIgnoreCase("Redmi Note 7")) {
+            HiRes_Audio_Dump_Lavender();
+        }
+
         TextView dr = (TextView) findViewById(R.id.textView4);
         FileInputStream fstream;
         try {
@@ -313,36 +430,72 @@ public class audio_stats extends AppCompatActivity {
             }
             fstream.close();
             String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("(DIRECT)")){
-                dr.setText("Hi-Res Audio Driver");
-                // Dump Audio state for specific driver only after drivers detected
-                HiRes_SR_Dump();
-                HiRes_BD_Dump();
-                HiRes_BF_Dump();
-                HiRes_FL_Dump();
-                HiRes_Out_Dump();
+            // Check device codename (Try to fix compatibility for lavender
+            if (codename.getText().toString().equalsIgnoreCase("mido")) {
+                if (details[0].equals("(DIRECT)")){
+                    dr.setText("Hi-Res Audio Driver");
+                    // Dump Audio state for specific driver only after drivers detected
+                    HiRes_SR_Dump();
+                    HiRes_BD_Dump();
+                    HiRes_BF_Dump();
+                    HiRes_FL_Dump();
+                    HiRes_Out_Dump();
 
-                // Do delay
-                HiRes_BD_Delay();
-                HiRes_SR_Delay();
-                HiRes_Out_Delay();
-                HiRes_FL_Delay();
-                HiRes_Buffer_Delay();
-            } else {
-                dr.setText("ALSA Audio Driver");
-                // Dump Audio state for specific driver only after drivers detected
-                Alsa_BD_Dump();
-                Alsa_BF_Dump();
-                Alsa_FL_Dump();
-                Alsa_Out_Dump();
-                Alsa_SR_Dump();
+                    // Do delay
+                    HiRes_BD_Delay();
+                    HiRes_SR_Delay();
+                    HiRes_Out_Delay();
+                    HiRes_FL_Delay();
+                    HiRes_Buffer_Delay();
+                } else {
+                    dr.setText("ALSA Audio Driver");
+                    // Dump Audio state for specific driver only after drivers detected
+                    Alsa_BD_Dump();
+                    Alsa_BF_Dump();
+                    Alsa_FL_Dump();
+                    Alsa_Out_Dump();
+                    Alsa_SR_Dump();
 
-                // Do delay
-                Alsa_BD_Delay();
-                Alsa_SR_Delay();
-                Alsa_Out_Delay();
-                Alsa_FL_Delay();
-                Alsa_Buffer_Delay();
+                    // Do delay
+                    Alsa_BD_Delay();
+                    Alsa_SR_Delay();
+                    Alsa_Out_Delay();
+                    Alsa_FL_Delay();
+                    Alsa_Buffer_Delay();
+                }
+            } else if (codename.getText().toString().equalsIgnoreCase("Redmi Note 7")) {
+                if (details[0].equals(" (DIRECT)")) {
+                    dr.setText("Hi-Res Audio Driver");
+
+                    // Dump Audio state for specific driver only after drivers detected
+                    HiRes_SR_Dump_Lavender();
+                    HiRes_BD_Dump_Lavender();
+                    HiRes_BF_Dump_Lavender();
+                    HiRes_FL_Dump_Lavender();
+                    HiRes_Out_Dump_Lavender();
+
+                    // Do delay
+                    HiRes_BD_Delay();
+                    HiRes_SR_Delay();
+                    HiRes_Out_Delay();
+                    HiRes_FL_Delay();
+                    HiRes_Buffer_Delay();
+                } else {
+                    dr.setText("ALSA Audio Driver");
+                    // Dump Audio state for specific driver only after drivers detected
+                    Alsa_BD_Dump_Lavender();
+                    Alsa_BF_Dump_Lavender();
+                    Alsa_FL_Dump_Lavender();
+                    Alsa_Out_Dump_Lavender();
+                    Alsa_SR_Dump_Lavender();
+
+                    // Do delay
+                    Alsa_BD_Delay();
+                    Alsa_SR_Delay();
+                    Alsa_Out_Delay();
+                    Alsa_FL_Delay();
+                    Alsa_Buffer_Delay();
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
