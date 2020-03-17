@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.os.Handler;
 
 import com.jaredrummler.android.shell.CommandResult;
 import com.jaredrummler.android.shell.Shell;
@@ -19,147 +19,72 @@ import java.io.IOException;
 
 public class audio_stats extends AppCompatActivity {
 
-    TextView sr,bd,fl,dr,o,bc;
+    private TextView sr,bd,fl,dr,o,bc;
 
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_audio_stats);
+
+        // Lock rotation to potrait by default
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        Clean();
+        // Declare item component here
+        final TextView dr = (TextView) findViewById(R.id.textView4);
+        final Button back = (Button) findViewById(R.id.btn_back);
+        final Button refresh = (Button) findViewById(R.id.btn_refresh);
+
+        // Run init component
         MediaFlinger();
-        ULL_Detect();
+        HiRes_Audio_Dump();
+        HiRes_Detect();
 
-        Button back = (Button) findViewById(R.id.btn_back);
-
-        back.setOnClickListener(new View.OnClickListener(){
+        back.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
+                Clean();
                 Intent i = new Intent(audio_stats.this, MainActivity.class);
                 startActivity(i);
             }
         });
 
-        Button refresh = (Button) findViewById(R.id.btn_refresh);
-
-        refresh.setOnClickListener(new View.OnClickListener(){
+        refresh.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Clean();
                 MediaFlinger();
-                ULL_Detect();
+                HiRes_Detect();
+                /* Do delay for every step when want to detect each ALSA component
+                   Due android 10 update, it can't access massive process in one process
+                   Do delay for 2 sec for each process. */
+                if (dr.getText().toString().equalsIgnoreCase("Hi-Res Audio Driver")) {
+                    HiRes_BD_Delay();
+                    HiRes_SR_Delay();
+                    HiRes_Out_Delay();
+                    HiRes_FL_Delay();
+                    HiRes_Buffer_Delay();
+                } else if (dr.getText().toString().equalsIgnoreCase("ALSA Audio Driver")){
+                    Alsa_BD_Delay();
+                    Alsa_SR_Delay();
+                    Alsa_Out_Delay();
+                    Alsa_FL_Delay();
+                    Alsa_Buffer_Delay();
+                } else {
+                    sr.setText("Not Detected");
+                    fl.setText("Not Detected");
+                    bd.setText("Not Detected");
+                    o.setText("Not Detected");
+                    bc.setText("Not Detected");
+                }
+                Clean();
             }
         });
     }
 
-    private void ULL_Dump(){
-        try {
-            CommandResult ULL = Shell.SU.run("grep -w mixPort /system/vendor/etc/audio_policy_configuration.xml | sed -n '3p' | tail -c +32 | sed 's/.\\{15\\}$//' > /data/data/com.hana.mao/files/ull.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void Audio_Dump_ULL(){
-        try {
-            CommandResult Detect = Shell.SU.run("grep -w type /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +62 | sed 's/.$//' > /data/data/com.hana.mao/files/fshr.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void Alsa_Dump_ULL(){
-        try {
-            CommandResult Detect = Shell.SU.run("grep -w type /data/data/com.hana.mao/files/audio.txt | sed -n '3p' | tail -c +62 | sed 's/.$//' > /data/data/com.hana.mao/files/ad.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void Record_Dump_ULL(){
-        try {
-            CommandResult Detect = Shell.SU.run("grep -w type /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +62 | sed 's/.$//' > /data/data/com.hana.mao/files/rd.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void HiRes_Record_Dump_ULL(){
-        try {
-            CommandResult Detect = Shell.SU.run("grep -w type /data/data/com.hana.mao/files/audio.txt | sed -n '6p' | tail -c +62 | sed 's/.$//' > /data/data/com.hana.mao/files/hrrd.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void Alsa_Out_Dump_ULL(){
-        try {
-            CommandResult Alsa_Out_Dump = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '6p' | tail -c +22 > /data/data/com.hana.mao/files/ao.txt");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void Alsa_Out_Dump_ULL_Q(){
-        try {
-            CommandResult Alsa_Out_Dump_Q = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '7p' | tail -c +22 > /data/data/com.hana.mao/files/aoq.txt");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void HiRes_Out_Dump_ULL(){
-        try {
-            CommandResult HiRes_Out_Dump = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '10p' | tail -c +22 > /data/data/com.hana.mao/files/ho.txt");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void HiRes_Out_Dump_ULL_Q(){
-        try {
-            CommandResult HiRes_Out_Dump_Q = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '11p' | tail -c +22 > /data/data/com.hana.mao/files/hoq.txt");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void Alsa_Out_Dump(){
-        try {
-            CommandResult Fail_Safe_Alsa_Out_Dump = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/fsao.txt");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void Alsa_Out_Dump_Q(){
-        try {
-            CommandResult Fail_Safe_Alsa_Out_Dump_Q = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +22 | sed 's/.$//' > /data/data/com.hana.mao/files/fsaoq.txt");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void HiRes_Out_Dump(){
-        try {
-            CommandResult HiRes_Out_Dump = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '8p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/fsho.txt");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void HiRes_Out_Dump_Q(){
-        try {
-            CommandResult HiRes_Out_Dump_Q = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '11p' | tail -c +23 | sed 's/.$//' > /data/data/com.hana.mao/files/fshoq.txt");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+    // Detect Media Flinger
     private void MediaFlinger(){
         try {
             CommandResult Dump_Media_Flinger = Shell.SU.run("dumpsys media.audio_flinger > /data/data/com.hana.mao/files/audio.txt");
@@ -168,74 +93,219 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
-    private void prop(){
+    // Check audio states
+    private void HiRes_Audio_Dump(){
         try {
-            CommandResult prop = Shell.SU.run("cp /system/build.prop /data/data/com.hana.mao/files/prop.txt");
+            CommandResult H_Detect = Shell.SU.run("grep -w type /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +66 | sed 's/.$//' > /data/data/com.hana.mao/files/hrad.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio output states (Hi-Res)
+    private void HiRes_Out_Dump(){
+        try {
+            CommandResult HiRes_Out_Dump = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '11p' | tail -c +22 > /data/data/com.hana.mao/files/hod.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void prop_split(){
+    // Check audio output states (ALSA)
+    private void Alsa_Out_Dump(){
         try {
-            CommandResult prop_split = Shell.SU.run("grep -w ro.build.version.release /data/data/com.hana.mao/files/prop.txt | tail -c +26 > /data/data/com.hana.mao/files/split.txt");
+            CommandResult Alsa_Out_Dump = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '6p' | tail -c +22 > /data/data/com.hana.mao/files/aod.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void ULL_Detect(){
-        ULL_Dump();
-        FileInputStream fstream;
+    // Check audio sample rates (Hi-Res)
+    private void HiRes_SR_Dump(){
         try {
-            fstream = openFileInput("ull.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("raw")){
-                Toast.makeText(audio_stats.this,"You're using Ultra Low Latency Mode",Toast.LENGTH_LONG).show();
-                HiRes_Detect_ULL();
-            } else if (details[0].equals("deep_buffer")){
-                Toast.makeText(audio_stats.this,"You're not using Ultra Low Latency Mode",Toast.LENGTH_LONG).show();
-                HiRes_Detect();
-            } else {
-                Toast.makeText(audio_stats.this,"Latency Mode Not Detected",Toast.LENGTH_LONG).show();
-                dr = (TextView) findViewById(R.id.textView4);
-                sr = (TextView) findViewById(R.id.sr_status);
-                bd = (TextView) findViewById(R.id.bd_status);
-                fl = (TextView) findViewById(R.id.flags_status);
-                dr.setText("Invalid");
-                sr.setText("Invalid");
-                bd.setText("Invalid");
-                fl.setText("Invalid");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            dr = (TextView) findViewById(R.id.textView4);
-            sr = (TextView) findViewById(R.id.sr_status);
-            bd = (TextView) findViewById(R.id.bd_status);
-            fl = (TextView) findViewById(R.id.flags_status);
-            dr.setText("Invalid");
-            sr.setText("Invalid");
-            bd.setText("Invalid");
-            fl.setText("Invalid");
-            Toast.makeText(audio_stats.this, "File not found", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
+            CommandResult HiRes_SR_Dump = Shell.SU.run("grep -w Sample /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +16 > /data/data/com.hana.mao/files/hsr.txt");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void HiRes_Detect_ULL(){
-        Audio_Dump_ULL();
-        prop();
-        prop_split();
+    // Check audio bit depth (Hi-Res)
+    private void HiRes_BD_Dump(){
+        try {
+            CommandResult HiRes_BD_Dump = Shell.SU.run("grep -w format /data/data/com.hana.mao/files/audio.txt | sed -n '10p' | tail -c +26 > /data/data/com.hana.mao/files/hbd.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio buffer size (Hi-Res)
+    private void HiRes_BF_Dump(){
+        try {
+            CommandResult HiRes_BF_Dump = Shell.SU.run("grep -w size /data/data/com.hana.mao/files/audio.txt | sed -n '9p' | tail -c +20  > /data/data/com.hana.mao/files/bhr.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio flags (Hi-Res)
+    private void HiRes_FL_Dump(){
+        try {
+            CommandResult HiRes_FL_Dump = Shell.SU.run("grep -w AudioStreamOut /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +42 > /data/data/com.hana.mao/files/hfl.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio sample rates (ALSA)
+    private void Alsa_SR_Dump(){
+        try {
+            CommandResult Alsa_SR_Dump = Shell.SU.run("grep -w Sample /data/data/com.hana.mao/files/audio.txt | sed -n '3p' | tail -c +16 > /data/data/com.hana.mao/files/asr.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio bit depth (ALSA)
+    private void Alsa_BD_Dump(){
+        try {
+            CommandResult Alsa_BD = Shell.SU.run("grep -w format /data/data/com.hana.mao/files/audio.txt | sed -n '6p' | tail -c +26 > /data/data/com.hana.mao/files/abd.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio flags (ALSA)
+    private void Alsa_FL_Dump(){
+        try {
+            CommandResult Alsa_FL_Dump = Shell.SU.run("grep -w AudioStreamOut /data/data/com.hana.mao/files/audio.txt | sed -n '3p' | tail -c +42 > /data/data/com.hana.mao/files/afl.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio buffer size (ALSA)
+    private void Alsa_BF_Dump(){
+        try {
+            CommandResult Alsa_BF_Dump = Shell.SU.run("grep -w size /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +20  > /data/data/com.hana.mao/files/ba.txt");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /* Delay begin
+      Do delay for :
+      - HiRes / ALSA Bit Depth
+      - HiRes / ALSA Sample Rate
+      - HiRes / ALSA Flags
+      - HiRes / AlSA Output
+    */
+    private void HiRes_BD_Delay() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                HiRes_BD();
+            }
+        }, 2000L); //3000 L = 3 detik
+    }
+
+    private void HiRes_FL_Delay() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                HiRes_FL();
+            }
+        }, 2000L); //3000 L = 3 detik
+    }
+
+    private void HiRes_SR_Delay() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                HiRes_SR();
+            }
+        }, 2000L); //3000 L = 3 detik
+    }
+
+    private void HiRes_Out_Delay() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                HiRes_O();
+            }
+        }, 2000L); //3000 L = 3 detik
+    }
+
+    private void HiRes_Buffer_Delay() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Buffer_HiRes();
+            }
+        }, 2000L); //3000 L = 3 detik
+    }
+
+    private void Alsa_BD_Delay() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Alsa_BD();
+            }
+        }, 2000L); //3000 L = 3 detik
+    }
+
+    private void Alsa_FL_Delay() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Alsa_FL();
+            }
+        }, 2000L); //3000 L = 3 detik
+    }
+
+    private void Alsa_SR_Delay() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Alsa_SR();
+            }
+        }, 2000L); //3000 L = 3 detik
+    }
+
+    private void Alsa_Out_Delay() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Alsa_O();
+            }
+        }, 2000L); //3000 L = 3 detik
+    }
+
+    private void Alsa_Buffer_Delay() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Buffer_Alsa();
+            }
+        }, 2000L); //3000 L = 3 detik
+    }
+
+    // Detect Hi-Res / ALSA State
+    private void HiRes_Detect(){
+        HiRes_Audio_Dump();
+        TextView dr = (TextView) findViewById(R.id.textView4);
         FileInputStream fstream;
         try {
-            fstream = openFileInput("fshr.txt");
+            fstream = openFileInput("hrad.txt");
             StringBuffer sbuffer = new StringBuffer();
             int i;
             while ((i = fstream.read())!= -1){
@@ -244,237 +314,50 @@ public class audio_stats extends AppCompatActivity {
             fstream.close();
             String details[] = sbuffer.toString().split("\n");
             if (details[0].equals("(DIRECT)")){
-                dr = (TextView) findViewById(R.id.textView4);
                 dr.setText("Hi-Res Audio Driver");
-                HiRes_SR_ULL();
-                HiRes_BD_ULL();
-                HiRes_FL_ULL();
-                Hires_O_ULL_CHK();
-                Buffer_HiRes_ULL();
-            } else if (details[0].equals(" (DIRECT)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("Hi-Res Audio Driver");
-                HiRes_SR_ULL();
-                HiRes_BD_ULL();
-                HiRes_FL_ULL();
-                Hires_O_ULL_CHK();
-                Buffer_HiRes_ULL();
-            } else if (details[0].equals("1 (DIRECT)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("Hi-Res Audio Driver");
-                HiRes_SR_ULL();
-                HiRes_BD_ULL();
-                HiRes_FL_ULL();
-                Hires_O_ULL_CHK();
-                Buffer_HiRes_ULL();
-            } else if (details[0].equals(" 1 (DIRECT)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("Hi-Res Audio Driver");
-                HiRes_SR_ULL();
-                HiRes_BD_ULL();
-                HiRes_FL_ULL();
-                Hires_O_ULL_CHK();
-                Buffer_HiRes_ULL();
-            } else if (details[0].equals("(MIXER)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("ALSA Audio Driver");
-                Alsa_SR_ULL();
-                Alsa_BD_ULL();
-                Alsa_FL_ULL();
-                Alsa_O_ULL_CHK();
-                Buffer_Alsa_ULL();
+                // Dump Audio state for specific driver only after drivers detected
+                HiRes_SR_Dump();
+                HiRes_BD_Dump();
+                HiRes_BF_Dump();
+                HiRes_FL_Dump();
+                HiRes_Out_Dump();
+
+                // Do delay
+                HiRes_BD_Delay();
+                HiRes_SR_Delay();
+                HiRes_Out_Delay();
+                HiRes_FL_Delay();
+                HiRes_Buffer_Delay();
             } else {
-                Alsa_Detect_ULL();
+                dr.setText("ALSA Audio Driver");
+                // Dump Audio state for specific driver only after drivers detected
+                Alsa_BD_Dump();
+                Alsa_BF_Dump();
+                Alsa_FL_Dump();
+                Alsa_Out_Dump();
+                Alsa_SR_Dump();
+
+                // Do delay
+                Alsa_BD_Delay();
+                Alsa_SR_Delay();
+                Alsa_Out_Delay();
+                Alsa_FL_Delay();
+                Alsa_Buffer_Delay();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            dr = (TextView) findViewById(R.id.textView4);
-            sr = (TextView) findViewById(R.id.sr_status);
-            bd = (TextView) findViewById(R.id.bd_status);
-            fl = (TextView) findViewById(R.id.flags_status);
-            dr.setText("Invalid");
-            sr.setText("Invalid");
-            bd.setText("Invalid");
-            fl.setText("Invalid");
-            Toast.makeText(audio_stats.this, "File not found", Toast.LENGTH_LONG).show();
+            dr.setText("Not Detected");
+            sr.setText("Not Detected");
+            bd.setText("Not Detected");
+            fl.setText("Not Detected");
         } catch (IOException e) {
             e.printStackTrace();
+            dr.setText("Not Detected");
         }
     }
 
-    private void Alsa_Detect_ULL(){
-        Alsa_Dump_ULL();
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("ad.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("(MIXER)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("ALSA Audio Driver");
-                Alsa_SR_ULL();
-                Alsa_BD_ULL();
-                Alsa_FL_ULL();
-                Alsa_O_ULL_CHK();
-                Buffer_Alsa_ULL();
-            }  else if (details[0].equals("MIXER)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("ALSA Audio Driver");
-                Alsa_SR_ULL();
-                Alsa_BD_ULL();
-                Alsa_FL_ULL();
-                Alsa_O_ULL_CHK();
-                Buffer_Alsa_ULL();
-            } else if (details[0].equals("0 (MIXER):")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("ALSA Audio Driver");
-                Alsa_SR_ULL();
-                Alsa_BD_ULL();
-                Alsa_FL_ULL();
-                Alsa_O_ULL_CHK();
-                Buffer_Alsa_ULL();
-            } else {
-                HiRes_Record_Detect_ULL();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            dr = (TextView) findViewById(R.id.textView4);
-            sr = (TextView) findViewById(R.id.sr_status);
-            bd = (TextView) findViewById(R.id.bd_status);
-            fl = (TextView) findViewById(R.id.flags_status);
-            dr.setText("Invalid");
-            sr.setText("Invalid");
-            bd.setText("Invalid");
-            fl.setText("Invalid");
-            Toast.makeText(audio_stats.this, "File not found", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void HiRes_Record_Detect_ULL(){
-        HiRes_Record_Dump_ULL();
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("hrrd.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("(RECORD)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("Record Audio Driver");
-                Alsa_SR_ULL();
-                Alsa_BD_ULL();
-                Alsa_FL_ULL();
-                Alsa_O_ULL_CHK();
-                Buffer_Alsa_ULL();
-            } else if (details[0].equals("RECORD)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("ALSA Audio Driver");
-                Alsa_SR_ULL();
-                Alsa_BD_ULL();
-                Alsa_FL_ULL();
-                Alsa_O_ULL_CHK();
-                Buffer_Alsa_ULL();
-            } else if (details[0].equals(" (RECORD):")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("ALSA Audio Driver");
-                Alsa_SR_ULL();
-                Alsa_BD_ULL();
-                Alsa_FL_ULL();
-                Alsa_O_ULL_CHK();
-                Buffer_Alsa_ULL();
-            } else {
-                Record_Detect_ULL();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            dr = (TextView) findViewById(R.id.textView4);
-            sr = (TextView) findViewById(R.id.sr_status);
-            bd = (TextView) findViewById(R.id.bd_status);
-            fl = (TextView) findViewById(R.id.flags_status);
-            dr.setText("Invalid");
-            sr.setText("Invalid");
-            bd.setText("Invalid");
-            fl.setText("Invalid");
-            Toast.makeText(audio_stats.this, "File not found", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void Record_Detect_ULL(){
-        Record_Dump_ULL();
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("rd.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("(RECORD)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("Record Audio Driver");
-                Alsa_SR_ULL();
-                Alsa_BD_ULL();
-                Alsa_FL_ULL();
-                Alsa_O_ULL_CHK();
-                Buffer_Alsa_ULL();
-            } else if (details[0].equals("RECORD)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("Record Audio Driver");
-                Alsa_SR_ULL();
-                Alsa_BD_ULL();
-                Alsa_FL_ULL();
-                Alsa_O_ULL_CHK();
-                Buffer_Alsa_ULL();
-            } else if (details[0].equals(" (RECORD):")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("Record Audio Driver");
-                Alsa_SR_ULL();
-                Alsa_BD_ULL();
-                Alsa_FL_ULL();
-                Alsa_O_ULL_CHK();
-                Buffer_Alsa_ULL();
-            } else {
-                HiRes_Detect();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            dr = (TextView) findViewById(R.id.textView4);
-            sr = (TextView) findViewById(R.id.sr_status);
-            bd = (TextView) findViewById(R.id.bd_status);
-            fl = (TextView) findViewById(R.id.flags_status);
-            dr.setText("Invalid");
-            sr.setText("Invalid");
-            bd.setText("Invalid");
-            fl.setText("Invalid");
-            Toast.makeText(audio_stats.this, "File not found", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private  void HiRes_SR_ULL(){
-        try {
-            CommandResult SR = Shell.SU.run("grep -w Sample /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +16 > /data/data/com.hana.mao/files/hsr.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        sr = (TextView) findViewById(R.id.sr_status);
+    private  void HiRes_SR(){
+        TextView sr = (TextView) findViewById(R.id.sr_status);
 
         FileInputStream fstream;
         try {
@@ -488,23 +371,15 @@ public class audio_stats extends AppCompatActivity {
             String details[] = sbuffer.toString().split("\n");
             sr.setText(details[0]);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            sr.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Sample Rate", Toast.LENGTH_LONG).show();
+            sr.setText("Not Detected");
         } catch (IOException e) {
             e.printStackTrace();
-            sr.setVisibility(View.GONE);
+            sr.setText("Not Detected");
         }
     }
 
-    private void HiRes_BD_ULL(){
-        try {
-            CommandResult SR = Shell.SU.run("grep -w format /data/data/com.hana.mao/files/audio.txt | sed -n '10p' | tail -c +26 > /data/data/com.hana.mao/files/hbd.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        bd = (TextView) findViewById(R.id.bd_status);
+    private void HiRes_BD(){
+        TextView bd = (TextView) findViewById(R.id.bd_status);
 
         FileInputStream fstream;
         try {
@@ -527,26 +402,19 @@ public class audio_stats extends AppCompatActivity {
             } else if (details[0].equals("(AUDIO_FORMAT_PCM_32_BIT)")){
                 bd.setText("32 Bit");
             } else {
-                bd.setText("Invalid Bit Depth");
+                bd.setText("Not Detected");
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            bd.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Bit Depth", Toast.LENGTH_LONG).show();
+            bd.setText("Not Detected");
         } catch (IOException e) {
             e.printStackTrace();
-            bd.setVisibility(View.GONE);
+            bd.setText("Not Detected");
         }
     }
 
-    private void HiRes_FL_ULL(){
-        try {
-            CommandResult SR = Shell.SU.run("grep -w AudioStreamOut /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +40 > /data/data/com.hana.mao/files/hfl.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+    private void HiRes_FL(){
+        TextView fl = (TextView) findViewById(R.id.flags_status);
 
-        fl = (TextView) findViewById(R.id.flags_status);
         FileInputStream fstream;
         try {
             fstream = openFileInput("hfl.txt");
@@ -559,66 +427,25 @@ public class audio_stats extends AppCompatActivity {
             String details[] = sbuffer.toString().split("\n");
             if (details[0].equals("(AUDIO_OUTPUT_FLAG_DIRECT)")){
                 fl.setText("DIRECT");
-            } else if (details[0].equals("1 (AUDIO_OUTPUT_FLAG_DIRECT)")){
-                fl.setText("DIRECT");
             } else if (details[0].equals("AUDIO_OUTPUT_FLAG_DEEP_BUFFER")){
                 fl.setText("DEEP BUFFER");
-            }  else if (details[0].equals("(AUDIO_OUTPUT_FLAG_FAST|AUDIO_OUTPUT_FLAG_PRIMARY)")){
-                fl.setText("FAST | PRIMARY");
-            } else if (details[0].equals("(AUDIO_OUTPUT_FLAG_FAST|AUDIO_OUTPUT_FLAG_RAW)")){
-                fl.setText("FAST | RAW");
-            } else if (details[0].equals("(AUDIO_OUTPUT_FLAG_PRIMARY|AUDIO_OUTPUT_FLAG_FAST)")){
-                fl.setText("PRIMARY | FAST");
-            } else if (details[0].equals("(AUDIO_OUTPUT_FLAG_RAW)")){
-                fl.setText("RAW");
-            } else if (details[0].equals("(AUDIO_OUTPUT_FLAG_NONE)")){
-                fl.setText("NONE");
             } else {
-                fl.setText("Invalid Flags");
+                fl.setText("Not Detected");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            fl.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Flags", Toast.LENGTH_LONG).show();
+            fl.setText("Not Detected");
         } catch (IOException e) {
-            e.printStackTrace();
-            fl.setVisibility(View.GONE);
+            fl.setText("Not Detected");
         }
     }
 
-    private  void Hires_O_ULL_CHK() {
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("split.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("9")){
-                HiRes_O_ULL();
-            } else if (details[0].equals("10")){
-                HiRes_O_ULL_Q();
-            } else {
-                o.setText("Standby");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void HiRes_O_ULL(){
-        o = (TextView) findViewById(R.id.out_status);
-
-        HiRes_Out_Dump_ULL();
+    private void HiRes_O(){
+        final TextView o = (TextView) findViewById(R.id.out_status);
 
         FileInputStream fstream;
         try {
-            fstream = openFileInput("ho.txt");
+            fstream = openFileInput("hod.txt");
             StringBuffer sbuffer = new StringBuffer();
             int i;
             while ((i = fstream.read())!= -1){
@@ -630,67 +457,45 @@ public class audio_stats extends AppCompatActivity {
                 o.setText("Wired Headset");
             } else if (details[0].equals("(AUDIO_DEVICE_OUT_SPEAKER)")){
                 o.setText("Speaker");
-            } else if (details[0].equals("000 (AUDIO_DEVICE_OUT_LINE)")){
-                o.setText("Line Out");
-            } else if (details[0].equals("(AUDIO_DEVICE_OUT_WIRED_HEADPHONE)")){
-                o.setText("Wired Headphone");
-            } else if (details[0].equals("(AUDIO_DEVICE_OUT_AUX_DIGITAL)")){
-                o.setText("AUX");
             } else {
-                o.setText("Standby");
+                o.setText("Not Detected");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+            o.setText("Not Detected");
+        } catch (IOException e) {
+            o.setText("Not Detected");
         }
     }
 
-    private void HiRes_O_ULL_Q(){
-        o = (TextView) findViewById(R.id.out_status);
-
-        HiRes_Out_Dump_ULL_Q();
-
+    private void Buffer_HiRes(){
         FileInputStream fstream;
+
+        TextView bc = (TextView) findViewById(R.id.buffer_status);
+
         try {
-            fstream = openFileInput("hoq.txt");
+            fstream = openFileInput("bhr.txt");
             StringBuffer sbuffer = new StringBuffer();
             int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
+            while ((i = fstream.read()) != -1) {
+                sbuffer.append((char) i);
             }
             fstream.close();
             String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("(AUDIO_DEVICE_OUT_WIRED_HEADSET)")){
-                o.setText("Wired Headset");
-            } else if (details[0].equals("(AUDIO_DEVICE_OUT_SPEAKER)")){
-                o.setText("Speaker");
-            } else if (details[0].equals("000 (AUDIO_DEVICE_OUT_LINE)")){
-                o.setText("Line Out");
-            } else if (details[0].equals("(AUDIO_DEVICE_OUT_WIRED_HEADPHONE)")){
-                o.setText("Wired Headphone");
-            } else if (details[0].equals("(AUDIO_DEVICE_OUT_AUX_DIGITAL)")){
-                o.setText("AUX");
-            } else {
-                o.setText("Standby");
-            }
+            bc.setText(details[0]);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+            bc.setText("Not Detected");
+        } catch (IOException e) {
+            bc.setText("Not Detected");
         }
     }
 
-    private  void Alsa_SR_ULL(){
-        try {
-            CommandResult SR = Shell.SU.run("grep -w Sample /data/data/com.hana.mao/files/audio.txt | sed -n '3p' | tail -c +16 > /data/data/com.hana.mao/files/asr.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        sr = (TextView) findViewById(R.id.sr_status);
-
+    private void Alsa_SR(){
         FileInputStream fstream;
+
+        TextView sr = (TextView) findViewById(R.id.sr_status);
+
         try {
             fstream = openFileInput("asr.txt");
             StringBuffer sbuffer = new StringBuffer();
@@ -703,24 +508,17 @@ public class audio_stats extends AppCompatActivity {
             sr.setText(details[0]);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            sr.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Sample Rate", Toast.LENGTH_LONG).show();
+            sr.setText("Not Detected");
         } catch (IOException e) {
-            e.printStackTrace();
-            sr.setVisibility(View.GONE);
+            sr.setText("Not Detected");
         }
     }
 
-    private void Alsa_BD_ULL(){
-        try {
-            CommandResult SR = Shell.SU.run("grep -w format /data/data/com.hana.mao/files/audio.txt | sed -n '6p' | tail -c +26 > /data/data/com.hana.mao/files/abd.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        bd = (TextView) findViewById(R.id.bd_status);
-
+    private void Alsa_BD(){
         FileInputStream fstream;
+
+        TextView bd = (TextView) findViewById(R.id.bd_status);
+
         try {
             fstream = openFileInput("abd.txt");
             StringBuffer sbuffer = new StringBuffer();
@@ -737,27 +535,21 @@ public class audio_stats extends AppCompatActivity {
             } else if (details[0].equals("(AUDIO_FORMAT_PCM_FLOAT)")){
                 bd.setText("Floating Point Bit Depth");
             } else {
-                bd.setText("Invalid Bit Depth");
+                bd.setText("Not Detected");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            bd.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Bit Depth", Toast.LENGTH_LONG).show();
+            bd.setText("Not Detected");
         } catch (IOException e) {
-            e.printStackTrace();
-            bd.setVisibility(View.GONE);
+            bd.setText("Not Detected");
         }
     }
 
-    private void Alsa_FL_ULL(){
-        try {
-            CommandResult SR = Shell.SU.run("grep -w AudioStreamOut /data/data/com.hana.mao/files/audio.txt | sed -n '3p' | tail -c +40 > /data/data/com.hana.mao/files/afl.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        fl = (TextView) findViewById(R.id.flags_status);
+    private void Alsa_FL(){
         FileInputStream fstream;
+
+        TextView fl = (TextView) findViewById(R.id.flags_status);
+
         try {
             fstream = openFileInput("afl.txt");
             StringBuffer sbuffer = new StringBuffer();
@@ -769,62 +561,26 @@ public class audio_stats extends AppCompatActivity {
             String details[] = sbuffer.toString().split("\n");
             if (details[0].equals("(AUDIO_OUTPUT_FLAG_DEEP_BUFFER)")){
                 fl.setText("DEEP BUFFER");
-            } else if (details[0].equals("(AUDIO_OUTPUT_FLAG_FAST|AUDIO_OUTPUT_FLAG_PRIMARY)")){
-                fl.setText("FAST | PRIMARY");
-            } else if (details[0].equals("(AUDIO_OUTPUT_FLAG_FAST|AUDIO_OUTPUT_FLAG_RAW)")){
-                fl.setText("FAST | RAW");
             } else if (details[0].equals("(AUDIO_OUTPUT_FLAG_PRIMARY|AUDIO_OUTPUT_FLAG_FAST)")){
                 fl.setText("PRIMARY | FAST");
-            } else if (details[0].equals("(AUDIO_OUTPUT_FLAG_NONE)")){
-                fl.setText("NONE");
-            } else if (details[0].equals("(AUDIO_OUTPUT_FLAG_RAW)")){
-                fl.setText("RAW");
             } else {
-                fl.setText("Invalid Flags");
+                fl.setText("Not Detected");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            fl.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Flags", Toast.LENGTH_LONG).show();
+            fl.setText("Not Detected");
         } catch (IOException e) {
-            e.printStackTrace();
-            fl.setVisibility(View.GONE);
+            fl.setText("Not Detected");
         }
     }
 
-    private  void Alsa_O_ULL_CHK() {
+    private void Alsa_O(){
         FileInputStream fstream;
+
+        TextView o = (TextView) findViewById(R.id.out_status);
+
         try {
-            fstream = openFileInput("split.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("9")){
-                Alsa_O_ULL();
-            } else if (details[0].equals("10")){
-                Alsa_O_ULL_Q();
-            } else {
-                o.setText("Standby");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void Alsa_O_ULL(){
-        o = (TextView) findViewById(R.id.out_status);
-
-        Alsa_Out_Dump_ULL();
-
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("ao.txt");
+            fstream = openFileInput("aod.txt");
             StringBuffer sbuffer = new StringBuffer();
             int i;
             while ((i = fstream.read())!= -1){
@@ -836,97 +592,22 @@ public class audio_stats extends AppCompatActivity {
                 o.setText("Wired Headset");
             } else if (details[0].equals("(AUDIO_DEVICE_OUT_SPEAKER)")){
                 o.setText("Speaker");
-            } else if (details[0].equals("(AUDIO_DEVICE_OUT_LINE)")){
-                o.setText("Line Out");
-            } else if (details[0].equals("(AUDIO_DEVICE_OUT_WIRED_HEADPHONE)")){
-                o.setText("Wired Headphone");
-            } else if (details[0].equals("(AUDIO_DEVICE_OUT_AUX_DIGITAL)")){
-                o.setText("AUX");
             } else {
-                o.setText("Standby");
+                o.setText("Not Detected");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            o.setText("Not Detected");
         } catch (Exception e) {
-            e.printStackTrace();
+            o.setText("Not Detected");
         }
     }
 
-    private void Alsa_O_ULL_Q(){
-        o = (TextView) findViewById(R.id.out_status);
-
-        Alsa_Out_Dump_ULL();
-
+    private void Buffer_Alsa(){
         FileInputStream fstream;
-        try {
-            fstream = openFileInput("aoq.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("(AUDIO_DEVICE_OUT_WIRED_HEADSET)")){
-                o.setText("Wired Headset");
-            } else if (details[0].equals("(AUDIO_DEVICE_OUT_SPEAKER)")){
-                o.setText("Speaker");
-            } else if (details[0].equals("(AUDIO_DEVICE_OUT_LINE)")){
-                o.setText("Line Out");
-            } else if (details[0].equals("(AUDIO_DEVICE_OUT_WIRED_HEADPHONE)")){
-                o.setText("Wired Headphone");
-            } else if (details[0].equals("(AUDIO_DEVICE_OUT_AUX_DIGITAL)")){
-                o.setText("AUX");
-            } else {
-                o.setText("Standby");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    private void Buffer_HiRes_ULL(){
-        try {
-            CommandResult BHR = Shell.SU.run("grep -w size /data/data/com.hana.mao/files/audio.txt | sed -n '9p' | tail -c +20  > /data/data/com.hana.mao/files/bhr.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        TextView bc = (TextView) findViewById(R.id.buffer_status);
 
-        bc = (TextView) findViewById(R.id.buffer_status);
-
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("bhr.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read()) != -1) {
-                sbuffer.append((char) i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            bc.setText(details[0]);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            bc.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Buffer Size", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            bc.setVisibility(View.GONE);
-        }
-    }
-
-    private void Buffer_Alsa_ULL(){
-        try {
-            CommandResult BA = Shell.SU.run("grep -w size /data/data/com.hana.mao/files/audio.txt | sed -n '5p' | tail -c +20  > /data/data/com.hana.mao/files/ba.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        bc = (TextView) findViewById(R.id.buffer_status);
-
-        FileInputStream fstream;
         try {
             fstream = openFileInput("ba.txt");
             StringBuffer sbuffer = new StringBuffer();
@@ -939,653 +620,13 @@ public class audio_stats extends AppCompatActivity {
             bc.setText(details[0]);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            bc.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Buffer Size", Toast.LENGTH_LONG).show();
+            bc.setText("Not Detected");
         } catch (IOException e) {
-            e.printStackTrace();
-            bc.setVisibility(View.GONE);
-        }
-    }
-
-    private void HiRes_Detect(){
-        try {
-            CommandResult HFS = Shell.SU.run("grep -w type /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +62 | sed 's/.$//' > /data/data/com.hana.mao/files/hrfs.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("hrfs.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("(DIRECT)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("Hi-Res Audio Driver");
-                HiRes_SR();
-                HiRes_BD();
-                HiRes_FL();
-                HiRes_O_CHK();
-                Buffer_HiRes();
-            } else if (details[0].equals("(RECORD)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("RECORD Audio State");
-                Alsa_SR();
-                Alsa_BD();
-                Alsa_FL();
-                Alsa_O_CHK();
-                Buffer_Alsa();
-            } else if (details[0].equals(" (DIRECT)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("Hi-Res Audio Driver");
-                HiRes_SR();
-                HiRes_BD();
-                HiRes_FL();
-                HiRes_O_CHK();
-                Buffer_HiRes();
-            } else if (details[0].equals("1 (DIRECT)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("Hi-Res Audio Driver");
-                HiRes_SR();
-                HiRes_BD();
-                HiRes_FL();
-                HiRes_O_CHK();
-                Buffer_HiRes();
-            }  else if (details[0].equals("(MIXER)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("ALSA Audio Driver");
-                Alsa_SR();
-                Alsa_BD();
-                Alsa_FL();
-                Alsa_O_CHK();
-                Buffer_Alsa();
-            } else if (details[0].equals("MIXER)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("ALSA Audio Driver");
-                Alsa_SR();
-                Alsa_BD();
-                Alsa_FL();
-                Alsa_O_CHK();
-                Buffer_Alsa();
-            } else {
-                Alsa_Detect();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            dr = (TextView) findViewById(R.id.textView4);
-            sr = (TextView) findViewById(R.id.sr_status);
-            bd = (TextView) findViewById(R.id.bd_status);
-            fl = (TextView) findViewById(R.id.flags_status);
-            dr.setText("Invalid");
-            sr.setText("Invalid");
-            bd.setText("Invalid");
-            fl.setText("Invalid");
-            Toast.makeText(audio_stats.this, "File not found", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void Alsa_Detect(){
-        try {
-            CommandResult AFS = Shell.SU.run("grep -w type /data/data/com.hana.mao/files/audio.txt | sed -n '2p' | tail -c +62 | sed 's/.$//' > /data/data/com.hana.mao/files/afs.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("afs.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("(MIXER)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("ALSA Audio Driver");
-                Alsa_SR();
-                Alsa_BD();
-                Alsa_FL();
-                Alsa_O_CHK();
-                Buffer_Alsa();
-            } else if (details[0].equals("MIXER)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("ALSA Audio Driver");
-                Alsa_SR();
-                Alsa_BD();
-                Alsa_FL();
-                Alsa_O_CHK();
-                Buffer_Alsa();
-            } else if (details[0].equals(" (MIXER)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("ALSA Audio Driver");
-                Alsa_SR();
-                Alsa_BD();
-                Alsa_FL();
-                Alsa_O_CHK();
-                Buffer_Alsa();
-            } else if (details[0].equals("(RECORD)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("ALSA Audio Driver");
-                Alsa_SR();
-                Alsa_BD();
-                Alsa_FL();
-                Alsa_O_CHK();
-                Buffer_Alsa();
-            } else if (details[0].equals("ECORD)")){
-                dr = (TextView) findViewById(R.id.textView4);
-                dr.setText("ALSA Audio Driver");
-                Alsa_SR();
-                Alsa_BD();
-                Alsa_FL();
-                Alsa_O_CHK();
-                Buffer_Alsa();
-            }  else {
-                Alsa_Detect();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            dr = (TextView) findViewById(R.id.textView4);
-            sr = (TextView) findViewById(R.id.sr_status);
-            bd = (TextView) findViewById(R.id.bd_status);
-            fl = (TextView) findViewById(R.id.flags_status);
-            dr.setText("Invalid");
-            sr.setText("Invalid");
-            bd.setText("Invalid");
-            fl.setText("Invalid");
-            Toast.makeText(audio_stats.this, "File not found", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void HiRes_SR(){
-        try {
-            CommandResult SR = Shell.SU.run("grep -w Sample /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +16 > /data/data/com.hana.mao/files/fshsr.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        sr = (TextView) findViewById(R.id.sr_status);
-
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("fshsr.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            sr.setText(details[0]);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            sr.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Sample Rate", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            sr.setVisibility(View.GONE);
-        }
-    }
-
-    private void HiRes_BD(){
-        try {
-            CommandResult SR = Shell.SU.run("grep -w format /data/data/com.hana.mao/files/audio.txt | sed -n '7p' | tail -c +20 | sed 's/.$//' > /data/data/com.hana.mao/files/fshbd.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        bd = (TextView) findViewById(R.id.bd_status);
-
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("fshbd.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("AUDIO_FORMAT_PCM_FLOAT")){
-                bd.setText("Floating Point Bit Depth");
-            } else if (details[0].equals("AUDIO_FORMAT_PCM_16_BIT")){
-                bd.setText("16 Bit");
-            } else if (details[0].equals("AUDIO_FORMAT_PCM_24_BIT_PACKED")){
-                bd.setText("24 Bit (Digital)");
-            } else if (details[0].equals("AUDIO_FORMAT_PCM_8_24_BIT")){
-                bd.setText("24 Bit (Analog)");
-            } else if (details[0].equals("AUDIO_FORMAT_PCM_32_BIT")){
-                bd.setText("32 Bit");
-            } else {
-                bd.setText("Invalid Bit Depth");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            bd.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Bit Depth", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            bd.setVisibility(View.GONE);
-        }
-    }
-
-    private void HiRes_FL(){
-        try {
-            CommandResult SR = Shell.SU.run("grep -w AudioStreamOut /data/data/com.hana.mao/files/audio.txt | sed -n '4p' | tail -c +41 | sed 's/.$//' > /data/data/com.hana.mao/files/fshfl.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        fl = (TextView) findViewById(R.id.flags_status);
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("fshfl.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("AUDIO_OUTPUT_FLAG_DIRECT")){
-                fl.setText("DIRECT");
-            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_DEEP_BUFFER")){
-                fl.setText("DEEP BUFFER");
-            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_FAST|AUDIO_OUTPUT_FLAG_PRIMARY")){
-                fl.setText("FAST | PRIMARY");
-            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_FAST|AUDIO_OUTPUT_FLAG_RAW")){
-                fl.setText("FAST | RAW");
-            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_PRIMARY|AUDIO_OUTPUT_FLAG_FAST")){
-                fl.setText("PRIMARY | FAST");
-            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_NONE")){
-                fl.setText("NONE");
-            }else if (details[0].equals("AUDIO_OUTPUT_FLAG_RAW")){
-                fl.setText("RAW");
-            } else {
-                fl.setText("Invalid Flags");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            fl.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Flags", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            fl.setVisibility(View.GONE);
-        }
-    }
-
-    private void HiRes_O_CHK(){
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("split.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("9")){
-                HiRes_O();
-            } else if (details[0].equals("10")){
-                HiRes_O_Q();
-            } else {
-                o.setText("Standby");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void HiRes_O(){
-        o = (TextView) findViewById(R.id.out_status);
-
-        HiRes_Out_Dump();
-
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("fsho.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")){
-                o.setText("Wired Headset");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_SPEAKER")){
-                o.setText("Speaker");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_LINE")){
-                o.setText("Line Out");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADPHONE")){
-                o.setText("Wired Headphone");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_AUX_DIGITAL")){
-                o.setText("AUX");
-            } else {
-                o.setText("Standby");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void HiRes_O_Q(){
-        o = (TextView) findViewById(R.id.out_status);
-
-        HiRes_Out_Dump_Q();
-
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("fsho.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")){
-                o.setText("Wired Headset");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_SPEAKER")){
-                o.setText("Speaker");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_LINE")){
-                o.setText("Line Out");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADPHONE")){
-                o.setText("Wired Headphone");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_AUX_DIGITAL")){
-                o.setText("AUX");
-            } else {
-                o.setText("Standby");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void Alsa_SR(){
-        try {
-            CommandResult SR = Shell.SU.run("grep -w Sample /data/data/com.hana.mao/files/audio.txt | sed -n '2p' | tail -c +16 > /data/data/com.hana.mao/files/fsasr.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        sr = (TextView) findViewById(R.id.sr_status);
-
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("fsasr.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            sr.setText(details[0]);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            sr.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Sample Rate", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            sr.setVisibility(View.GONE);
-        }
-    }
-
-    private void Alsa_BD(){
-        try {
-            CommandResult SR = Shell.SU.run("grep -w format /data/data/com.hana.mao/files/audio.txt | sed -n '3p' | tail -c +20 | sed 's/.$//' > /data/data/com.hana.mao/files/fsabd.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        bd = (TextView) findViewById(R.id.bd_status);
-
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("fsabd.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("AUDIO_FORMAT_PCM_24_BIT_PACKED")){
-                bd.setText("24 Bit (Digital)");
-            } else if (details[0].equals("AUDIO_FORMAT_PCM_16_BIT")){
-                bd.setText("16 Bit");
-            } else if (details[0].equals("AUDIO_FORMAT_PCM_FLOAT")){
-                bd.setText("Floating Point Bit Depth");
-            } else {
-                bd.setText("Invalid Bit Depth");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            bd.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Bit Depth", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            bd.setVisibility(View.GONE);
-        }
-    }
-
-    private void Alsa_FL(){
-        try {
-            CommandResult SR = Shell.SU.run("grep -w AudioStreamOut /data/data/com.hana.mao/files/audio.txt | sed -n '2p' | tail -c +41 | sed 's/.$//' > /data/data/com.hana.mao/files/fsafl.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        fl = (TextView) findViewById(R.id.flags_status);
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("fsafl.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("AUDIO_OUTPUT_FLAG_DEEP_BUFFER")){
-                fl.setText("DEEP BUFFER");
-            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_FAST|AUDIO_OUTPUT_FLAG_PRIMARY")){
-                fl.setText("FAST | PRIMARY");
-            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_FAST|AUDIO_OUTPUT_FLAG_RAW")){
-                fl.setText("FAST | RAW");
-            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_PRIMARY|AUDIO_OUTPUT_FLAG_FAST")){
-                fl.setText("PRIMARY | FAST");
-            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_RAW")){
-                fl.setText("RAW");
-            } else if (details[0].equals("AUDIO_OUTPUT_FLAG_NONE")){
-                fl.setText("NONE");
-            }else {
-                fl.setText("Invalid Flags");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            fl.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Flags", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            fl.setVisibility(View.GONE);
-        }
-    }
-
-    private void Alsa_O_CHK(){
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("split.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("9")){
-                Alsa_O();
-            } else if (details[0].equals("10")){
-                Alsa_O_Q();
-            } else {
-                o.setText("Standby");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void Alsa_O(){
-        o = (TextView) findViewById(R.id.out_status);
-
-        Alsa_Out_Dump();
-
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("fsao.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")){
-                o.setText("Wired Headset");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_SPEAKER")){
-                o.setText("Speaker");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_LINE")){
-                o.setText("Line Out");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADPHONE")){
-                o.setText("Wired Headphone");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_AUX_DIGITAL")){
-                o.setText("AUX");
-            } else {
-                o.setText("Standby");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void Alsa_O_Q(){
-        o = (TextView) findViewById(R.id.out_status);
-
-        Alsa_Out_Dump_Q();
-
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("fsao.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read())!= -1){
-                sbuffer.append((char)i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADSET")){
-                o.setText("Wired Headset");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_SPEAKER")){
-                o.setText("Speaker");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_LINE")){
-                o.setText("Line Out");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_WIRED_HEADPHONE")){
-                o.setText("Wired Headphone");
-            } else if (details[0].equals("AUDIO_DEVICE_OUT_AUX_DIGITAL")){
-                o.setText("AUX");
-            } else {
-                o.setText("Standby");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void Buffer_HiRes(){
-        try {
-            CommandResult BHR = Shell.SU.run("grep -w size /data/data/com.hana.mao/files/audio.txt | sed -n '7p' | tail -c +20  > /data/data/com.hana.mao/files/fsbhr.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        bc = (TextView) findViewById(R.id.buffer_status);
-
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("fsbhr.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read()) != -1) {
-                sbuffer.append((char) i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            bc.setText(details[0]);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            bc.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Buffer Size", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            bc.setVisibility(View.GONE);
-        }
-    }
-
-    private void Buffer_Alsa(){
-        try {
-            CommandResult BA = Shell.SU.run("grep -w size /data/data/com.hana.mao/files/audio.txt | sed -n '3p' | tail -c +20  > /data/data/com.hana.mao/files/fsba.txt");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        bc = (TextView) findViewById(R.id.buffer_status);
-
-        FileInputStream fstream;
-        try {
-            fstream = openFileInput("fsba.txt");
-            StringBuffer sbuffer = new StringBuffer();
-            int i;
-            while ((i = fstream.read()) != -1) {
-                sbuffer.append((char) i);
-            }
-            fstream.close();
-            String details[] = sbuffer.toString().split("\n");
-            bc.setText(details[0]);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            bc.setVisibility(View.GONE);
-            Toast.makeText(audio_stats.this,"Invalid Buffer Size", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            bc.setVisibility(View.GONE);
+            bc.setText("Not Detected");
         }
     }
 
     private void Clean() {
-        CommandResult clean = Shell.SU.run("rm /data/data/com.hana.mao/files/*.txt");
+        CommandResult clean = Shell.SU.run("rm -rvf /data/data/com.hana.mao/files/*.txt");
     }
 }
