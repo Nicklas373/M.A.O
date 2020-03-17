@@ -37,7 +37,6 @@ public class audio_stats extends AppCompatActivity {
         final Button refresh = (Button) findViewById(R.id.btn_refresh);
 
         // Run init component
-        Codename();
         MediaFlinger();
         HiRes_Audio_Dump();
         HiRes_Detect();
@@ -260,13 +259,6 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
-    // Declare device codename
-    private void Codename() {
-        TextView codename = (TextView) findViewById(R.id.codename);
-
-        codename.setText(Build.MODEL);
-    }
-
     /* Delay begin
       Do delay for :
       - HiRes / ALSA Bit Depth
@@ -376,12 +368,17 @@ public class audio_stats extends AppCompatActivity {
 
     // Detect Hi-Res / ALSA State
     private void HiRes_Detect(){
-        final TextView codename = (TextView) findViewById(R.id.codename);
+        // Use string to save device models
+        String codename = Build.MODEL;
 
-        // Check device codename (Try to fix compatibility for lavender
-        if (codename.getText().toString().equalsIgnoreCase("mido")) {
+        /* Check device codename (Try to fix compatibility for lavender)
+            Since i use MODEL for build details, then
+            Mido will equals to Redmi Note 4
+            Lavender will equals to Redmi Note 7
+        */
+        if (codename.equalsIgnoreCase("Redmi Note 4")) {
             HiRes_Audio_Dump();
-        } else if (codename.getText().toString().equalsIgnoreCase("Redmi Note 7")) {
+        } else if (codename.equalsIgnoreCase("Redmi Note 7")) {
             HiRes_Audio_Dump_Lavender();
         }
 
@@ -397,8 +394,23 @@ public class audio_stats extends AppCompatActivity {
             fstream.close();
             String details[] = sbuffer.toString().split("\n");
             // Check device codename (Try to fix compatibility for lavender
-            if (codename.getText().toString().equalsIgnoreCase("mido")) {
+            if (codename.equalsIgnoreCase("Redmi Note 4")) {
                 if (details[0].equals("(DIRECT)")){
+                    dr.setText("Hi-Res Audio Driver");
+                    // Dump Audio state for specific driver only after drivers detected
+                    HiRes_SR_Dump();
+                    HiRes_BD_Dump();
+                    HiRes_BF_Dump();
+                    HiRes_FL_Dump();
+                    HiRes_Out_Dump();
+
+                    // Do delay
+                    HiRes_BD_Delay();
+                    HiRes_SR_Delay();
+                    HiRes_Out_Delay();
+                    HiRes_FL_Delay();
+                    HiRes_Buffer_Delay();
+                } else if (details[0].equals("DIRECT)")){ // This is actually fail-safe algorithm...
                     dr.setText("Hi-Res Audio Driver");
                     // Dump Audio state for specific driver only after drivers detected
                     HiRes_SR_Dump();
@@ -429,7 +441,7 @@ public class audio_stats extends AppCompatActivity {
                     Alsa_FL_Delay();
                     Alsa_Buffer_Delay();
                 }
-            } else if (codename.getText().toString().equalsIgnoreCase("Redmi Note 7")) {
+            } else if (codename.equalsIgnoreCase("Redmi Note 7")) {
                 if (details[0].equals(" (DIRECT)")) {
                     dr.setText("Hi-Res Audio Driver");
 
