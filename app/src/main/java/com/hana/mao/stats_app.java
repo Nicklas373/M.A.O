@@ -58,16 +58,5 @@ public class stats_app extends AppCompatActivity {
             }
         });
 
-        Button back = (Button) findViewById(R.id.back);
-
-        back.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v){
-                Intent i = new Intent(stats_app.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
-
     }
 }

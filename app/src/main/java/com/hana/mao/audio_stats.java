@@ -34,7 +34,6 @@ public class audio_stats extends AppCompatActivity {
 
         // Declare item component here
         final TextView dr = (TextView) findViewById(R.id.textView4);
-        final Button back = (Button) findViewById(R.id.btn_back);
         final Button refresh = (Button) findViewById(R.id.btn_refresh);
 
         // Run init component
@@ -43,16 +42,6 @@ public class audio_stats extends AppCompatActivity {
         HiRes_Audio_Dump();
         HiRes_Detect();
 
-        back.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Clean();
-                Intent i = new Intent(audio_stats.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
-
         refresh.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -60,29 +49,6 @@ public class audio_stats extends AppCompatActivity {
                 Clean();
                 MediaFlinger();
                 HiRes_Detect();
-                /* Do delay for every step when want to detect each ALSA component
-                   Due android 10 update, it can't access massive process in one process
-                   Do delay for 2 sec for each process. */
-                if (dr.getText().toString().equalsIgnoreCase("Hi-Res Audio Driver")) {
-                    HiRes_BD_Delay();
-                    HiRes_SR_Delay();
-                    HiRes_Out_Delay();
-                    HiRes_FL_Delay();
-                    HiRes_Buffer_Delay();
-                } else if (dr.getText().toString().equalsIgnoreCase("ALSA Audio Driver")){
-                    Alsa_BD_Delay();
-                    Alsa_SR_Delay();
-                    Alsa_Out_Delay();
-                    Alsa_FL_Delay();
-                    Alsa_Buffer_Delay();
-                } else {
-                    sr.setText("Not Detected");
-                    fl.setText("Not Detected");
-                    bd.setText("Not Detected");
-                    o.setText("Not Detected");
-                    bc.setText("Not Detected");
-                }
-                Clean();
             }
         });
     }

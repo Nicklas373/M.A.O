@@ -508,17 +508,6 @@ public class audio_conf extends AppCompatActivity {
             qcom_gating.setVisibility(View.GONE);
             Toast.makeText(audio_conf.this, "QCOM Gating Not Found", Toast.LENGTH_LONG).show();
         }
-
-        Button back = (Button) findViewById(R.id.btn_back);
-
-        back.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v){
-                Intent i = new Intent(audio_conf.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
     }
 
     private void uhqa_dump() {
