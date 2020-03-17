@@ -17,6 +17,9 @@ public class stats extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Kernel Audio Status");
+
+        // Lock rotation to potrait by default
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     @Override
@@ -30,7 +33,6 @@ public class stats extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Next = (Button) view.findViewById(R.id.audio_stats);
 
         Next.setOnClickListener(new View.OnClickListener() {

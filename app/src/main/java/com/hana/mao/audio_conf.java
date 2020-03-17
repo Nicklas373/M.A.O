@@ -33,6 +33,8 @@ public class audio_conf extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_audio_conf);
+
+        // Lock rotation to potrait by default
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //Define cardview layout

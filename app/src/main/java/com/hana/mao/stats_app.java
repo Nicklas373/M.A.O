@@ -17,6 +17,9 @@ public class stats_app extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats_app);
+        getSupportActionBar().hide();
+
+        // Lock rotation to potrait by default
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         setTitle("Contributor");

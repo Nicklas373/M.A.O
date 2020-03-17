@@ -16,7 +16,10 @@ public class conf extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Kernel Audio Configuration");
+        getActivity().setTitle("Audio Configuration");
+
+        // Lock rotation to potrait by default
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     @Override
@@ -29,8 +32,6 @@ public class conf extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Next = (Button) view.findViewById(R.id.audio_conf);
 
