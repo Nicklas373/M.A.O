@@ -1,60 +1,64 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".home"
     android:background="#424242">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="226dp"
-            android:layout_height="39dp"
-            android:layout_marginBottom="575dp"
-            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="80dp"
             android:text="@string/nav_header_title"
+            android:fontFamily="@font/test"
+            android:textSize="25sp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="#ffffff"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.556"
+            app:layout_constraintHorizontal_bias="0.000"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.804" />
+            app:layout_constraintVertical_bias="0.000" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView"
-            android:layout_width="226dp"
-            android:layout_height="321dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="180dp"
+            android:layout_marginStart="110dp"
+            app:civ_border_color="#FFFFFFFF"
+            app:civ_border_width="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.556"
+            app:layout_constraintHorizontal_bias="0.000"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.275"
-            app:srcCompat="@drawable/test" />
+            app:layout_constraintVertical_bias="0.000"
+            android:src="@drawable/test"
+            android:contentDescription="@string/app_name"/>
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="246dp"
-            android:layout_height="61dp"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="480dp"
             android:text="@string/home_secondary_text"
             android:textAlignment="center"
-            android:textAllCaps="false"
+            android:fontFamily="@font/test"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="#ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintHorizontal_bias="0.000"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.871" />
+            app:layout_constraintVertical_bias="0.000" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

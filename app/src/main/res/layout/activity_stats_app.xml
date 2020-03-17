@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".stats_app"
     android:background="#424242">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_details_title"
-        android:textColor="#ffffff"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:gravity="top"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_title"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.532"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1"/>
+        app:layout_constraintVertical_bias="0.0"
+        app:cardBackgroundColor="@color/color_app_bar">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_details_title"
+            android:fontFamily="@font/test"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:textColor="#fff"
+            android:textSize="24sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/textView9"
@@ -28,14 +37,16 @@
         android:layout_height="wrap_content"
         android:text="@string/app_details_end"
         android:textColor="#ffffff"
+        android:fontFamily="@font/test"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:gravity="top"
+        android:layout_marginTop="530dp"
+        android:layout_marginStart="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.445"
+        app:layout_constraintHorizontal_bias="0.000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.745"/>
+        app:layout_constraintVertical_bias="0.000"/>
 
     <TextView
         android:id="@+id/textView12"
@@ -43,253 +54,198 @@
         android:layout_height="wrap_content"
         android:text="@string/app_details_ext"
         android:textColor="#ffffff"
+        android:fontFamily="@font/test"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:gravity="top"
+        android:layout_marginTop="580dp"
+        android:layout_marginStart="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.820"/>
+        app:layout_constraintVertical_bias="0.000"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_second_cont"
-        android:layout_width="365dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="340dp"
+        app:cardBackgroundColor="@color/color_app_bar_dark"
         app:cardCornerRadius="12dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintHorizontal_bias="0.000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.570">
+        app:layout_constraintVertical_bias="0.000">
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        app:srcCompat="@drawable/second_cont"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.22" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView7"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/second_cont"
+            android:contentDescription="@string/main_contributor"
+            app:civ_border_color="#FFFFFFFF"
+            app:civ_border_width="4dp"/>
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name"
-            android:textColor="#000000"
-            android:layout_marginLeft="150dp"
-            android:layout_marginVertical="20dp" />
+        <View
+            android:layout_width="4dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="55dp"
+            android:layout_height="fill_parent"
+            android:background="#FFFFFF" />
 
         <TextView
             android:id="@+id/textView15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/second_contributor"
-            android:textColor="#000000"
-            android:layout_marginLeft="215dp"
-            android:layout_marginVertical="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/id"
-            android:textColor="#000000"
-            android:layout_marginLeft="207dp"
-            android:layout_marginVertical="20dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title"
-            android:textColor="#000000"
-            android:layout_marginLeft="150dp"
-            android:layout_marginVertical="50dp"/>
+            android:textColor="#fff"
+            android:fontFamily="@font/test"
+            android:textSize="18sp"
+            android:layout_marginStart="165dp"
+            android:layout_marginVertical="10dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/second_cont_desc"
-            android:textColor="#000000"
-            android:layout_marginLeft="215dp"
+            android:textColor="#fff"
+            android:fontFamily="@font/test"
+            android:textSize="17sp"
+            android:layout_marginStart="165dp"
             android:layout_marginVertical="50dp"/>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/id"
-            android:textColor="#000000"
-            android:layout_marginLeft="207dp"
-            android:layout_marginVertical="50dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:id="@+id/contact_text2"
-            android:text="@string/contact"
-            android:textColor="#000000"
-            android:layout_marginLeft="150dp"
-            android:layout_marginVertical="80sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:text="@string/id"
-            android:textColor="#000000"
-            android:layout_marginLeft="207dp"
-            android:layout_marginVertical="80sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:text="Private"
-            android:textColor="#000000"
-            android:layout_marginLeft="215dp"
-            android:layout_marginVertical="80sp"/>
+            android:layout_height="20dp"
+            android:text="@string/second_cont_contact"
+            android:textColor="#fff"
+            android:fontFamily="@font/test"
+            android:textSize="15sp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="105dp"/>
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_main_cont"
-        android:layout_width="365dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="150dp"
+        app:cardBackgroundColor="@color/color_app_bar_dark"
         app:cardCornerRadius="12dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintHorizontal_bias="0.000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.270">
+        app:layout_constraintVertical_bias="0.000">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView2"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            app:srcCompat="@drawable/main_contributor"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.22" />
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/main_contributor"
+            android:contentDescription="@string/main_contributor"
+            app:civ_border_color="#FFFFFFFF"
+            app:civ_border_width="4dp"/>
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name"
-            android:textColor="#000000"
-            android:layout_marginLeft="150dp"
-            android:layout_marginVertical="20dp" />
+        <View
+            android:layout_width="4dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="55dp"
+            android:layout_height="fill_parent"
+            android:background="#FFFFFF" />
 
         <TextView
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/main_contributor"
-            android:textColor="#000000"
-            android:layout_marginLeft="215dp"
-            android:layout_marginVertical="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/id"
-            android:textColor="#000000"
-            android:layout_marginLeft="207dp"
-            android:layout_marginVertical="20dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title"
-            android:textColor="#000000"
-            android:layout_marginLeft="150dp"
-            android:layout_marginVertical="50dp"/>
+            android:textColor="#fff"
+            android:fontFamily="@font/test"
+            android:textSize="18sp"
+            android:layout_marginStart="165dp"
+            android:layout_marginVertical="10dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/main_cont_desc"
-            android:textColor="#000000"
-            android:layout_marginLeft="215dp"
+            android:textColor="#fff"
+            android:fontFamily="@font/test"
+            android:textSize="17sp"
+            android:layout_marginStart="165dp"
             android:layout_marginVertical="50dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/id"
-            android:textColor="#000000"
-            android:layout_marginLeft="207dp"
-            android:layout_marginVertical="50dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:id="@+id/contact_text"
-            android:text="@string/contact"
-            android:textColor="#000000"
-            android:layout_marginLeft="150dp"
-            android:layout_marginVertical="80sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:text="@string/id"
-            android:textColor="#000000"
-            android:layout_marginLeft="207dp"
-            android:layout_marginVertical="80sp"/>
-
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/telegram"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            app:srcCompat="@drawable/telegram"
-            android:layout_marginLeft="220dp"
-            android:layout_marginVertical="78sp"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/telegram"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="40dp"
+            app:civ_border_color="#FFFFFFFF"
+            app:civ_border_width="2dp"
+            android:contentDescription="@string/main_contributor" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/github"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            app:srcCompat="@drawable/git"
-            android:layout_marginLeft="265dp"
-            android:layout_marginVertical="78sp"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/git"
+            android:layout_gravity="center"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="40dp"
+            app:civ_border_color="#FFFFFFFF"
+            app:civ_border_width="2dp"
+            android:contentDescription="@string/main_contributor" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/xda"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            app:srcCompat="@drawable/xda"
-            android:layout_marginLeft="310dp"
-            android:layout_marginVertical="78sp"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/xda"
+            android:layout_gravity="center"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="40dp"
+            app:civ_border_color="#FFFFFFFF"
+            app:civ_border_width="2dp"
+            android:contentDescription="@string/main_contributor" />
+
 
     </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/back"
-        android:layout_width="225dp"
+        android:layout_width="150dp"
         android:layout_height="61dp"
         android:background="@drawable/ripple_effect"
         android:text="@string/menu_back"
         android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#ffffff"
+        android:fontFamily="@font/test"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_marginTop="650dp"
+        android:layout_marginStart="145dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.556"
+        app:layout_constraintHorizontal_bias="0.000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.952" />
+        app:layout_constraintVertical_bias="0.000" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
