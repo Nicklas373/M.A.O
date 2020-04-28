@@ -68,11 +68,11 @@ public class audio_conf extends AppCompatActivity {
         TextView t_v_impedance = (TextView) findViewById(R.id.t_v_impedance);
 
         //Define kernel audio path
-        File uhqa_file = new File("/sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
+        File uhqa_file = new File("/sys/module/wcd9355_dlkm/parameters/huwifi_mode"); //4.9 Kernel Path Update
         File hph_file = new File("/sys/module/snd_soc_wcd9330/parameters/high_perf_mode");
-        File amp_file = new File("/sys/module/snd_soc_wcd9335/parameters/low_distort_amp");
+        File amp_file = new File("/sys/module/wcd9355_dlkm/parameters/low_distort_amp"); //4.9 Kernel Path Update
         File impedance_file = new File("/sys/module/snd_soc_wcd9xxx/parameters/impedance_detect_en");
-        File gating_file = new File("/sys/module/snd_soc_wcd9335/parameters/dig_core_collapse_enable");
+        File gating_file = new File("/sys/module/wcd9355_dlkm/parameters/dig_core_collapse_enable"); //4.9 Kernel Path Update
 
         preferences = getSharedPreferences("exp_pref", Context.MODE_PRIVATE);
 
@@ -109,7 +109,7 @@ public class audio_conf extends AppCompatActivity {
                             if(s_uhqa.isChecked())
                             {
                                 try {
-                                    CommandResult uhqa = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
+                                    CommandResult uhqa = Shell.SU.run("echo \"1\" > /sys/module/wcd9355_dlkm/parameters/huwifi_mode");
                                     Toast.makeText(audio_conf.this, "Ultra High Quality Audio is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
@@ -117,7 +117,7 @@ public class audio_conf extends AppCompatActivity {
                                 }
                             }  else {
                                 try {
-                                    CommandResult uhqa = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
+                                    CommandResult uhqa = Shell.SU.run("echo \"0\" > /sys/module/wcd9355_dlkm/parameters/huwifi_mode");
                                     Toast.makeText(audio_conf.this, "Ultra High Quality Audio is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
@@ -136,7 +136,7 @@ public class audio_conf extends AppCompatActivity {
                             if(s_uhqa.isChecked())
                             {
                                 try {
-                                    CommandResult uhqa = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
+                                    CommandResult uhqa = Shell.SU.run("echo \"1\" > /sys/module/wcd9355_dlkm/parameters/huwifi_mode");
                                     Toast.makeText(audio_conf.this, "Ultra High Quality Audio is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
@@ -144,7 +144,7 @@ public class audio_conf extends AppCompatActivity {
                                 }
                             }  else {
                                 try {
-                                    CommandResult uhqa = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
+                                    CommandResult uhqa = Shell.SU.run("echo \"0\" > /sys/module/wcd9355_dlkm/parameters/huwifi_mode");
                                     Toast.makeText(audio_conf.this, "Ultra High Quality Audio is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
@@ -269,7 +269,7 @@ public class audio_conf extends AppCompatActivity {
                             if(s_amp.isChecked())
                             {
                                 try {
-                                    CommandResult amp = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/low_distort_amp");
+                                    CommandResult amp = Shell.SU.run("echo \"1\" > /sys/module/wcd9355_dlkm/parameters/low_distort_amp");
                                     Toast.makeText(audio_conf.this, "Low Distortion AMP is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
@@ -277,7 +277,7 @@ public class audio_conf extends AppCompatActivity {
                                 }
                             }  else {
                                 try {
-                                    CommandResult amp = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/low_distort_amp");
+                                    CommandResult amp = Shell.SU.run("echo \"0\" > /sys/module/wcd9355_dlkm/parameters/low_distort_amp");
                                     Toast.makeText(audio_conf.this, "Low Distortion AMP is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
@@ -296,7 +296,7 @@ public class audio_conf extends AppCompatActivity {
                             if(s_amp.isChecked())
                             {
                                 try {
-                                    CommandResult amp = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/low_distort_amp");
+                                    CommandResult amp = Shell.SU.run("echo \"1\" >/sys/module/wcd9355_dlkm/parameters/low_distort_amp");
                                     Toast.makeText(audio_conf.this, "Low Distortion AMP is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
@@ -304,7 +304,7 @@ public class audio_conf extends AppCompatActivity {
                                 }
                             }  else {
                                 try {
-                                    CommandResult amp = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/low_distort_amp");
+                                    CommandResult amp = Shell.SU.run("echo \"0\" > /sys/module/wcd9355_dlkm/parameters/low_distort_amp");
                                     Toast.makeText(audio_conf.this, "Low Distortion AMP is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
@@ -456,7 +456,7 @@ public class audio_conf extends AppCompatActivity {
                             if(s_gating.isChecked())
                             {
                                 try {
-                                    CommandResult qcom_gating = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/dig_core_collapse_enable");
+                                    CommandResult qcom_gating = Shell.SU.run("echo \"1\" > /sys/module/wcd9355_dlkm/parameters/dig_core_collapse_enable");
                                     Toast.makeText(audio_conf.this, "Power Gating is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
@@ -464,7 +464,7 @@ public class audio_conf extends AppCompatActivity {
                                 }
                             }  else {
                                 try {
-                                    CommandResult qcom_gating = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/dig_core_collapse_enable");
+                                    CommandResult qcom_gating = Shell.SU.run("echo \"0\" > /sys/module/wcd9355_dlkm/parameters/dig_core_collapse_enable");
                                     Toast.makeText(audio_conf.this, "Power Gating is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
@@ -483,7 +483,7 @@ public class audio_conf extends AppCompatActivity {
                             if(s_gating.isChecked())
                             {
                                 try {
-                                    CommandResult qcom_gating = Shell.SU.run("echo \"1\" > /sys/module/snd_soc_wcd9335/parameters/dig_core_collapse_enable");
+                                    CommandResult qcom_gating = Shell.SU.run("echo \"1\" > /sys/module/wcd9355_dlkm/parameters/dig_core_collapse_enable");
                                     Toast.makeText(audio_conf.this, "QCOM Gating is Active", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(Exception e){
@@ -491,7 +491,7 @@ public class audio_conf extends AppCompatActivity {
                                 }
                             }  else {
                                 try {
-                                    CommandResult qcom_gating = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/dig_core_collapse_enable");
+                                    CommandResult qcom_gating = Shell.SU.run("echo \"0\" > /sys/module/wcd9355_dlkm/parameters/dig_core_collapse_enable");
                                     Toast.makeText(audio_conf.this, "QCOM Gating is Disabled", Toast.LENGTH_SHORT).show();
                                 }
                                 catch (Exception e) {
@@ -512,7 +512,7 @@ public class audio_conf extends AppCompatActivity {
 
     private void uhqa_dump() {
         try {
-            CommandResult uhqa_check = Shell.SU.run("cp /sys/module/snd_soc_wcd9335/parameters/huwifi_mode /data/user/0/com.hana.mao/files/uhqa.txt");
+            CommandResult uhqa_check = Shell.SU.run("cp /sys/module/wcd9355_dlkm/parameters/huwifi_mode /data/user/0/com.hana.mao/files/uhqa.txt");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -530,7 +530,7 @@ public class audio_conf extends AppCompatActivity {
 
     private void amp_dump() {
         try {
-            CommandResult amp_check = Shell.SU.run("cp /sys/module/snd_soc_wcd9335/parameters/low_distort_amp /data/user/0/com.hana.mao/files/amp.txt");
+            CommandResult amp_check = Shell.SU.run("cp /sys/module/wcd9355_dlkm/parameters/low_distort_amp /data/user/0/com.hana.mao/files/amp.txt");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -548,7 +548,7 @@ public class audio_conf extends AppCompatActivity {
 
     private void gating_dump() {
         try {
-            CommandResult qcom_gating_check = Shell.SU.run("cp /sys/module/snd_soc_wcd9335/parameters/dig_core_collapse_enable /data/user/0/com.hana.mao/files/qcom_gating.txt");
+            CommandResult qcom_gating_check = Shell.SU.run("cp /sys/module/wcd9355_dlkm/parameters/dig_core_collapse_enable /data/user/0/com.hana.mao/files/qcom_gating.txt");
         }
         catch (Exception e) {
             e.printStackTrace();
