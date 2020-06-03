@@ -1,6 +1,5 @@
 package com.hana.mao;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.os.Handler;
 import android.os.Build;
-import android.widget.Toast;
 
 import com.jaredrummler.android.shell.CommandResult;
 import com.jaredrummler.android.shell.Shell;
@@ -21,7 +19,7 @@ import java.io.IOException;
 
 public class audio_stats extends AppCompatActivity {
 
-    private TextView sr,bd,fl,dr,o,bc;
+    private TextView sr,bd,fl,dr,o,bc,kn;
 
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
@@ -83,6 +81,15 @@ public class audio_stats extends AppCompatActivity {
     private void HiRes_Out_Dump(){
         try {
             CommandResult HiRes_Out_Dump = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '11p' | tail -c +22 > /data/data/com.hana.mao/files/hod.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Check audio output states (Hi-Res) (Mido)
+    private void HiRes_Out_Dump_FF(){
+        try {
+            CommandResult HiRes_Out_Dump_FF = Shell.SU.run("grep -w Output /data/data/com.hana.mao/files/audio.txt | sed -n '10p' | tail -c +22 > /data/data/com.hana.mao/files/hod_ff.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -259,12 +266,23 @@ public class audio_stats extends AppCompatActivity {
         }
     }
 
+    // Check kernel version for debugging
+    private void Kernel_Dump() {
+        try {
+            CommandResult uname_check = Shell.SU.run("uname -r | head -c 7 > /data/user/0/com.hana.mao/files/kdump.txt");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /* Delay begin
       Do delay for :
       - HiRes / ALSA Bit Depth
       - HiRes / ALSA Sample Rate
       - HiRes / ALSA Flags
       - HiRes / AlSA Output
+      - Kernel version
     */
     private void HiRes_BD_Delay() {
         final Handler handler = new Handler();
@@ -366,6 +384,16 @@ public class audio_stats extends AppCompatActivity {
         }, 2000L); //3000 L = 3 detik
     }
 
+    private void Kernel_Dump_Delay() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Kernel_Read();
+            }
+        }, 2000L); //3000 L = 3 detik
+    }
+
     // Detect Hi-Res / ALSA State
     private void HiRes_Detect(){
         // Use string to save device models
@@ -403,6 +431,7 @@ public class audio_stats extends AppCompatActivity {
                     HiRes_BF_Dump();
                     HiRes_FL_Dump();
                     HiRes_Out_Dump();
+                    Kernel_Dump();
 
                     // Do delay
                     HiRes_BD_Delay();
@@ -410,6 +439,7 @@ public class audio_stats extends AppCompatActivity {
                     HiRes_Out_Delay();
                     HiRes_FL_Delay();
                     HiRes_Buffer_Delay();
+                    Kernel_Dump_Delay();
                 } else if (details[0].equals("DIRECT)")){ // This is actually fail-safe algorithm...
                     dr.setText("Hi-Res Audio Driver");
                     // Dump Audio state for specific driver only after drivers detected
@@ -418,6 +448,7 @@ public class audio_stats extends AppCompatActivity {
                     HiRes_BF_Dump();
                     HiRes_FL_Dump();
                     HiRes_Out_Dump();
+                    Kernel_Dump();
 
                     // Do delay
                     HiRes_BD_Delay();
@@ -425,6 +456,7 @@ public class audio_stats extends AppCompatActivity {
                     HiRes_Out_Delay();
                     HiRes_FL_Delay();
                     HiRes_Buffer_Delay();
+                    Kernel_Dump_Delay();
                 } else {
                     dr.setText("ALSA Audio Driver");
                     // Dump Audio state for specific driver only after drivers detected
@@ -433,6 +465,7 @@ public class audio_stats extends AppCompatActivity {
                     Alsa_FL_Dump();
                     Alsa_Out_Dump();
                     Alsa_SR_Dump();
+                    Kernel_Dump();
 
                     // Do delay
                     Alsa_BD_Delay();
@@ -440,6 +473,7 @@ public class audio_stats extends AppCompatActivity {
                     Alsa_Out_Delay();
                     Alsa_FL_Delay();
                     Alsa_Buffer_Delay();
+                    Kernel_Dump_Delay();
                 }
             } else if (codename.equalsIgnoreCase("Redmi Note 7")) {
                 if (details[0].equals(" (DIRECT)")) {
@@ -451,6 +485,7 @@ public class audio_stats extends AppCompatActivity {
                     HiRes_BF_Dump_Lavender();
                     HiRes_FL_Dump_Lavender();
                     HiRes_Out_Dump_Lavender();
+                    Kernel_Dump();
 
                     // Do delay
                     HiRes_BD_Delay();
@@ -458,6 +493,7 @@ public class audio_stats extends AppCompatActivity {
                     HiRes_Out_Delay();
                     HiRes_FL_Delay();
                     HiRes_Buffer_Delay();
+                    Kernel_Dump_Delay();
                 } else {
                     dr.setText("ALSA Audio Driver");
                     // Dump Audio state for specific driver only after drivers detected
@@ -466,6 +502,7 @@ public class audio_stats extends AppCompatActivity {
                     Alsa_FL_Dump_Lavender();
                     Alsa_Out_Dump_Lavender();
                     Alsa_SR_Dump_Lavender();
+                    Kernel_Dump();
 
                     // Do delay
                     Alsa_BD_Delay();
@@ -473,6 +510,7 @@ public class audio_stats extends AppCompatActivity {
                     Alsa_Out_Delay();
                     Alsa_FL_Delay();
                     Alsa_Buffer_Delay();
+                    Kernel_Dump_Delay();
                 }
             }
         } catch (FileNotFoundException e) {
@@ -577,6 +615,37 @@ public class audio_stats extends AppCompatActivity {
         FileInputStream fstream;
         try {
             fstream = openFileInput("hod.txt");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read())!= -1){
+                sbuffer.append((char)i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            if (details[0].equals("(AUDIO_DEVICE_OUT_WIRED_HEADSET)")){
+                o.setText("Wired Headset");
+            } else if (details[0].equals("(AUDIO_DEVICE_OUT_SPEAKER)")){
+                o.setText("Speaker");
+            } else {
+                HiRes_O_FF();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            o.setText("Not Detected");
+        } catch (IOException e) {
+            o.setText("Not Detected");
+        }
+    }
+
+    private void HiRes_O_FF(){
+        final TextView o = (TextView) findViewById(R.id.out_status);
+
+        FileInputStream fstream;
+
+        HiRes_Out_Dump_FF();
+
+        try {
+            fstream = openFileInput("hod_ff.txt");
             StringBuffer sbuffer = new StringBuffer();
             int i;
             while ((i = fstream.read())!= -1){
@@ -754,6 +823,29 @@ public class audio_stats extends AppCompatActivity {
             bc.setText("Not Detected");
         } catch (IOException e) {
             bc.setText("Not Detected");
+        }
+    }
+
+    private void Kernel_Read(){
+        FileInputStream fstream;
+
+        TextView kn = (TextView) findViewById(R.id.kernel_status);
+
+        try {
+            fstream = openFileInput("kdump.txt");
+            StringBuffer sbuffer = new StringBuffer();
+            int i;
+            while ((i = fstream.read()) != -1) {
+                sbuffer.append((char) i);
+            }
+            fstream.close();
+            String details[] = sbuffer.toString().split("\n");
+            kn.setText(details[0]);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            kn.setText("Not Detected");
+        } catch (IOException e) {
+            kn.setText("Not Detected");
         }
     }
 
