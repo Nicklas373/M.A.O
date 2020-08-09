@@ -150,7 +150,7 @@ public class audio_conf extends AppCompatActivity {
                                 catch(Exception e){
                                     e.printStackTrace();
                                 }
-                            }  else {
+                            } else {
                                 try {
                                     CommandResult uhqa = Shell.SU.run("echo \"0\" > /sys/module/snd_soc_wcd9335/parameters/huwifi_mode");
                                     Toast.makeText(audio_conf.this, "Ultra High Quality Audio is Disabled", Toast.LENGTH_SHORT).show();
@@ -851,6 +851,10 @@ public class audio_conf extends AppCompatActivity {
                 amp_4_dump();
                 gating_4_dump();
 
+                //FIXME
+                uhqa_4_fix();
+                //END OF FIXME
+
                 uhqa_switch_4();
                 amp_switch_4();
                 gating_switch_4();
@@ -896,6 +900,16 @@ public class audio_conf extends AppCompatActivity {
     private void uhqa_4_dump() {
         try {
             CommandResult uhqa_4_check = Shell.SU.run("cp /sys/module/wcd9335_dlkm/parameters/huwifi_mode /data/user/0/com.hana.mao/files/uhqa_4.txt");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //FIXME: I should fix this later, this happen may from implementation of this function to xiaomi parts.
+    private void uhqa_4_fix() {
+        try {
+            CommandResult uhqa_4_fix = Shell.SU.run("chmod 0644 /data/user/0/com.hana.mao/files/uhqa_4.txt");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -949,7 +963,7 @@ public class audio_conf extends AppCompatActivity {
 
     private void gating_4_dump() {
         try {
-            CommandResult qcom_gating_4_check = Shell.SU.run("cp /sys/module/wcd9335_dlkm/parameters/dig_core_collapse_enable /data/user/0/com.hana.mao/files/qcom_gating_4.txt");
+            CommandResult qcom_gating_4_check = Shell.SU.run("cp /sys/module/wcd9335_dlkm/parameters/dig_core_collapse_enable /data/user/0/com.hana.mao/files/gating_4.txt");
         }
         catch (Exception e) {
             e.printStackTrace();
